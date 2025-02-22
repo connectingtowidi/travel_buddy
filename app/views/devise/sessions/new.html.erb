@@ -1,20 +1,38 @@
-<h2>Log in</h2>
+<div class="d-flex">
+<div class="flex-grow-1 auth-left-banner d-none d-sm-block">
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+</div>
+
+  <div class="auth-right-banner p-5">
+    <%= image_tag "merlion-ruby.jpg", class: "logo-featured mt-5" %>
+
+    <div class="my-5">
+      <h2>
+        SG Travel Buddy
+      </h2>
+    </div>
+
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :email,
+                    required: false,
+                    autofocus: true,
+                    input_html: { autocomplete: "email", style: "border: 2px solid #000; background-color: #f1f1f1;" } %> <!-- Fixed the missing closing %> -->
+        
+        <%= f.input :password,
+                    required: false,
+                    input_html: { autocomplete: "current-password", style: "border: 2px solid #000;" } %>
+        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+      </div>
+
+      <div class="form-actions mt-5 mb-4">
+        <%= f.button :submit, "Login", class: "btn btn-primary btn-lg rounded-pill" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
