@@ -1,2 +1,44 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container py-4">
+ 
+<div class="row">
+    <div class="col-md-8">
+        <div class="mb-3"><h4 class="fw-bold">Kids-focused 3-days itinerary</h4></div>
+        <div class="itinerary-card">
+        <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+             
+            <div>
+                <h5>Gardens by the Bay</h5>
+                <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
+                <button class="btn btn-dark btn-sm">Details</button>
+            </div>
+            <span class="ms-auto">3 hours</span>
+        </div>
+        <div class="itinerary-card">
+           <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+       
+            <div>
+                <h5>Esplanade</h5>
+                <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
+                <button class="btn btn-dark btn-sm">Details</button>
+            </div>
+            <span class="ms-auto">3 hours</span>
+        </div>
+        <div class="itinerary-card">
+              <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+       
+            <div>
+                <h5>Merlion</h5>
+                <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
+                <button class="btn btn-danger btn-sm">Remove</button>
+            </div>
+            <span class="ms-auto">1 hour</span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="side-box">
+            <h4 class="fw-bold">Plan a trip that’s so local</h4>
+            <p><em>Discover hidden gems in Singapore</em></p>
+        </div>
+    </div>
+</div>
+</div>

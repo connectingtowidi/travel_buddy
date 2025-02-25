@@ -1,5 +1,5 @@
 .auth-left-banner {
-    background-image: linear-gradient(rgba(171, 35, 58, 0.5), rgba(26, 24, 24, 0.7)), url(asset-path('cover-page.jpg'));
+    background-image: linear-gradient(rgba(171, 35, 58, 0.5), rgba(26, 24, 24, 0.7)), url(asset-path('cover-page.png'));
     background-size: cover;
     background-position: center;
     height: auto;
@@ -10,4 +10,7 @@
   @media (min-width: 576px) {
     width: 50%;
   }
+
+
+  
 }
