@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= itinerary.name %></h5>
                     <p class="card-text"><%= itinerary.start_date %> - <%= itinerary.end_date %></p>
-                    <a href="#" class="btn btn-primary">Details</a>
+                    <a href="/itineraries/<%= itinerary.id %>" class="btn btn-primary">Details</a>
                 </div>
             </div>
         <% end %>
@@ -15,8 +15,3 @@
 
     <%= link_to "New Itinerary", new_itinerary_path %>
 </div>
-
-  
-
-
-
