@@ -13,14 +13,20 @@
   <body>
   <%= render "shared/flashes" %>
   
-  <% if user_signed_in? %>
-  <%= render 'shared/navbar' %>
-<% elsif !current_page?(new_user_session_path) && 
+   <% if user_signed_in? || 
+       (!current_page?(new_user_session_path) && 
         !current_page?(new_user_registration_path) && 
         !current_page?(edit_user_registration_path) && 
-        !current_page?(new_user_password_path) %>
-  <%= render 'shared/navbar' %>
-<% end %>
+        !current_page?(edit_user_password_path) &&
+        !current_page?(new_user_password_path) &&
+        !current_page?(new_user_registration_path) &&
+        !current_page?(user_registration_path) &&
+        !current_page?(cancel_user_registration_path) &&
+        !flash[:alert] && 
+        !flash[:error] &&
+        !(resource&.errors&.any? if defined?(resource))) %>
+    <%= render 'shared/navbar' %>
+  <% end %>
   <%= yield %>
   </div>
 </body>

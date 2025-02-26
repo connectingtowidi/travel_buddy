@@ -1,4 +1,6 @@
-<div class="container py-4">
+<%= render "shared/navbar"%>
+
+<div class="container py-4" data-controller="redirect">
     <div class="row">
         <div class="col-md-8">
             <div class="mb-3"><h4 class="fw-bold">Kids-focused 3-days itinerary</h4></div>
@@ -8,7 +10,9 @@
                 <div>
                     <h5>Gardens by the Bay</h5>
                     <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button class="btn btn-dark btn-sm">Details</button>
+                    <button 
+                        class="btn btn-dark btn-sm" 
+                        data-action="click->redirect#redirectToLogin">Details</button>
                 </div>
                 <span class="ms-auto">3 hours</span>
             </div>
@@ -18,7 +22,9 @@
                 <div>
                     <h5>Esplanade</h5>
                     <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button class="btn btn-dark btn-sm">Details</button>
+                    <button 
+                    class="btn btn-dark btn-sm" 
+                    data-action="click->redirect#redirectToLogin">Details</button>
                 </div>
                 <span class="ms-auto">3 hours</span>
             </div>
@@ -28,7 +34,9 @@
                 <div>
                     <h5>Merlion</h5>
                     <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button class="btn btn-danger btn-sm">Remove</button>
+                    <button 
+                        class="btn btn-danger btn-sm" 
+                        data-action="click->redirect#redirectToLogin">Remove</button>
                 </div>
                 <span class="ms-auto">1 hour</span>
             </div>
