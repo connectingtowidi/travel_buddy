@@ -3,4 +3,11 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
-import "@stimulus"
+
+
+import PasswordToggleController from "../controllers/password_toggle_controller.js"
+Stimulus.register("password_toggle", PasswordToggleController)
+
+
+import RedirectController from "../controllers/redirect_controller.js"
+Stimulus.register("redirect", RedirectController)
