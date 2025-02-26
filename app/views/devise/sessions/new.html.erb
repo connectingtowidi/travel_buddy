@@ -13,20 +13,20 @@
        Invalid email or password
      </div>
      <% end %>
-  
-     <div class="mb-3 password-container" data-controller="password_toggle">
+
+     <div class="mb-3 password-container" data-controller="password-toggle">
       <%= f.label :password, class: "form-label" %>
       <div class="position-relative">
-        <%= f.input_field :password, 
-              required: false, 
-              autocomplete: "current-password", 
+        <%= f.input_field :password,
+              required: false,
+              autocomplete: "current-password",
               value: "user1pw",
-              class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle", 
+              class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
               data: { password_toggle_target: "password" } %>
 
         <span class="toggle-password"
-              data-password_toggle-target="toggleIcon"
-              data-action="click->password_toggle#toggle">
+              data-password-toggle-target="toggleIcon"
+              data-action="click->password-toggle#toggle">
           👁
         </span>
       </div>

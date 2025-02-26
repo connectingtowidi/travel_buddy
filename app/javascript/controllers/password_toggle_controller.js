@@ -1,12 +1,16 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["password", "toggleIcon"]
+  static targets = ["password", "toggleIcon"];
+
+  connect() {
+    console.log("password");
+  }
 
   toggle() {
     const passwordField = this.passwordTarget;
     const isPassword = passwordField.type === "password";
-    
+
     // Toggle input type
     passwordField.type = isPassword ? "text" : "password";
 
