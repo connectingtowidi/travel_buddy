@@ -1,24 +1,20 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="password-toggle"
 export default class extends Controller {
-  static targets = ["input", "toggle"]
+  static targets = ["password", "toggleIcon"];
+
+  connect() {
+    console.log("password");
+  }
 
   toggle() {
+    const passwordField = this.passwordTarget;
+    const isPassword = passwordField.type === "password";
 
-  //     var passwordField = document.getElementById("password");
-  //     if (passwordField.type === "password") {
-  //         passwordField.type = "text";
-  //     } else {
-  //         passwordField.type = "password";
-  //     }
-  // }
+    // Toggle input type
+    passwordField.type = isPassword ? "text" : "password";
 
-  console.log("toggle")
-  
-    const type = this.inputTarget.type === "password" ? "text" : "password"
-    this.inputTarget.type = type
-   
-  
+    // Change eye icon (optional)
+    this.toggleIconTarget.textContent = isPassword ? "🙈" : "👁";
   }
 }

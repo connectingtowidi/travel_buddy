@@ -1,53 +1,49 @@
-<div class="login-container">
-<div class="left-panel"></div>
-<div class="right-panel">
-    <div class="login-box">
-        <h1 class="fw-bold">SG Travel Buddy</h1>
-        <p>Curated itineraries for everyone</p>
+<%= render "devise/shared/login_container" do %>
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
 
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <%= f.error_notification %>
-    
-          <div class="form-inputs">
-            <%= f.input :email,
-                    required: false,
-                    autofocus: true,
-                    input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
-        
-           <% if flash[:alert] %>
-           <div class="invalid-feedback">
-             Invalid email or password
-           </div>
-         <% end %>
-            <div class="mb-3 password-container">
-            <%= f.label :password, class: "form-label" %>
-              <div class="position-relative">
-                <%= f.input_field :password, 
-                      required: false, 
-                      autocomplete: "current-password", 
-                      class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle", 
-                      id: "password" %>
-                      <span class="toggle-password" data-action="click->password_toggle#toggle">👁</span>
-              </div>
-            </div>
+    <div class="form-inputs">
+      <%= f.input :email,
+              required: false,
+              autofocus: true,
+              input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
 
-            <% if flash[:alert] %>
-            <div class="invalid-feedback">
-              Invalid email or password
-            </div>
-          <% end %>
+     <% if flash[:alert] %>
+     <div class="invalid-feedback">
+       Invalid email or password
+     </div>
+     <% end %>
 
-            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-          </div>
-    
-          <div class="form-actions mt-5 mb-4">
-            <%= f.button :submit, "Let's go", class: "btn btn-dark w-10" %>
-          </div>
-        <% end %>
+     <div class="mb-3 password-container" data-controller="password-toggle">
+      <%= f.label :password, class: "form-label" %>
+      <div class="position-relative">
+        <%= f.input_field :password,
+              required: false,
+              autocomplete: "current-password",
+              value: "user1pw",
+              class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
+              data: { password_toggle_target: "password" } %>
 
-        <%= render "devise/shared/links" %>
- 
+        <span class="toggle-password"
+              data-password-toggle-target="toggleIcon"
+              data-action="click->password-toggle#toggle">
+          👁
+        </span>
+      </div>
     </div>
-</div>
-</div>
 
+
+      <% if flash[:alert] %>
+      <div class="invalid-feedback">
+        Invalid email or password
+      </div>
+      <% end %>
+
+      <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+    </div>
+
+    <div class="form-actions mt-5 mb-4">
+      <%= f.button :submit, "Let's go", class: "btn btn-dark w-10" %>
+    </div>
+  <% end %>
+<% end %>
