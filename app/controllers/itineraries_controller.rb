@@ -26,4 +26,8 @@ class ItinerariesController < ApplicationController
   def itinerary_params 
     params.require(:itinerary).permit(:name, :description, :start_date, :end_date)
   end    
+
+  def set_itinerary
+    @itinerary = Itinerary.find(params[:id])
+  end
 end
