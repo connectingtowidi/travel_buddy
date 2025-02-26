@@ -6,12 +6,24 @@
     <div class="row">
         <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>            
             <% if itinerary_attraction.order == 1 %>
-                <p>Day <%= itinerary_attraction.day %></p>
+                <h2 style="font-weight: bold; line-height: 3;">Day <%= itinerary_attraction.day %></h2>
             <% end %>
-            <div class="col-md-7 py-2">
-                <div class="card" style="background-color: #BFD1E5;">
-                    <div class="card-body" style="border-width: 0px;">
-                        <h5 class="card-title"><%= itinerary_attraction.attraction.name %></h5>
+            <%# formatted_time = datetime.in_time_zone("Asia/Singapore").strftime("%l%P") %>
+            <h3><%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%l%P") %></h3>
+            <div class="col-md-7 pt-2 pb-5">
+                <div class="container card" style="border-width: 0px; background-color: #D8BFAA; border-radius: 5px;">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-4 p-3">
+                            <%= image_tag "garden-by-the-bay.png", class: "card-img-fluid", style: "width: 100%; height: 200px; padding: 0px;"%>
+                        </div>
+                        <div class="col-8 card-body">
+                            <h3 class="card-title" style="font-weight: bold;"><%= itinerary_attraction.attraction.name %></h3>
+                            <p class="card-text"><%= itinerary_attraction.attraction.address %></p>
+                            <a href="#" class="btn" style="background-color: #EBF5EE;">Details</a>
+                            <div style="text-align: right; position: absolute; bottom: 20px; right: 20px;">
+                                <p style="font-size: 18px; margin-bottom: 10px;"><%= itinerary_attraction.attraction.duration %> hour(s)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -21,6 +33,9 @@
                         <p class="card-text"><%= itinerary_attraction.attraction.description %></p>
                     </div>
                 </div>
+            </div>                
+            <div class="col-md-7 pt-2 pb-5">
+                <h3 style="text-align: center;"> <i class="fa-solid fa-taxi"></i> - 15 mins </h3>
             </div>
         <% end %>
     </div>
