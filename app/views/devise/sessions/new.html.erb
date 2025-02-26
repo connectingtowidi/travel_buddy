@@ -1,38 +1,53 @@
-<div class="d-flex">
-<div class="flex-grow-1 auth-left-banner d-none d-sm-block">
+<div class="login-container">
+<div class="left-panel"></div>
+<div class="right-panel">
+    <div class="login-box">
+        <h1 class="fw-bold">SG Travel Buddy</h1>
+        <p>Curated itineraries for everyone</p>
 
-</div>
-
-  <div class="auth-right-banner p-5">
-    <%= image_tag "merlion-ruby.jpg", class: "logo-featured mt-5" %>
-
-    <div class="my-5">
-      <h2>
-        SG Travel Buddy
-      </h2>
-    </div>
-
-    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :email,
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+    
+          <div class="form-inputs">
+            <%= f.input :email,
                     required: false,
                     autofocus: true,
-                    input_html: { autocomplete: "email", style: "border: 2px solid #000; background-color: #f1f1f1;" } %> <!-- Fixed the missing closing %> -->
+                    input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
         
-        <%= f.input :password,
-                    required: false,
-                    input_html: { autocomplete: "current-password", style: "border: 2px solid #000;" } %>
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-      </div>
+           <% if flash[:alert] %>
+           <div class="invalid-feedback">
+             Invalid email or password
+           </div>
+         <% end %>
+            <div class="mb-3 password-container">
+            <%= f.label :password, class: "form-label" %>
+              <div class="position-relative">
+                <%= f.input_field :password, 
+                      required: false, 
+                      autocomplete: "current-password", 
+                      class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle", 
+                      id: "password" %>
+                      <span class="toggle-password" data-action="click->password_toggle#toggle">👁</span>
+              </div>
+            </div>
 
-      <div class="form-actions mt-5 mb-4">
-        <%= f.button :submit, "Login", class: "btn btn-primary btn-lg rounded-pill" %>
-      </div>
-    <% end %>
+            <% if flash[:alert] %>
+            <div class="invalid-feedback">
+              Invalid email or password
+            </div>
+          <% end %>
 
-    <%= render "devise/shared/links" %>
-  </div>
-  </div>
+            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+          </div>
+    
+          <div class="form-actions mt-5 mb-4">
+            <%= f.button :submit, "Let's go", class: "btn btn-dark w-10" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+ 
+    </div>
 </div>
+</div>
+

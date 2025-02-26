@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_25_060025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
     t.time "closing_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price"
+    t.integer "duration"
   end
 
   create_table "itineraries", force: :cascade do |t|
@@ -58,6 +60,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.string "interest"
+    t.string "pace"
     t.index ["user_id"], name: "index_itineraries_on_user_id"
   end
 
@@ -68,8 +74,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
     t.timestamptz "starting_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "day"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
+  end
+
+  create_table "journeys", force: :cascade do |t|
+    t.bigint "itinerary_attraction_id", null: false
+    t.string "mode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_attraction_id"], name: "index_journeys_on_itinerary_attraction_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -78,16 +93,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["itinerary_id"], name: "index_payments_on_itinerary_id"
-  end
-
-  create_table "travels", force: :cascade do |t|
-    t.bigint "itinerary_attraction_from_id", null: false
-    t.bigint "itinerary_attraction_to_id", null: false
-    t.string "mode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itinerary_attraction_from_id"], name: "index_travels_on_itinerary_attraction_from_id"
-    t.index ["itinerary_attraction_to_id"], name: "index_travels_on_itinerary_attraction_to_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -107,7 +112,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_24_132824) do
   add_foreign_key "itineraries", "users"
   add_foreign_key "itinerary_attractions", "attractions"
   add_foreign_key "itinerary_attractions", "itineraries"
+  add_foreign_key "journeys", "itinerary_attractions"
   add_foreign_key "payments", "itineraries"
-  add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_from_id"
-  add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_to_id"
 end

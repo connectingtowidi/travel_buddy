@@ -1,1 +1,19 @@
-// Specific CSS for your home-page
+.itinerary-card {
+    background-color: #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.itinerary-card img {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    margin-right: 15px;
+}
+.side-box {
+    background-color: #ccc;
+    padding: 20px;
+    border-radius: 8px;// Specific CSS for your home-page
+}

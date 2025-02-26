@@ -1,0 +1,40 @@
+.login-container {
+    height: 100vh;
+    display: flex;
+}
+.left-panel {
+    background-color: #e0e0e0;
+    flex: 1;
+    background-image: linear-gradient(rgba(171, 35, 58, 0.5), rgba(26, 24, 24, 0.7)), url(asset-path('cover-page.png'));
+    background-size: cover;
+    background-position: center;
+    height: auto;
+}
+.right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    @media (min-width: 576px) {
+        width: 50%;
+      }
+}
+.login-box {
+    max-width: 350px;
+    width: 100%;
+}
+.password-container {
+    position: relative;
+}
+.password-container input {
+    padding-right: 40px; /* Ensure space for the icon */
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+}
