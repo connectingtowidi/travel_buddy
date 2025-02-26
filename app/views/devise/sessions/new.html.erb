@@ -1,4 +1,4 @@
-<%= render "shared/login_container" do %>
+<%= render "devise/shared/login_container" do %>
   <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <%= f.error_notification %>
 
@@ -6,7 +6,7 @@
       <%= f.input :email,
               required: false,
               autofocus: true,
-              input_html: { autocomplete: "email", value: "user1@mail.com", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
+              input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
 
      <% if flash[:alert] %>
      <div class="invalid-feedback">
