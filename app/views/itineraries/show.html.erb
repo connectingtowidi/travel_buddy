@@ -1,0 +1,25 @@
+<div class="container">
+    <h1>Itinerary Details</h1>
+    <h2><%= @itinerary.name %></h2>
+    <p><%= @itinerary.start_date %> - <%= @itinerary.end_date %></p>
+
+    <div class="row">
+        <p><%= @itinerary.start_date + 1%></p>
+        <% @itinerary.attractions.each do |attraction| %>
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= attraction.name %></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><%= attraction.description %></p>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
