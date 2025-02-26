@@ -4,19 +4,21 @@
     <p><%= @itinerary.start_date %> - <%= @itinerary.end_date %></p>
 
     <div class="row">
-        <p><%= @itinerary.start_date + 1%></p>
-        <% @itinerary.attractions.each do |attraction| %>
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= attraction.name %></h5>
+        <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>            
+            <% if itinerary_attraction.order == 1 %>
+                <p>Day <%= itinerary_attraction.day %></p>
+            <% end %>
+            <div class="col-md-7 py-2">
+                <div class="card" style="background-color: #BFD1E5;">
+                    <div class="card-body" style="border-width: 0px;">
+                        <h5 class="card-title"><%= itinerary_attraction.attraction.name %></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="card">
+            <div class="col-md-5 py-2">
+                <div class="card" style="background-color: #EBF5EE;">
                     <div class="card-body">
-                        <p class="card-text"><%= attraction.description %></p>
+                        <p class="card-text"><%= itinerary_attraction.attraction.description %></p>
                     </div>
                 </div>
             </div>
