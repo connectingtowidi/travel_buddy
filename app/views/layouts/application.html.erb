@@ -22,10 +22,14 @@
         !current_page?(new_user_registration_path) &&
         !current_page?(user_registration_path) &&
         !current_page?(cancel_user_registration_path) &&
+         current_page?(home_path) &&
         !flash[:alert] && 
         !flash[:error] &&
         !(resource&.errors&.any? if defined?(resource))) %>
     <%= render 'shared/navbar' %>
+
+  <% elsif current_page?(root_path) %>
+   <%= render 'shared/navbar' %>
   <% end %>
   <%= yield %>
   </div>

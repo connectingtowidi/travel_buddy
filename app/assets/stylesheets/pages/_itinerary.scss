@@ -1,0 +1,49 @@
+.itinerary-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.itinerary-card img {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    margin-right: 15px;
+}
+
+.itinerary-card > div {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.itinerary-card h5 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.itinerary-card p {
+    margin-bottom: 10px;
+    color: #6c757d;
+}
+
+.travel-line {
+    width: 1px;
+    height: 30px;
+    background-color: #6c757d;
+    margin: 0 auto;
+}
+
+.travel-text {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.side-box {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

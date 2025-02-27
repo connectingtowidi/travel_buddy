@@ -1,51 +1,71 @@
-
-
 <div class="container py-4">
     <div class="row">
         <div class="col-md-8">
-            <div class="mb-3"><h4 class="fw-bold">Kids-focused 3-days itinerary</h4></div>
-            <div class="itinerary-card"  data-controller="redirect">
-            <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+            <div class="mb-3">
+                <h4 class="fw-bold">Adventure Kids-focused 3-days itinerary</h4>
+            </div>
+            <div class="itinerary-card d-flex justify-content-between align-items-center">
+                <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
 
-                <div>
+                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
                     <h5>Gardens by the Bay</h5>
-                    <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button 
-                        class="btn btn-dark btn-sm" 
-                        data-action="click->redirect#redirectToLogin">Details</button>
+                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                        is a futuristic nature park located in the heart of Singapore. Spanning 101 hectares of reclaimed land, it is one of the most iconic landmarks in the city, blending nature with modern technology to create an extraordinary urban landscape. It opened in 2012 and has since become one of Singapore's top attractions.
+                    </p>
                 </div>
-                <span class="ms-auto">3 hours</span>
-            </div>
-            <div class="itinerary-card">
-               <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
 
-                <div>
+                <!-- Flex container for button and duration -->
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-dark btn-sm" data-action="click->redirect#redirectToLogin">Details</button>
+                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">3 hours</span>
+                </div>
+            </div>
+
+            <div class="itinerary-card d-flex justify-content-between align-items-center">
+                <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+
+                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
                     <h5>Esplanade</h5>
-                    <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button 
-                    class="btn btn-dark btn-sm" 
-                    data-action="click->redirect#redirectToLogin">Details</button>
+                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                        is a world-renowned performing arts center located along the waterfront in Singapore. Often referred to as "The Durian" due to its unique spiky architectural design, the Esplanade is one of the country's most iconic cultural landmarks.
+                    </p>
                 </div>
-                <span class="ms-auto">3 hours</span>
-            </div>
-            <div class="itinerary-card">
-                  <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
 
-                <div>
-                    <h5>Merlion</h5>
-                    <p>Lorem ipsum dolor amet, consectetur adipiscing elit.</p>
-                    <button 
-                        class="btn btn-danger btn-sm" 
-                        data-action="cli dck->redirect#redirectToLogin">Remove</button>
+                <!-- Flex container for button and duration -->
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-dark btn-sm" data-action="click->redirect#redirectToLogin">Details</button>
+                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">3 hours</span>
                 </div>
-                <span class="ms-auto">1 hour</span>
+            </div>
+
+            <div class="itinerary-card d-flex justify-content-between align-items-center">
+                <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+
+                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                    <h5>Merlion</h5>
+                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                        The Merlion is a statue with the head of a lion and the body of a fish. The lion's head represents Singapore's original name, Singapura, which means "Lion City" in Malay. The fish body symbolizes Singapore's humble beginnings as a fishing village before it transformed into a bustling metropolis.
+                    </p>
+                </div>
+
+                <!-- Flex container for button and duration -->
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-danger btn-sm" data-action="click->redirect#redirectToLogin">Remove</button>
+                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">1 hour</span>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="side-box">
+
+         <% if !user_signed_in? %>
+        <!-- Side Box Section: "Plan a trip that’s so local" positioned at the top-right and aligned with Gardens by the Bay -->
+        <div class="col-md-4" style="display: flex; justify-content: flex-end; position: relative;">
+            <div class="side-box" style="position: absolute; top: 0; right: 0;">
                 <h4 class="fw-bold">Plan a trip that’s so local</h4>
                 <p><em>Discover hidden gems in Singapore</em></p>
             </div>
         </div>
+        <% end %>
     </div>
 </div>
+
+

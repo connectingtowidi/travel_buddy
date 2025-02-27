@@ -1,42 +1,68 @@
-<div class="container">
-    <h1>Itinerary Details</h1>
-    <h2><%= @itinerary.name %></h2>
-    <p><%= @itinerary.start_date %> - <%= @itinerary.end_date %></p>
-
-    <div class="row">
-        <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>            
-            <% if itinerary_attraction.order == 1 %>
-                <h2 style="font-weight: bold; line-height: 3;">Day <%= itinerary_attraction.day %></h2>
-            <% end %>
-            <%# formatted_time = datetime.in_time_zone("Asia/Singapore").strftime("%l%P") %>
-            <h3><%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%l%P") %></h3>
-            <div class="col-md-7 pt-2 pb-5">
-                <div class="container card" style="border-width: 0px; background-color: #D8BFAA; border-radius: 5px;">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-4 p-3">
-                            <%= image_tag "garden-by-the-bay.png", class: "card-img-fluid", style: "width: 100%; height: 200px; padding: 0px;"%>
-                        </div>
-                        <div class="col-8 card-body">
-                            <h3 class="card-title" style="font-weight: bold;"><%= itinerary_attraction.attraction.name %></h3>
-                            <p class="card-text"><%= itinerary_attraction.attraction.address %></p>
-                            <a href="#" class="btn" style="background-color: #EBF5EE;">Details</a>
-                            <div style="text-align: right; position: absolute; bottom: 20px; right: 20px;">
-                                <p style="font-size: 18px; margin-bottom: 10px;"><%= itinerary_attraction.attraction.duration %> hour(s)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 py-2">
-                <div class="card" style="background-color: #EBF5EE;">
-                    <div class="card-body">
-                        <p class="card-text"><%= itinerary_attraction.attraction.description %></p>
-                    </div>
-                </div>
-            </div>                
-            <div class="col-md-7 pt-2 pb-5">
-                <h3 style="text-align: center;"> <i class="fa-solid fa-taxi"></i> - 15 mins </h3>
-            </div>
-        <% end %>
+<div class="container py-4">
+    <!-- Header row with title and button -->
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8 col-sm-6">
+            <h2>Your Itinerary Details</h2>
+        </div>
+        <div class="col-md-4 col-sm-6 text-md-end">
+            <button class="btn btn-dark">See My Journey</button>
+        </div>
     </div>
-</div>
+    
+    <!-- Main content row with itinerary and sidebar -->
+    <div class="row">
+        <!-- Left column - Itinerary content -->
+        <div class="col-md-8">
+            <div class="mb-3">
+                <% days = (@itinerary.end_date - @itinerary.start_date).to_i %>
+                <p>Here is your <%= days %> days <%= @itinerary.name %> itinerary</p>
+                <p><span><%= @itinerary.start_date %></span> - <span><%= @itinerary.end_date %></span></p>
+            </div>
+            
+            <% @itinerary.itinerary_attractions.sort_by(&:order).each do |itinerary_attraction| %>
+                <div class="mb-3">
+                    <h5 class="day-title fw-bold">Day <%= itinerary_attraction.day %></h5>
+                </div>
+                
+                <!-- Gardens by the Bay -->
+                <div class="itinerary-card" data-controller="redirect">
+                    <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                    <div>
+                        <h5><%= itinerary_attraction.attraction.name %></h5>
+                        <p class="card-text"><%= itinerary_attraction.attraction.address %></p>
+                        <p style="font-size: 18px; margin-bottom: 10px;">
+                        <%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
+                        </p>
+                        <button class="btn btn-dark btn-sm">Details</button>
+                    </div>
+                    <span class="ms-auto">
+                        <%= itinerary_attraction.attraction.duration %> 
+                        <%= itinerary_attraction.attraction.duration > 1 ? 'hours' : 'hour' %>
+                    </span>
+                </div>
+                
+                <!-- Travel info -->
+                <div class="d-flex justify-content-center my-2">
+                    <div class="text-center">
+                        <div class="travel-line"></div>
+                        <div class="travel-text">
+                            15 mins on 
+                            <% case @transport_mode %>
+                                <% when "foot" %>
+                                    foot <i class="fa-solid fa-shoe-prints"></i>
+                                <% when "taxi" %>
+                                    taxi <i class="fa-solid fa-taxi"></i>
+                                <% when "bus" %>
+                                    bus <i class="fa-solid fa-bus"></i>
+                                <% else %>
+                                    unknown mode <i class="fa-solid fa-question"></i>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                
+            <% end %>
+            
+        </div> <!-- Close the col-md-8 -->
+    </div> <!-- Close the row -->
+</div> <!-- Close the container -->

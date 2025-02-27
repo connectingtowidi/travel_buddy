@@ -6,6 +6,8 @@ class ItinerariesController < ApplicationController
   end
 
   def show  
+    @itinerary.itinerary_attractions = @itinerary.itinerary_attractions.order(:order)
+    @transport_mode = "foot"
   end
 
   def new
