@@ -1,42 +1,41 @@
-<div class="container">
-    <h1>Itinerary Details</h1>
-    <h2><%= @itinerary.name %></h2>
-    <p><%= @itinerary.start_date %> - <%= @itinerary.end_date %></p>
+<div class="container mt-4">
+  <h1><%= @itinerary.name %></h1>
+  
+  <%# Debug information %>
+  <% if @itinerary.itinerary_attractions.empty? %>
+    <p>No attractions found for this itinerary</p>
+  <% end %>
 
-    <div class="row">
-        <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>            
-            <% if itinerary_attraction.order == 1 %>
-                <h2 style="font-weight: bold; line-height: 3;">Day <%= itinerary_attraction.day %></h2>
-            <% end %>
-            <%# formatted_time = datetime.in_time_zone("Asia/Singapore").strftime("%l%P") %>
-            <h3><%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%l%P") %></h3>
-            <div class="col-md-7 pt-2 pb-5">
-                <div class="container card" style="border-width: 0px; background-color: #D8BFAA; border-radius: 5px;">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-4 p-3">
-                            <%= image_tag "garden-by-the-bay.png", class: "card-img-fluid", style: "width: 100%; height: 200px; padding: 0px;"%>
-                        </div>
-                        <div class="col-8 card-body">
-                            <h3 class="card-title" style="font-weight: bold;"><%= itinerary_attraction.attraction.name %></h3>
-                            <p class="card-text"><%= itinerary_attraction.attraction.address %></p>
-                            <a href="#" class="btn" style="background-color: #EBF5EE;">Details</a>
-                            <div style="text-align: right; position: absolute; bottom: 20px; right: 20px;">
-                                <p style="font-size: 18px; margin-bottom: 10px;"><%= itinerary_attraction.attraction.duration %> hour(s)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <% @itinerary.itinerary_attractions.group_by(&:day).each do |day, attractions| %>
+    <div class="day-section mb-4">
+      <h2>Day <%= day %></h2>
+      
+      <% attractions.sort_by(&:order).each do |itinerary_attraction| %>
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <% if itinerary_attraction.attraction.photo.attached? %>
+                <%= image_tag itinerary_attraction.attraction.photo, class: "img-fluid rounded-start" %>
+              <% else %>
+                <%= image_tag "cover-page.png", class: "img-fluid rounded-start" %>
+              <% end %>
             </div>
-            <div class="col-md-5 py-2">
-                <div class="card" style="background-color: #EBF5EE;">
-                    <div class="card-body">
-                        <p class="card-text"><%= itinerary_attraction.attraction.description %></p>
-                    </div>
-                </div>
-            </div>                
-            <div class="col-md-7 pt-2 pb-5">
-                <h3 style="text-align: center;"> <i class="fa-solid fa-taxi"></i> - 15 mins </h3>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title"><%= itinerary_attraction.attraction.name %></h5>
+                <p class="card-text"><%= itinerary_attraction.attraction.description %></p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    Starting time: <%= itinerary_attraction.starting_time.strftime("%I:%M %p") %><br>
+                    Duration: <%= itinerary_attraction.attraction.duration %> hours<br>
+                    Price: $<%= itinerary_attraction.attraction.price %>
+                  </small>
+                </p>
+              </div>
             </div>
-        <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
+  <% end %>
 </div>
