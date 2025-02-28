@@ -1,18 +1,18 @@
 <div class="container py-4">
     <div class="row mb-3 align-items-center">
         <div class="col-md-8 col-sm-6">
-            <h4><strong>Adventure Kids-focused 3-days itinerary</strong></h4>
+            <h4><strong>Adventure Kids-focused 5-days itinerary</strong></h4>
         </div>
         <div class="col-md-4 col-sm-6 text-md-end">
             <button class="btn btn-dark">See My Journey</button>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" data-controller="redirect">
         <!-- Left column - Itinerary content -->
         <div class="col-md-8">
             <div class="mb-3">
-                <p>Here is your 3 days Adventure Kids-focused itinerary</p>
+                <p>Here is your 5 days Adventure Kids-focused itinerary</p>
                 <p><span>2025-03-25</span> - <span>2025-03-28</span></p>
             </div>
 
@@ -20,7 +20,7 @@
             <div class="mb-3">
                 <h5 class="day-title fw-bold">Day 1</h5>
             </div>
-            <div class="itinerary-card" data-controller="redirect">
+            <div class="itinerary-card">
                 <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                    <div>
                         <h5>Gardens by the Bay</h5>
@@ -33,7 +33,7 @@
                         <p style="font-size: 18px; margin-bottom: 10px;">
                         10:00 AM
                         </p>
-                        <button class="btn btn-dark btn-sm">Details</button>
+                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
                     </div>
                     <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                    1 hour
@@ -56,7 +56,7 @@
             <div class="mb-3">
                 <h5 class="day-title fw-bold">Day 2</h5>
             </div>
-            <div class="itinerary-card" data-controller="redirect">
+            <div class="itinerary-card">
                 <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                    <div>
                         <h5>Esplanade</h5>
@@ -69,7 +69,7 @@
                         <p style="font-size: 18px; margin-bottom: 10px;">
                         10:00 AM
                         </p>
-                        <button class="btn btn-dark btn-sm">Details</button>
+                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
                     </div>
                     <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                    1 hour
@@ -92,7 +92,7 @@
             <div class="mb-3">
                 <h5 class="day-title fw-bold">Day 3</h5>
             </div>
-            <div class="itinerary-card" data-controller="redirect">
+            <div class="itinerary-card">
                 <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                    <div>
                         <h5>Merlion Park</h5>
@@ -105,7 +105,7 @@
                         <p style="font-size: 18px; margin-bottom: 10px;">
                         10:00 AM
                         </p>
-                        <button class="btn btn-dark btn-sm">Details</button>
+                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
                     </div>
                     <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                    1 hour
@@ -129,7 +129,7 @@
             <div class="mb-3">
                 <h5 class="day-title fw-bold">Day 4</h5>
             </div>
-            <div class="itinerary-card" data-controller="redirect">
+            <div class="itinerary-card">
                 <%= image_tag "singapore-zoo.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                    <div>
                         <h5>Singapore Zoo</h5>
@@ -142,7 +142,42 @@
                         <p style="font-size: 18px; margin-bottom: 10px;">
                         10:00 AM
                         </p>
-                        <button class="btn btn-dark btn-sm">Details</button>
+                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
+                    </div>
+                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
+                   1 hour
+                </span>
+
+            </div>
+
+            <!-- Travel info -->
+            <div class="d-flex justify-content-center my-2">
+                <div class="text-center">
+                    <div class="travel-line"></div>
+                    <div class="travel-text">
+                        5 mins by car <i class="fa-solid fa-taxi"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Day 5 card -->
+            <div class="mb-3">
+                <h5 class="day-title fw-bold">Day 5</h5>
+            </div>
+            <div class="itinerary-card">
+                <%= image_tag "botanic-gardens.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                   <div>
+                        <h5>Botanic Garden</h5>
+                        <p class="card-text">1 Cluny Road, Singapore 259569</p>
+                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                          renowned as the world's largest tropical orchid collection... 
+                        </p>
+                        </div>
+                        <p style="font-size: 18px; margin-bottom: 10px;">
+                        10:00 AM
+                        </p>
+                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
                     </div>
                     <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                    1 hour

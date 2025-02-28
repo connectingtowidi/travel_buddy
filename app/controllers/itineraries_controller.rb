@@ -6,36 +6,6 @@ class ItinerariesController < ApplicationController
   end
 
   
-  # def show
-  #  # @itinerary.itinerary_attractions = @itinerary.itinerary_attractions.order(:order)
-  #   @itinerary = Itinerary.includes(itinerary_attractions: :attraction).find(params[:id])
-  #   # Create a hash to store travel information between attractions
-  #   @transport_modes = {}
-  #   @travel_durations = {}
-    
-  #   # For each attraction, find the travel to the next attraction
-  #   @itinerary.itinerary_attractions.each_with_index do |current_attraction, index|
-  #     if index < @itinerary.itinerary_attractions.size - 1
-  #       next_attraction = @itinerary.itinerary_attractions[index + 1]
-        
-  #       # Find the travel between current and next attraction
-  #       travel = Travel.find_by(
-  #         itinerary_attraction_from_id: current_attraction.id,
-  #         itinerary_attraction_to_id: next_attraction.id
-  #       )
-        
-  #       # Store the mode (default to "foot" if no travel record exists)
-  #       @transport_modes[current_attraction.id] = travel&.mode || "foot"
-        
-  #       # For now, using hardcoded 15 mins, but you could store actual durations in your Travel model
-  #       @travel_durations[current_attraction.id] = 15
-  #     end
-  #   end
-    
-  #   # Default transport mode as fallback
-  #   @default_transport_mode = "foot"
-  # end
-
   def show
     @itinerary = Itinerary.find(params[:id])
     
