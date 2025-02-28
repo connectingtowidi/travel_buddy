@@ -57,7 +57,7 @@
     
     <div class="col-md-2 col-sm-6 col-12 mb-2">
     <div class="filter-label">&nbsp;</div> <!-- Empty label to align with other dropdowns -->
-    <button class="btn btn-regenerate w-100">Regenerate</button>
+    <button data-action="click->redirect#redirectToLogin" class="btn btn-regenerate w-100">Regenerate</button>
   </div>
 
    <% if !user_signed_in? %>
