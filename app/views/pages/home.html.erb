@@ -1,65 +1,136 @@
 <div class="container py-4">
-    <div class="row" data-controller="redirect">
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8 col-sm-6">
+            <h4><strong>Adventure Kids-focused 3-days itinerary</strong></h4>
+        </div>
+        <div class="col-md-4 col-sm-6 text-md-end">
+            <button class="btn btn-dark">See My Journey</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left column - Itinerary content -->
         <div class="col-md-8">
             <div class="mb-3">
-                <h4 class="fw-bold">Adventure Kids-focused 3-days itinerary</h4>
+                <p>Here is your 3 days Adventure Kids-focused itinerary</p>
+                <p><span>2025-03-25</span> - <span>2025-03-28</span></p>
             </div>
-            <div class="itinerary-card d-flex justify-content-between align-items-center">
+
+            <!-- Day 1 card -->
+            <div class="mb-3">
+                <h5 class="day-title fw-bold">Day 1</h5>
+            </div>
+            <div class="itinerary-card" data-controller="redirect">
                 <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                   <div>
+                        <h5>Gardens by the Bay</h5>
+                        <p class="card-text">18 Marina Gardens Dr</p>
+                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                          is a futuristic nature park located in the heart of Singapore...
+                        </p>
+                        </div>
+                        <p style="font-size: 18px; margin-bottom: 10px;">
+                        10:00 AM
+                        </p>
+                        <button class="btn btn-dark btn-sm">Details</button>
+                    </div>
+                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
+                   1 hour
+                </span>
 
-                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                    <h5>Gardens by the Bay</h5>
-                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                        is a futuristic nature park located in the heart of Singapore. Spanning 101 hectares of reclaimed land, it is one of the most iconic landmarks in the city, blending nature with modern technology to create an extraordinary urban landscape. It opened in 2012 and has since become one of Singapore's top attractions.
-                    </p>
-                </div>
+            </div>
 
-                <!-- Flex container for button and duration -->
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-dark btn-sm" data-action="click->redirect#redirectToLogin">Details</button>
-                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">3 hours</span>
+
+            <!-- Travel info -->
+            <div class="d-flex justify-content-center my-2">
+                <div class="text-center">
+                    <div class="travel-line"></div>
+                    <div class="travel-text">
+                        15 mins on foot <i class="fa-solid fa-shoe-prints"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="itinerary-card d-flex justify-content-between align-items-center">
+            <!-- Day 2 card -->
+            <div class="mb-3">
+                <h5 class="day-title fw-bold">Day 2</h5>
+            </div>
+            <div class="itinerary-card" data-controller="redirect">
                 <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                   <div>
+                        <h5>Esplanade</h5>
+                        <p class="card-text">1 Esplanade Dr, Singapore 038981</p>
+                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                          is a world-renowned performing arts center...
+                        </p>
+                        </div>
+                        <p style="font-size: 18px; margin-bottom: 10px;">
+                        10:00 AM
+                        </p>
+                        <button class="btn btn-dark btn-sm">Details</button>
+                    </div>
+                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
+                   1 hour
+                </span>
 
-                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                    <h5>Esplanade</h5>
-                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                        is a world-renowned performing arts center located along the waterfront in Singapore. Often referred to as "The Durian" due to its unique spiky architectural design, the Esplanade is one of the country's most iconic cultural landmarks.
-                    </p>
-                </div>
+            </div>
 
-                <!-- Flex container for button and duration -->
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-dark btn-sm" data-action="click->redirect#redirectToLogin">Details</button>
-                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">3 hours</span>
+
+            <!-- Travel info -->
+            <div class="d-flex justify-content-center my-2">
+                <div class="text-center">
+                    <div class="travel-line"></div>
+                    <div class="travel-text">
+                        5 mins by car <i class="fa-solid fa-taxi"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="itinerary-card d-flex justify-content-between align-items-center">
+            <!-- Day 3 card -->
+            <div class="mb-3">
+                <h5 class="day-title fw-bold">Day 3</h5>
+            </div>
+            <div class="itinerary-card" data-controller="redirect">
                 <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                   <div>
+                        <h5>Merlion Park</h5>
+                        <p class="card-text">1 Fullerton Rd, Singapore 049213</p>
+                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                          The Merlion is a statue with the head of a lion...
+                        </p>
+                        </div>
+                        <p style="font-size: 18px; margin-bottom: 10px;">
+                        10:00 AM
+                        </p>
+                        <button class="btn btn-dark btn-sm">Details</button>
+                    </div>
+                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
+                   1 hour
+                </span>
 
-                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                    <h5>Merlion</h5>
-                    <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                        The Merlion is a statue with the head of a lion and the body of a fish. The lion's head represents Singapore's original name, Singapura, which means "Lion City" in Malay. The fish body symbolizes Singapore's humble beginnings as a fishing village before it transformed into a bustling metropolis.
-                    </p>
-                </div>
+            </div>
 
-                <!-- Flex container for button and duration -->
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-danger btn-sm" data-action="click->redirect#redirectToLogin">Remove</button>
-                    <span class="ms-3 fs-6 text-nowrap" style="white-space: nowrap;">1 hour</span>
+            <!-- Travel info -->
+            <div class="d-flex justify-content-center my-2">
+                <div class="text-center">
+                    <div class="travel-line"></div>
+                    <div class="travel-text">
+                        5 mins by car <i class="fa-solid fa-taxi"></i>
+                    </div>
                 </div>
             </div>
+            
         </div>
 
-         <% if !user_signed_in? %>
-        <!-- Side Box Section: "Plan a trip that’s so local" positioned at the top-right and aligned with Gardens by the Bay -->
-        <div class="col-md-4" style="display: flex; justify-content: flex-end; position: relative;">
-            <div class="side-box" style="position: absolute; top: 0; right: 0;">
+            
+      
+        <!-- Right column - Sidebar -->
+        <% if !user_signed_in? %>
+        <div class="col-md-4 d-flex justify-content-end position-relative">
+            <div class="side-box position-absolute top-0 end-0">
                 <h4 class="fw-bold">Plan a trip that’s so local</h4>
                 <p><em>Discover hidden gems in Singapore</em></p>
             </div>
@@ -67,4 +138,3 @@
         <% end %>
     </div>
 </div>
-

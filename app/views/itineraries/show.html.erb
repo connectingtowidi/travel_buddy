@@ -1,7 +1,7 @@
 <div class="container py-4">
     <div class="row mb-3 align-items-center">
         <div class="col-md-8 col-sm-6">
-            <h2><%= @itinerary.name %></h2>
+            <h4><strong><%= @itinerary.name %></strong></h4>
             <%# Debug information %>
             <% if @itinerary.itinerary_attractions.empty? %>
               <p>No attractions found for this itinerary</p>
@@ -41,12 +41,17 @@
                     <div>
                         <h5><%= itinerary_attraction.attraction.name %></h5>
                         <p class="card-text"><%= itinerary_attraction.attraction.address %></p>
+                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                            <%= itinerary_attraction.attraction.description %>
+                        </p>
+                        </div>
                         <p style="font-size: 18px; margin-bottom: 10px;">
                         <%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
                         </p>
                         <button class="btn btn-dark btn-sm">Details</button>
                     </div>
-                    <span class="ms-auto">
+                   <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                         <%= itinerary_attraction.attraction.duration %> 
                         <%= itinerary_attraction.attraction.duration > 1 ? 'hours' : 'hour' %>
                     </span>
