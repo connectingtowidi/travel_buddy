@@ -1,3 +1,5 @@
+<% require_relative "../../services/tripadvisor_api" %>
+
 <div class="container mt-4">
   <h1><%= @itinerary.name %></h1>
   
@@ -38,4 +40,12 @@
       <% end %>
     </div>
   <% end %>
+</div>
+
+<div class="container">
+    <h1>Suggested Attractions</h1>
+    <% TripadvisorApi.fetch_singapore_attractions.each do |attraction| %>
+        <h2><%= attraction[:name] %></h2>
+        <p><%= attraction[:description] %></p>
+    <% end %>
 </div>
