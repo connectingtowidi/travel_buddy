@@ -25,7 +25,10 @@
         !flash[:alert] && 
         !flash[:error] &&
         !(resource&.errors&.any? if defined?(resource))) %>
-    <%= render 'shared/navbar' %>
+    <%= render 'shared/navbar_main' %>
+    <% unless current_page?(itineraries_path) %>
+      <%= render 'shared/navbar_filters' %>
+    <% end %>
   <% end %>
   <%= yield %>
   </div>

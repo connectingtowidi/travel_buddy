@@ -6,6 +6,11 @@ class ItinerariesController < ApplicationController
   end
 
   def show  
+    @itinerary = Itinerary.includes(itinerary_attractions: :attraction).find(params[:id])
+    # Add some debugging
+    puts "Itinerary: #{@itinerary.name}"
+    puts "Number of attractions: #{@itinerary.itinerary_attractions.count}"
+    puts "Attractions: #{@itinerary.itinerary_attractions.map { |ia| ia.attraction.name }}"
   end
 
   def new
