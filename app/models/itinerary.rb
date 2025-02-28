@@ -5,4 +5,5 @@ class Itinerary < ApplicationRecord
   has_one :payment, dependent: :destroy
 
   validates :name, presence: true
+
 end

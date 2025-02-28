@@ -1,8 +1,11 @@
 <div class="container py-4">
-    <!-- Header row with title and button -->
     <div class="row mb-3 align-items-center">
         <div class="col-md-8 col-sm-6">
-            <h2>Your Itinerary Details</h2>
+            <h2><%= @itinerary.name %></h2>
+            <%# Debug information %>
+            <% if @itinerary.itinerary_attractions.empty? %>
+              <p>No attractions found for this itinerary</p>
+            <% end %>
         </div>
         <div class="col-md-4 col-sm-6 text-md-end">
             <button class="btn btn-dark">See My Journey</button>
@@ -24,7 +27,7 @@
                     <h5 class="day-title fw-bold">Day <%= itinerary_attraction.day %></h5>
                 </div>
                 
-                <!-- Gardens by the Bay -->
+                <!-- Attraction details -->
                 <div class="itinerary-card" data-controller="redirect">
                     <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                     <div>
@@ -66,5 +69,10 @@
             <% end %>
             
         </div> <!-- Close the col-md-8 -->
+        
+        <!-- Right column - Sidebar (add your sidebar content here) -->
+        <div class="col-md-4">
+            <!-- Sidebar content goes here -->
+        </div>
     </div> <!-- Close the row -->
 </div> <!-- Close the container -->

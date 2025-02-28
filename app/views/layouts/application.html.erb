@@ -23,6 +23,7 @@
         !current_page?(user_registration_path) &&
         !current_page?(cancel_user_registration_path) &&
          current_page?(home_path) &&
+         current_page?(itineraries_path) &&
         !flash[:alert] && 
         !flash[:error] &&
         !(resource&.errors&.any? if defined?(resource))) %>
