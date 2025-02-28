@@ -19,7 +19,7 @@
                 <p><span><%= @itinerary.start_date %></span> - <span><%= @itinerary.end_date %></span></p>
             </div>
             
-            <% @itinerary.itinerary_attractions.sort_by(&:order).each do |itinerary_attraction| %>
+            <% @itinerary.itinerary_attractions.sort_by(&:order).each_with_index do |itinerary_attraction, index| %>
                 <div class="mb-3">
                     <h5 class="day-title fw-bold">Day <%= itinerary_attraction.day %></h5>
                 </div>
@@ -41,26 +41,28 @@
                     </span>
                 </div>
                 
-                <!-- Travel info -->
-                <div class="d-flex justify-content-center my-2">
-                    <div class="text-center">
-                        <div class="travel-line"></div>
-                        <div class="travel-text">
-                            15 mins on 
-                            <% case @transport_mode %>
-                                <% when "foot" %>
-                                    foot <i class="fa-solid fa-shoe-prints"></i>
-                                <% when "taxi" %>
-                                    taxi <i class="fa-solid fa-taxi"></i>
-                                <% when "bus" %>
-                                    bus <i class="fa-solid fa-bus"></i>
-                                <% else %>
-                                    unknown mode <i class="fa-solid fa-question"></i>
-                            <% end %>
+                <!-- Travel info - Only display if this isn't the last attraction -->
+                <% if index < @itinerary.itinerary_attractions.size - 1 %>
+                    <div class="d-flex justify-content-center my-2">
+                        <div class="text-center">
+                            <div class="travel-line"></div>
+                            <div class="travel-text">
+                                <%= @travel_durations[itinerary_attraction.id] || 15 %> mins on 
+                                <% current_mode = @transport_modes[itinerary_attraction.id] || @default_transport_mode %>
+                                <% case current_mode %>
+                                    <% when "foot" %>
+                                        foot <i class="fa-solid fa-shoe-prints"></i>
+                                    <% when "taxi" %>
+                                        taxi <i class="fa-solid fa-taxi"></i>
+                                    <% when "bus" %>
+                                        bus <i class="fa-solid fa-bus"></i>
+                                    <% else %>
+                                        unknown mode <i class="fa-solid fa-question"></i>
+                                <% end %>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
+                <% end %>
             <% end %>
             
         </div> <!-- Close the col-md-8 -->

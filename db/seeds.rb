@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 Journey.destroy_all
+Travel.destroy_all
 Payment.destroy_all
 ItineraryAttraction.destroy_all
 Attraction.destroy_all
@@ -332,47 +333,68 @@ itinerary_attraction_322 = ItineraryAttraction.create!(
     starting_time: DateTime.new(2025, 4, 12, 16, 0, 0, "+08:00")
 )
 
-puts "Creating journeys..."
+# puts "Creating journeys..."
 
-journey_111 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_111,
-    mode: 'bus'
+# journey_111 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_111,
+#     mode: 'bus'
+# )
+
+# journey_112 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_112,
+#     mode: 'taxi'
+# )
+
+# journey_121 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_121,
+#     mode: 'walk'
+# )
+
+# journey_122 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_122,
+#     mode: 'bus'
+# )
+
+# journey_211 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_211,   
+#     mode: 'taxi'
+# )
+
+# journey_311 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_311,
+#     mode: 'bus'
+# )
+
+# journey_312 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_312,
+#     mode: 'taxi'
+# )   
+
+# journey_321 = Journey.create!(
+#     itinerary_attraction: itinerary_attraction_321,
+#     mode: 'bus'
+# )
+
+puts "Creating travel..."
+
+travel_111_112 = Travel.create!(
+  itinerary_attraction_from: itinerary_attraction_111,
+  itinerary_attraction_to: itinerary_attraction_112,
+  mode: 'bus'
 )
 
-journey_112 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_112,
-    mode: 'taxi'
-)
-
-journey_121 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_121,
+travel_121_122 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_121,
+    itinerary_attraction_to: itinerary_attraction_122,
     mode: 'walk'
 )
 
-journey_122 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_122,
-    mode: 'bus'
-)
-
-journey_211 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_211,   
+travel_211_311 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_211,   
+    itinerary_attraction_to: itinerary_attraction_311,
     mode: 'taxi'
 )
 
-journey_311 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_311,
-    mode: 'bus'
-)
-
-journey_312 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_312,
-    mode: 'taxi'
-)   
-
-journey_321 = Journey.create!(
-    itinerary_attraction: itinerary_attraction_321,
-    mode: 'bus'
-)
 
 puts "Creating payments..."
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_25_060025) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_060025) do
     t.index ["itinerary_id"], name: "index_payments_on_itinerary_id"
   end
 
+  create_table "travels", force: :cascade do |t|
+    t.bigint "itinerary_attraction_from_id", null: false
+    t.bigint "itinerary_attraction_to_id", null: false
+    t.string "mode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_attraction_from_id"], name: "index_travels_on_itinerary_attraction_from_id"
+    t.index ["itinerary_attraction_to_id"], name: "index_travels_on_itinerary_attraction_to_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -114,4 +124,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_060025) do
   add_foreign_key "itinerary_attractions", "itineraries"
   add_foreign_key "journeys", "itinerary_attractions"
   add_foreign_key "payments", "itineraries"
+  add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_from_id"
+  add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_to_id"
 end
