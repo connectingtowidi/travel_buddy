@@ -1,5 +1,3 @@
-require_relative "../services/tripadvisor_api"
-
 class ItinerariesController < ApplicationController
   before_action :set_itinerary, only: [:show]
 
@@ -11,7 +9,7 @@ class ItinerariesController < ApplicationController
   def show
     @itinerary = Itinerary.find(params[:id])
 
-    @tripadvisor_suggestions = TripadvisorService.fetch_singapore_attractions
+    @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
     
     # Create a hash to store travel durations and transport modes
     @travel_durations = {}
