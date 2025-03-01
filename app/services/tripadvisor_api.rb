@@ -27,6 +27,7 @@ class TripadvisorApi
           name: attraction["name"],
           address: details["address"],
           description: details["description"],
+          phone: details["phone"],
           duration: details["duration"],
           photos: fetch_photos(location_id),
           reviews: fetch_reviews(location_id)
