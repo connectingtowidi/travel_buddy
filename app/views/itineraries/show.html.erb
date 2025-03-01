@@ -26,6 +26,90 @@
       <p class="text-muted animate-slide" style="margin-top: 10px;"><%= @itinerary.remark %></p>
     </div>
   </div>
+    <!-- Main content row with itinerary and sidebar -->
+    <div class="row">
+        <!-- Left column - Itinerary content -->
+        <div class="col-md-8">
+            <div class="mb-3">
+                <% days = (@itinerary.end_date - @itinerary.start_date).to_i %>
+                <p>Here is your <%= days %> days <%= @itinerary.name %> itinerary</p>
+                <p><span><%= @itinerary.start_date %></span> - <span><%= @itinerary.end_date %></span></p>
+            </div>
+
+          <% @itinerary.itinerary_attractions.group_by(&:day).each do |day, attractions| %>
+
+            <% @itinerary.itinerary_attractions.sort_by(&:order).each_with_index do |itinerary_attraction, index| %>
+                <div class="mb-3">
+                  <h5 class="day-title fw-bold">Day <%= itinerary_attraction.day %></h5>
+                </div>
+
+                <!-- Attraction details -->
+                <div class="itinerary-card">
+                  <% if itinerary_attraction.attraction.photo.attached? %>
+                    <%= image_tag itinerary_attraction.attraction.photo, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                  <% else %>
+                    <%= image_tag "cover-page.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                  <% end %>
+                  <div class="attraction-details">
+                    <h5><%= itinerary_attraction.attraction.name %></h5>
+                    <p class="card-text"><%= itinerary_attraction.attraction.address_string %></p>
+                    <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                      <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                        <%= itinerary_attraction.attraction.description %>
+                      </p>
+                    </div>
+                    <p style="font-size: 18px; margin-bottom: 10px;">
+                      <%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
+                    </p>
+                    <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: itinerary_attraction.attraction), class: "btn btn-dark btn-sm" %>
+                  </div>
+                  <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
+                    <%= itinerary_attraction.attraction.duration %>
+                    <%= itinerary_attraction.attraction.duration && itinerary_attraction.attraction.duration > 1 ? 'hours' : 'hour' %>
+                  </span>
+                </div>
+
+                <!-- Travel info - Only display if this isn't the last attraction -->
+                <% if index < @itinerary.itinerary_attractions.size - 1 %>
+                    <div class="d-flex justify-content-center my-2">
+                        <div class="text-center">
+                            <div class="travel-line"></div>
+                            <div class="travel-text">
+                                <%= @travel_durations[itinerary_attraction.id] || 15 %> mins on
+                                <% current_mode = @transport_modes[itinerary_attraction.id] || @default_transport_mode %>
+                                <% case current_mode %>
+                                    <% when "foot" %>
+                                        foot <i class="fa-solid fa-shoe-prints"></i>
+                                    <% when "taxi" %>
+                                        taxi <i class="fa-solid fa-taxi"></i>
+                                    <% when "bus" %>
+                                        bus <i class="fa-solid fa-bus"></i>
+                                    <% else %>
+                                        unknown mode <i class="fa-solid fa-question"></i>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+          <% end %>
+
+        </div> <!-- Close the col-md-8 -->
+
+        <!-- Right column - Sidebar (add your sidebar content here) -->
+        <div class="col-md-4">
+            <!-- Sidebar content goes here -->
+            <%= render("attractions/details", selected_attraction: @selected_attraction) if @selected_attraction %>
+        </div>
+    </div> <!-- Close the row -->
+</div> <!-- Close the container -->
+
+<div class="container">
+    <h1>Suggested Attractions</h1>
+    <% @tripadvisor_suggestions.each do |attraction| %>
+        <h2><%= attraction[:name] %></h2>
+        <p><%= attraction[:description] %></p>
+    <% end %>
 </div>
 
   <!-- AI Prompt Section -->
