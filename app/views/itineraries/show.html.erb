@@ -1,3 +1,6 @@
+<meta name="turbo-refresh-method" content="morph">
+<meta name="turbo-refresh-scroll" content="preserve">
+
 <div class="container py-4">
     <div class="row mb-3 align-items-center">
         <div class="col-md-8 col-sm-6">
@@ -47,7 +50,7 @@
                     <p style="font-size: 18px; margin-bottom: 10px;">
                       <%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
                     </p>
-                    <%= link_to 'Details', attraction_path(@attraction), class: "btn btn-dark btn-sm" %>
+                    <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: itinerary_attraction.attraction), class: "btn btn-dark btn-sm" %>
                   </div>
                   <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                     <%= itinerary_attraction.attraction.duration %>
@@ -85,6 +88,7 @@
         <!-- Right column - Sidebar (add your sidebar content here) -->
         <div class="col-md-4">
             <!-- Sidebar content goes here -->
+            <%= render(partial: "attractions/details") if @selected_attraction %>
         </div>
     </div> <!-- Close the row -->
 </div> <!-- Close the container -->

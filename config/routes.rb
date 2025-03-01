@@ -17,5 +17,4 @@ Rails.application.routes.draw do
   resources :itineraries, only: [:index, :show, :new, :create]
 
 
-  resources :itineraries, only: [:index, :show, :new, :create]
 end

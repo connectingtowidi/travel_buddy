@@ -1,3 +1,5 @@
 <% @attractions.each do |attraction| %>
-  <%= link_to 'Details', attraction_path(attraction), class: "btn btn-dark btn-sm" %>
+  <%= link_to 'Details', attraction, class: "btn btn-dark btn-sm" %>
 <% end %>
+
+<%= @attraction.inspect %>
