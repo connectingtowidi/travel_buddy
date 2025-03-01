@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get '/home', to: "pages#home"
   get '/attractions', to: 'attractions#index'
 
-  resources :itineraries, only: [:index, :show, :new, :create] do
+  resources :itineraries, only: [:index, :show, :new, :create]
 
-  end
 end
