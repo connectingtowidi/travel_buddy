@@ -1,0 +1,77 @@
+<div class="navbar-container">
+  <div class="d-flex justify-content-between align-items-start">
+    <!-- Left side: Brand -->
+    <div>
+      <div class="brand-title">SG Travel Buddy</div>
+      <div class="brand-subtitle">Curated itineraries for everyone</div>
+    </div>
+    
+    <!-- Right side: Avatar (only appears when signed in) -->
+    <% if user_signed_in? %>
+    <div class="dropdown">
+      <div class="avatar" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; cursor: pointer;" data-bs-toggle="dropdown">
+        <%= image_tag current_user.avatar.attached? ? current_user.avatar : "default_avatar.png", class: "w-100 h-100" %>
+      </div>
+      <div class="dropdown-menu dropdown-menu-end">
+        <span class="dropdown-item-text"><%= current_user.email %></span>
+        <div class="dropdown-divider"></div>
+        <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+        <%= button_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+  <!-- Filters -->
+  <% if (!current_page?(itineraries_path)) %>
+  <div class="filter-row mt-3">
+    <div class="col-md-3 col-sm-6 col-12 mb-2">
+      <div class="filter-label">Interest</div>
+      <select class="form-select">
+        <option selected>Kids-focused</option>
+        <option>Culture</option>
+        <option>Food</option>
+        <option>Nature</option>
+        <option>Shopping</option>
+      </select>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 col-12 mb-2">
+      <div class="filter-label">Duration</div>
+      <select class="form-select">
+        <option selected>3 Days</option>
+        <option>1 Day</option>
+        <option>2 Days</option>
+        <option>4 Days</option>
+        <option>5 Days</option>
+      </select>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 col-12 mb-2">
+      <div class="filter-label">Pace</div>
+      <select class="form-select">
+        <option selected>Fast paced</option>
+        <option>Relaxed</option>
+        <option>Moderate</option>
+      </select>
+    </div>
+    
+
+      <div class="col-md-2 col-sm-6 col-12 mb-2">
+      <div class="filter-label">&nbsp;</div> <!-- Empty label to align with other dropdowns -->
+      <button data-action="click->redirect#redirectToLogin" class="btn btn-regenerate w-100">Regenerate</button>
+    </div>
+    <% end%>
+
+   <% if !user_signed_in? %>
+  <!-- Login Button at the top-right -->
+<div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
+    <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
+        Login
+    </button>
+</div>
+<% end %>
+
+   
+</div>
+</div>
