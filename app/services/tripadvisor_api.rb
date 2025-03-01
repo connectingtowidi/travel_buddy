@@ -12,7 +12,7 @@ class TripadvisorApi
     response = get("/location/search", query: {
       key: API_KEY,
       searchQuery: 'singapore',
-      category: 'attractions',
+      category: 'attractions,restaurants',
       language: 'en'
     })
 
@@ -24,13 +24,14 @@ class TripadvisorApi
       begin
         details = fetch_attraction_details(location_id)
         {
-          name: attraction["name"],
-          address: details["address"],
-          description: details["description"],
-          phone: details["phone"],
-          duration: details["duration"],
-          photos: fetch_photos(location_id),
-          reviews: fetch_reviews(location_id)
+          "location_id" => location_id,
+          "name" => attraction["name"], 
+          "address" => details["address"],
+          "description" => details["description"],
+          "phone" => details["phone"],
+          "duration" => details["duration"],
+          "photos" => fetch_photos(location_id),
+          "reviews" => fetch_reviews(location_id)
         }
       rescue StandardError => e
         Rails.logger.error("Failed to fetch details for attraction #{location_id}: #{e.message}")
@@ -42,7 +43,8 @@ class TripadvisorApi
   def self.fetch_attraction_details(location_id)
     response = get("/location/#{location_id}/details", query: {
       key: API_KEY,
-      language: 'en'
+      language: 'en',
+      currency: 'SGD'
     })
 
     {
@@ -70,6 +72,16 @@ class TripadvisorApi
     })
 
     response["data"]&.first(3)&.map { |review| { title: review["title"], text: review["text"] } } || []
+  end
+
+  def self.fetch_location_details(location_id)
+    response = get("/location/#{location_id}/details", query: {
+      key: API_KEY,
+      language: 'en',
+      currency: 'SGD'
+    })
+    
+    handle_response(response)
   end
 
   private
