@@ -54,6 +54,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
     t.jsonb "reviews", default: []
     t.jsonb "photos", default: []
     t.decimal "price"
+    t.string "location_id"
+    t.decimal "rating", precision: 3, scale: 1
+    t.integer "num_reviews"
+    t.string "rating_image_url"
+    t.jsonb "trip_types", default: []
+    t.jsonb "weekday_text", default: []
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.string "email"
+    t.string "website"
+    t.index ["location_id"], name: "index_attractions_on_location_id"
   end
 
   create_table "itineraries", force: :cascade do |t|
