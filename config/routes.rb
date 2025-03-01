@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   get '/home', to: "pages#home"
+  get '/generate', to: 'attractions#generate'
 
   resources :attractions, only: [:index, :show]
   resources :itineraries, only: [:index, :show, :new, :create]
 
+
+  resources :itineraries, only: [:index, :show, :new, :create]
 end

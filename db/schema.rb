@@ -43,15 +43,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
   end
 
   create_table "attractions", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "description"
-    t.time "opening_hour"
-    t.time "closing_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "price"
+    t.integer "day"
+    t.string "name"
+    t.string "address_string"
+    t.text "description"
     t.integer "duration"
+    t.string "phone"
+    t.jsonb "reviews", default: []
+    t.jsonb "photos", default: []
+    t.decimal "price"
   end
 
   create_table "itineraries", force: :cascade do |t|

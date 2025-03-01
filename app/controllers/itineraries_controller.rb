@@ -43,7 +43,7 @@ class ItinerariesController < ApplicationController
       render :new
     end
   end
-  
+
   private
 
   def itinerary_params 
