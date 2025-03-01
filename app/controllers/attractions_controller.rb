@@ -2,9 +2,9 @@
 
 class AttractionsController < ApplicationController
     def generate
-        # @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
-        @tripadvisor_suggestions = JSON.parse(File.read(Rails.root.join('app', 'controllers', 'temp_tripadvisor_results.json')))
-        @tripadvisor_suggestions['attractions'].each do |attraction_data|
+        @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
+        # @tripadvisor_suggestions = JSON.parse(File.read(Rails.root.join('app', 'controllers', 'temp_tripadvisor_results.json')))
+        @tripadvisor_suggestions.each do |attraction_data|
           attraction = Attraction.create!(
             name: attraction_data['name'],
             address_string: attraction_data['address']['address_string'],
