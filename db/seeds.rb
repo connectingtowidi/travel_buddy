@@ -7,7 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Journey.destroy_all
 Travel.destroy_all
 Payment.destroy_all
 ItineraryAttraction.destroy_all
@@ -80,9 +79,9 @@ attraction_history_1 = Attraction.create!(
     name: 'National Gallery Singapore',
     address_string: '1 St Andrew\'s Road', 
     description: 'The National Gallery Singapore is a visual arts institution which oversees the largest public collection of modern art in Singapore and Southeast Asia. Situated in the Downtown Core of Singapore, the museum occupies two national monuments: the former Supreme Court Building and City Hall.',
-    opening_hour: '10:00',
-    closing_hour: '19:00', 
-    duration: 2,
+    # opening_hour: '10:00',
+    # closing_hour: '19:00', 
+    # duration: 2,
     price: 20.00,
     reviews: [],
     photos: []
@@ -92,9 +91,9 @@ attraction_history_2 = Attraction.create!(
     name: 'National Museum of Singapore',
     address_string: '93 Stamford Road', 
     description: 'The National Museum of Singapore is a national museum of Singapore. It is the oldest museum in Singapore and the first national museum in Southeast Asia. The museum is located in the Civic District.',
-    opening_hour: '10:00',
-    closing_hour: '18:30',
-    duration: 2,
+    # opening_hour: '10:00',
+    # closing_hour: '18:30',
+    # duration: 2,
     price: 24.00,
     reviews: [],
     photos: []
@@ -104,9 +103,9 @@ attraction_history_3 = Attraction.create!(
     name: 'Fort Siloso',
     address_string: '20 Bukom Hill', 
     description: 'Fort Siloso is a fort located in Singapore. It is a historical fort that was built in the 19th century.',
-    opening_hour: '10:00',
-    closing_hour: '17:00',
-    duration: 3,
+    # opening_hour: '10:00',
+    # closing_hour: '17:00',
+    # duration: 3,
     price: 0.00,
     reviews: [],
     photos: []
@@ -116,9 +115,9 @@ attraction_history_4 = Attraction.create!(
     name: 'Peranakan Museum',
     address_string: '26 Armenian St', 
     description: 'The Peranakan Museum is a museum in Singapore that showcases the Peranakan culture. It is a museum that is dedicated to the Peranakan culture.',
-    opening_hour: '10:00',
-    closing_hour: '19:00',
-    duration: 1,
+    # opening_hour: '10:00',
+    # closing_hour: '19:00',
+    # duration: 1,
     price: 18.00,
     reviews: [],
     photos: []
@@ -128,9 +127,9 @@ attraction_history_5 = Attraction.create!(
     name: 'Asian Civilisations Museum',
     address_string: '1 Empress Place', 
     description: 'The Asian Civilisations Museum is a museum in Singapore that showcases the Asian civilisations. It is a museum that is dedicated to the Asian civilisations.',
-    opening_hour: '10:00',
-    closing_hour: '19:00',
-    duration: 2,
+    # opening_hour: '10:00',
+    # closing_hour: '19:00',
+    # duration: 2,
     price: 15.00,
     reviews: [],
     photos: []
@@ -140,9 +139,9 @@ attraction_nature_1 = Attraction.create!(
     name: 'Flower Dome at Garden by the Bay',
     address_string: '18 Marina Gardens Dr', 
     description: 'The Flower Dome at Garden by the Bay is a greenhouse in Singapore that showcases the flowers. It is a greenhouse that is dedicated to the flowers.',
-    opening_hour: '09:00',
-    closing_hour: '21:00',
-    duration: 2,
+    # opening_hour: '09:00',
+    # closing_hour: '21:00',
+    # duration: 2,
     price: 20.00,
     reviews: [],
     photos: []
@@ -152,9 +151,9 @@ attraction_nature_2 = Attraction.create!(
     name: 'Cloud Forest at Gardens by the Bay',
     address_string: '18 Marina Gardens Dr', 
     description: 'The Cloud Forest at Gardens by the Bay is a greenhouse in Singapore that showcases the clouds. It is a greenhouse that is dedicated to the clouds.',
-    opening_hour: '09:00',
-    closing_hour: '20:00',
-    duration: 4,
+    # opening_hour: '09:00',
+    # closing_hour: '20:00',
+    # duration: 4,
     price: 25.00,
     reviews: [],
     photos: []
@@ -164,9 +163,9 @@ attraction_nature_3 = Attraction.create!(
     name: 'Singapore Botanic Gardens',
     address_string: '1 Cluny Rd', 
     description: 'The Singapore Botanic Gardens is a botanical garden in Singapore. It is a botanical garden that is dedicated to the plants.',
-    opening_hour: '05:00',
-    closing_hour: '23:00',
-    duration: 2,
+    # opening_hour: '05:00',
+    # closing_hour: '23:00',
+    # duration: 2,
     price: 0.00,
     reviews: [],
     photos: []
@@ -176,9 +175,9 @@ attraction_nature_4 = Attraction.create!(
     name: 'MacRitchie Reservoir',
     address_string: '262A Upper Thomson Rd', 
     description: 'The MacRitchie Reservoir is a reservoir in Singapore. It is a reservoir that is dedicated to the water.',
-    opening_hour: '07:00',
-    closing_hour: '19:00',
-    duration: 2,
+    # opening_hour: '07:00',
+    # closing_hour: '19:00',
+    # duration: 2,
     price: 0.00,
     reviews: [],
     photos: []
@@ -188,9 +187,9 @@ attraction_nature_5 = Attraction.create!(
     name: 'Fort Canning Park',
     address_string: 'Fort Canning Park', 
     description: 'The Fort Canning Park is a park in Singapore. It is a park that is dedicated to the history.',
-    opening_hour: '07:00',
-    closing_hour: '19:00',
-    duration: 2,
+    # opening_hour: '07:00',
+    # closing_hour: '19:00',
+    # duration: 2,
     price: 0.00,
     reviews: [],
     photos: []
@@ -200,9 +199,9 @@ attraction_kids_1 = Attraction.create!(
     name: 'ArtScience Museum',
     address_string: '6 Bayfront Avenue', 
     description: 'The ArtScience Museum is a museum in Singapore. It is a museum that is dedicated to the art and science.',
-    opening_hour: '08:00',
-    closing_hour: '20:00',
-    duration: 2,
+    # opening_hour: '08:00',
+    # closing_hour: '20:00',
+    # duration: 2,
     price: 35.00,
     reviews: [],
     photos: []
@@ -212,9 +211,9 @@ attraction_kids_2 = Attraction.create!(
     name: 'Singapore Flyer',
     address_string: '30 Raffles Ave', 
     description: 'The Singapore Flyer is a ferris wheel in Singapore. It is a ferris wheel that is dedicated to the city.',
-    opening_hour: '08:00',
-    closing_hour: '20:00',
-    duration: 1,
+    # opening_hour: '08:00',
+    # closing_hour: '20:00',
+    # duration: 1,
     price: 33.00,
     reviews: [],
     photos: []
@@ -224,9 +223,9 @@ attraction_kids_3 = Attraction.create!(
     name: 'Universal Studios Singapore',
     address_string: '8 Sentosa Gateway', 
     description: 'The Universal Studios Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
-    opening_hour: '09:00',
-    closing_hour: '18:00',
-    duration: 3,
+    # opening_hour: '09:00',
+    # closing_hour: '18:00',
+    # duration: 3,
     price: 100.00,
     reviews: [],
     photos: []
@@ -236,9 +235,9 @@ attraction_kids_4 = Attraction.create!(
     name: 'Underwater World Singapore',
     address_string: '8 Sentosa Gateway', 
     description: 'The Underwater World Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
-    opening_hour: '09:00',
-    closing_hour: '18:00',
-    duration: 2,
+    # opening_hour: '09:00',
+    # closing_hour: '18:00',
+    # duration: 2,
     price: 30.00,
     reviews: [],
     photos: []
@@ -248,9 +247,9 @@ attraction_kids_5 = Attraction.create!(
     name: 'Singapore Zoo',
     address_string: '80 Mandai Lake Road', 
     description: 'The Singapore Zoo is a zoo in Singapore. It is a zoo that is dedicated to the animals.',
-    opening_hour: '09:00',
-    closing_hour: '18:00',
-    duration: 3,
+    # opening_hour: '09:00',
+    # closing_hour: '18:00',
+    # duration: 3,
     price: 30.00,
     reviews: [],
     photos: []
@@ -452,7 +451,7 @@ puts "Finished! Created #{User.count} users."
 puts "Finished! Created #{Itinerary.count} itineraries."
 puts "Finished! Created #{Attraction.count} attractions."
 puts "Finished! Created #{ItineraryAttraction.count} itinerary attractions."
-puts "Finished! Created #{Journey.count} journeys."
+# puts "Finished! Created #{Journey.count} journeys."
 puts "Finished! Created #{Payment.count} payments."
 
 # Attach an image if you have one
