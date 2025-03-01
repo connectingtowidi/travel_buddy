@@ -262,104 +262,92 @@ itinerary_attraction_111 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_1,
     day: 1,
-    order: 1,
-    starting_time: DateTime.new(2025, 3, 26, 10, 0, 0, "+08:00")
+    duration: 1
 )
 
 itinerary_attraction_112 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_2,
     day: 1,
-    order: 2,
-    starting_time: DateTime.new(2025, 3, 26, 14, 0, 0, "+08:00")
+    duration: 2
+    
 )
 
 itinerary_attraction_113 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_3,
     day: 1,
-    order: 3,
-    starting_time: DateTime.new(2025, 3, 26, 17, 0, 0, "+08:00")
+    duration: 3
 )
 
 itinerary_attraction_121 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_4,
     day: 2,
-    order: 1,
-    starting_time: DateTime.new(2025, 3, 27, 8, 0, 0, "+08:00")
+    duration: 2
 )
 
 itinerary_attraction_122 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_5,
     day: 2,
-    order: 2,
-    starting_time: DateTime.new(2025, 3, 27, 14, 0, 0, "+08:00")
+    duration: 2
 )
 
 itinerary_attraction_123 = ItineraryAttraction.create!(
     itinerary: itinerary_1,
     attraction: attraction_history_2,
     day: 2,
-    order: 2,
-    starting_time: DateTime.new(2025, 3, 27, 18, 0, 0, "+08:00")
+    duration: 2
 )
 
 itinerary_attraction_211 = ItineraryAttraction.create!(
     itinerary: itinerary_2,
     attraction: attraction_nature_1,
     day: 1,
-    order: 1,
-    starting_time: DateTime.new(2025, 4, 17, 9, 0, 0, "+08:00")
+    duration: 1
 )
 
 itinerary_attraction_212 = ItineraryAttraction.create!(
     itinerary: itinerary_2,
     attraction: attraction_nature_2,
     day: 1,
-    order: 2,
-    starting_time: DateTime.new(2025, 4, 17, 16, 0, 0, "+08:00")
+    duration: 2
 )
 
 itinerary_attraction_311 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_1,
     day: 1,
-    order: 1,
-    starting_time: DateTime.new(2025, 4, 11, 8, 0, 0, "+08:00")
+    duration: 1
 )
 
 itinerary_attraction_312 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_2,
     day: 1,
-    order: 2,
-    starting_time: DateTime.new(2025, 4, 11, 13, 0, 0, "+08:00")   
+    duration: 2
 )
 
 itinerary_attraction_313 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_3,
     day: 1,
-    order: 3,
-    starting_time: DateTime.new(2025, 4, 11, 17, 0, 0, "+08:00")
+    duration: 3
 )
 
 itinerary_attraction_321 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_4,
     day: 2,
-    order: 1,
-    starting_time: DateTime.new(2025, 4, 12, 9, 0, 0, "+08:00")
+    duration: 1
 )
 
 itinerary_attraction_322 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_5,
     day: 2,
-    order: 2,
-    starting_time: DateTime.new(2025, 4, 12, 16, 0, 0, "+08:00")
+    duration: 2
 )
 
 # puts "Creating journeys..."
