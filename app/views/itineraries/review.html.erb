@@ -1,0 +1,38 @@
+<div class="container py-4">
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8 col-sm-6">
+            <h4><strong>My Journey</strong></h4>
+            <p><%= @itinerary.name %></p>
+            <%# Debug information %>
+            <% if @itinerary.itinerary_attractions.empty? %>
+              <p>No attractions found for this itinerary</p>
+            <% end %>
+        </div>
+        <div class="col-md-4 col-sm-6 text-md-end">
+        </div>
+    </div>
+    
+    <!-- Main content row with itinerary and sidebar -->
+    <div class="row">
+        <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>
+        <!-- Left column - Itinerary content -->
+        <div class="col-md-6">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row"><%= itinerary_attraction.starting_time.strftime('%I:%M %p') %></th>
+                    <td><%= itinerary_attraction.attraction.name %></td>
+                    <td><%= itinerary_attraction.attraction.price %></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        <% end %><!--Sidebar content goes here -->
+    </div> <!-- Close the row -->
+</div> <!-- Close the container -->

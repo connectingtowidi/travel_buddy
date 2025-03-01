@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/attractions', to: 'attractions#index'
 
   resources :itineraries, only: [:index, :show, :new, :create] do
-
+    get '/review', to: 'itineraries#review'
   end
+
+    
 end

@@ -11,7 +11,7 @@ class ItinerariesController < ApplicationController
   def show
     @itinerary = Itinerary.find(params[:id])
 
-    @tripadvisor_suggestions = TripadvisorService.fetch_singapore_attractions
+    @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
     
     # Create a hash to store travel durations and transport modes
     @travel_durations = {}
@@ -46,6 +46,11 @@ class ItinerariesController < ApplicationController
     end
   end
   
+  def review
+    @itinerary = Itinerary.find(params[:itinerary_id])
+    @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
+  end
+
   private
 
   def itinerary_params 
