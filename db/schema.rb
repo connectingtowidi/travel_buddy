@@ -79,14 +79,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
   end
 
-  create_table "journeys", force: :cascade do |t|
-    t.bigint "itinerary_attraction_id", null: false
-    t.string "mode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itinerary_attraction_id"], name: "index_journeys_on_itinerary_attraction_id"
-  end
-
   create_table "payments", force: :cascade do |t|
     t.boolean "payment_status"
     t.bigint "itinerary_id", null: false
@@ -122,7 +114,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
   add_foreign_key "itineraries", "users"
   add_foreign_key "itinerary_attractions", "attractions"
   add_foreign_key "itinerary_attractions", "itineraries"
-  add_foreign_key "journeys", "itinerary_attractions"
   add_foreign_key "payments", "itineraries"
   add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_from_id"
   add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_to_id"
