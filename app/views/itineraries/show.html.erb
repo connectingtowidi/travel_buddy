@@ -90,3 +90,11 @@
         </div>
     </div> <!-- Close the row -->
 </div> <!-- Close the container -->
+
+<div class="container">
+    <h1>Suggested Attractions</h1>
+    <% @tripadvisor_suggestions.each do |attraction| %>
+        <h2><%= attraction[:name] %></h2>
+        <p><%= attraction[:description] %></p>
+    <% end %>
+</div>
