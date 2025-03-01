@@ -31,7 +31,6 @@
 
                 <!-- Attraction details -->
                 <div class="itinerary-card">
-                  <%= link_to itinerary_attraction.attraction.description, itinerary_attraction.attraction, class: "itinerary-card-item-action" %>
                   <% if itinerary_attraction.attraction.photo.attached? %>
                     <%= image_tag itinerary_attraction.attraction.photo, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
                   <% else %>
@@ -48,7 +47,7 @@
                     <p style="font-size: 18px; margin-bottom: 10px;">
                       <%= itinerary_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
                     </p>
-                    <button class="btn btn-dark btn-sm">Details</button>
+                    <%= link_to 'Details', attraction_path(@attraction), class: "btn btn-dark btn-sm" %>
                   </div>
                   <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
                     <%= itinerary_attraction.attraction.duration %>
