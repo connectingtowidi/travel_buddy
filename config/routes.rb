@@ -12,8 +12,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   get '/home', to: "pages#home"
   get '/attractions', to: 'attractions#index'
+  get '/generate', to: 'attractions#generate'
 
-  resources :itineraries, only: [:index, :show, :new, :create] do
-
-  end
+  resources :itineraries, only: [:index, :show, :new, :create]
 end

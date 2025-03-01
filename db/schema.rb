@@ -43,15 +43,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
   end
 
   create_table "attractions", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "description"
-    t.time "opening_hour"
-    t.time "closing_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "price"
+    t.integer "day"
+    t.string "name"
+    t.string "address_string"
+    t.text "description"
     t.integer "duration"
+    t.string "phone"
+    t.jsonb "reviews", default: []
+    t.jsonb "photos", default: []
+    t.decimal "price"
   end
 
   create_table "itineraries", force: :cascade do |t|
@@ -77,14 +79,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
     t.integer "day"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
-  end
-
-  create_table "journeys", force: :cascade do |t|
-    t.bigint "itinerary_attraction_id", null: false
-    t.string "mode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itinerary_attraction_id"], name: "index_journeys_on_itinerary_attraction_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -122,7 +116,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_080530) do
   add_foreign_key "itineraries", "users"
   add_foreign_key "itinerary_attractions", "attractions"
   add_foreign_key "itinerary_attractions", "itineraries"
-  add_foreign_key "journeys", "itinerary_attractions"
   add_foreign_key "payments", "itineraries"
   add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_from_id"
   add_foreign_key "travels", "itinerary_attractions", column: "itinerary_attraction_to_id"
