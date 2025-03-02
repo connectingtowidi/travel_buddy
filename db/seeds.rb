@@ -35,7 +35,7 @@ user3 = User.create!(
 
 puts "Creating itineraries..."
 itinerary_1 = Itinerary.create!(
-    name: '(Summarised) Stories of the Straits: Singapore in a Day',
+    name: '(Summarised) Stories of the Straits: Singapore in Two Days',
     duration: 2,
     user: user1,
     interest: 'history',
@@ -85,7 +85,18 @@ attraction_history_1 = Attraction.create!(
     # duration: 2,
     price: 20.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 294265,
+    rating: 4.5,
+    num_reviews: 7391,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "business", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 7:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.290270,
+    longitude: 103.851959,
+    email: "info@nationalgallery.sg",
+    phone: "+65 6271 7000",
+    website: "http://www.nationalgallery.sg"
 )
 
 attraction_history_2 = Attraction.create!(
@@ -97,7 +108,18 @@ attraction_history_2 = Attraction.create!(
     # duration: 2,
     price: 24.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324650, 
+    rating: 4.5,
+    num_reviews: 5829,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "business", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 6:30 PM", "Tuesday: 10:00 AM - 6:30 PM", "Wednesday: 10:00 AM - 6:30 PM", "Thursday: 10:00 AM - 6:30 PM", "Friday: 10:00 AM - 6:30 PM", "Saturday: 10:00 AM - 6:30 PM", "Sunday: 10:00 AM - 6:30 PM"],
+    latitude: 1.296667,
+    longitude: 103.848611,
+    email: "nhb_nm_corpcomms@nhb.gov.sg",
+    phone: "+65 6332 3659",
+    website: "http://www.nationalmuseum.sg"
 )
 
 attraction_history_3 = Attraction.create!(
@@ -109,7 +131,18 @@ attraction_history_3 = Attraction.create!(
     # duration: 3,
     price: 0.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 311897,
+    rating: 4.0,
+    num_reviews: 2341,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 6:00 PM", "Tuesday: 10:00 AM - 6:00 PM", "Wednesday: 10:00 AM - 6:00 PM", "Thursday: 10:00 AM - 6:00 PM", "Friday: 10:00 AM - 6:00 PM", "Saturday: 10:00 AM - 6:00 PM", "Sunday: 10:00 AM - 6:00 PM"],
+    latitude: 1.258056,
+    longitude: 103.809722,
+    email: "fortsiloso@sentosa.com.sg",
+    phone: "+65 6736 8672",
+    website: "http://www.fortsiloso.com"
 )
 
 attraction_history_4 = Attraction.create!(
@@ -121,7 +154,18 @@ attraction_history_4 = Attraction.create!(
     # duration: 1,
     price: 18.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324908,
+    rating: 4.5,
+    num_reviews: 1523,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "friends", "families"],
+    weekday_text: ["Monday: Closed", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 7:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.294444,
+    longitude: 103.849722,
+    email: "nhb_pm_enquiry@nhb.gov.sg",
+    phone: "+65 6332 7591",
+    website: "http://www.peranakanmuseum.sg"
 )
 
 attraction_history_5 = Attraction.create!(
@@ -133,7 +177,18 @@ attraction_history_5 = Attraction.create!(
     # duration: 2,
     price: 15.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324751,
+    rating: 4.5,
+    num_reviews: 3876,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 9:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.287222,
+    longitude: 103.851389,
+    email: "nhb_acm_enquiry@nhb.gov.sg", 
+    phone: "+65 6332 7798",
+    website: "http://www.acm.org.sg"
 )
 
 attraction_nature_1 = Attraction.create!(
@@ -145,7 +200,18 @@ attraction_nature_1 = Attraction.create!(
     # duration: 2,
     price: 20.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 2331323,
+    rating: 4.5,
+    num_reviews: 14562,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 9:00 AM - 9:00 PM", "Tuesday: 9:00 AM - 9:00 PM", "Wednesday: 9:00 AM - 9:00 PM", "Thursday: 9:00 AM - 9:00 PM", "Friday: 9:00 AM - 9:00 PM", "Saturday: 9:00 AM - 9:00 PM", "Sunday: 9:00 AM - 9:00 PM"],
+    latitude: 1.284722,
+    longitude: 103.865833,
+    email: "feedback@gardensbythebay.com.sg",
+    phone: "+65 6420 6848",
+    website: "http://www.gardensbythebay.com.sg"
 )
 
 attraction_nature_2 = Attraction.create!(
@@ -157,7 +223,18 @@ attraction_nature_2 = Attraction.create!(
     # duration: 4,
     price: 25.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 2331324,
+    rating: 4.5,
+    num_reviews: 14562,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 9:00 AM - 9:00 PM", "Tuesday: 9:00 AM - 9:00 PM", "Wednesday: 9:00 AM - 9:00 PM", "Thursday: 9:00 AM - 9:00 PM", "Friday: 9:00 AM - 9:00 PM", "Saturday: 9:00 AM - 9:00 PM", "Sunday: 9:00 AM - 9:00 PM"],
+    latitude: 1.284167,
+    longitude: 103.866111,
+    email: "feedback@gardensbythebay.com.sg",
+    phone: "+65 6420 6848",
+    website: "http://www.gardensbythebay.com.sg"
 )
 
 attraction_nature_3 = Attraction.create!(
@@ -169,8 +246,19 @@ attraction_nature_3 = Attraction.create!(
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: []
-)
+    tripadvisor_photos: [],
+    location_id: 324542,
+    rating: 4.5,
+    num_reviews: 19876,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "friends", "families"],
+    weekday_text: ["Monday: 5:00 AM - 12:00 AM", "Tuesday: 5:00 AM - 12:00 AM", "Wednesday: 5:00 AM - 12:00 AM", "Thursday: 5:00 AM - 12:00 AM", "Friday: 5:00 AM - 12:00 AM", "Saturday: 5:00 AM - 12:00 AM", "Sunday: 5:00 AM - 12:00 AM"],
+    latitude: 1.315556,
+    longitude: 103.815556,
+    email: "nparks_sbg_visitor_services@nparks.gov.sg",
+    phone: "+65 6471 7138",
+    website: "http://www.sbg.org.sg"
+)   
 
 attraction_nature_4 = Attraction.create!(
     name: 'MacRitchie Reservoir',
@@ -181,7 +269,18 @@ attraction_nature_4 = Attraction.create!(
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324761,
+    rating: 4.5,
+    num_reviews: 1234,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "solo", "friends"],
+    weekday_text: ["Monday: 7:00 AM - 7:00 PM", "Tuesday: 7:00 AM - 7:00 PM", "Wednesday: 7:00 AM - 7:00 PM", "Thursday: 7:00 AM - 7:00 PM", "Friday: 7:00 AM - 7:00 PM", "Saturday: 7:00 AM - 7:00 PM", "Sunday: 7:00 AM - 7:00 PM"],
+    latitude: 1.340556,
+    longitude: 103.833889,
+    email: "nparks_public_affairs@nparks.gov.sg",
+    phone: "+65 1800 471 7300",
+    website: "http://www.nparks.gov.sg"
 )
 
 attraction_nature_5 = Attraction.create!(
@@ -193,7 +292,18 @@ attraction_nature_5 = Attraction.create!(
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324757,
+    rating: 4.0,
+    num_reviews: 2345,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
+    trip_types: ["couples", "solo", "friends", "families"],
+    weekday_text: ["Monday: 24 hours", "Tuesday: 24 hours", "Wednesday: 24 hours", "Thursday: 24 hours", "Friday: 24 hours", "Saturday: 24 hours", "Sunday: 24 hours"],
+    latitude: 1.295278,
+    longitude: 103.845833,
+    email: "nparks_fort_canning_park@nparks.gov.sg",
+    phone: "+65 1800 471 7300",
+    website: "http://www.nparks.gov.sg"
 )
 
 attraction_kids_1 = Attraction.create!(
@@ -205,7 +315,18 @@ attraction_kids_1 = Attraction.create!(
     # duration: 2,
     price: 35.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 2331322,
+    rating: 4.5,
+    num_reviews: 7654,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 7:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.286111,
+    longitude: 103.859444,
+    email: "museumenquiries@marinabaysands.com",
+    phone: "+65 6688 8888",
+    website: "http://www.marinabaysands.com/museum.html"
 )
 
 attraction_kids_2 = Attraction.create!(
@@ -217,7 +338,18 @@ attraction_kids_2 = Attraction.create!(
     # duration: 1,
     price: 33.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324761,
+    rating: 4.0,
+    num_reviews: 8765,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 8:30 AM - 10:30 PM", "Tuesday: 8:30 AM - 10:30 PM", "Wednesday: 8:30 AM - 10:30 PM", "Thursday: 8:30 AM - 10:30 PM", "Friday: 8:30 AM - 10:30 PM", "Saturday: 8:30 AM - 10:30 PM", "Sunday: 8:30 AM - 10:30 PM"],
+    latitude: 1.289444,
+    longitude: 103.863333,
+    email: "customer_service@singaporeflyer.com",
+    phone: "+65 6333 3311",
+    website: "http://www.singaporeflyer.com"
 )
 
 attraction_kids_3 = Attraction.create!(
@@ -229,7 +361,18 @@ attraction_kids_3 = Attraction.create!(
     # duration: 3,
     price: 100.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 2331321,
+    rating: 4.5,
+    num_reviews: 19876,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 7:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.254167,
+    longitude: 103.823889,
+    email: "enquiries@rwsentosa.com",
+    phone: "+65 6577 8888",
+    website: "http://www.rwsentosa.com"
 )
 
 attraction_kids_4 = Attraction.create!(
@@ -241,7 +384,18 @@ attraction_kids_4 = Attraction.create!(
     # duration: 2,
     price: 30.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [],
+    location_id: 324752,
+    rating: 4.0,
+    num_reviews: 5432,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 7:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
+    latitude: 1.258333,
+    longitude: 103.811944,
+    email: "enquiry@underwaterworld.com.sg",
+    phone: "+65 6577 8888",
+    website: "http://www.underwaterworld.com.sg"
 )
 
 attraction_kids_5 = Attraction.create!(
@@ -253,7 +407,18 @@ attraction_kids_5 = Attraction.create!(
     # duration: 3,
     price: 30.00,
     reviews: [],
-    photos: []
+    tripadvisor_photos: [], 
+    location_id: 324543,
+    rating: 4.5,
+    num_reviews: 23456,
+    rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
+    trip_types: ["couples", "friends", "families"],
+    weekday_text: ["Monday: 8:30 AM - 6:00 PM", "Tuesday: 8:30 AM - 6:00 PM", "Wednesday: 8:30 AM - 6:00 PM", "Thursday: 8:30 AM - 6:00 PM", "Friday: 8:30 AM - 6:00 PM", "Saturday: 8:30 AM - 6:00 PM", "Sunday: 8:30 AM - 6:00 PM"],
+    latitude: 1.404444,
+    longitude: 103.793056,
+    email: "info.zoo@wrs.com.sg",
+    phone: "+65 6269 3411",
+    website: "http://www.wrs.com.sg/en/singapore-zoo"
 )
 
 puts "Creating itineraries Attractions..."
@@ -410,19 +575,22 @@ puts "Creating travel..."
 travel_111_112 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_111,
   itinerary_attraction_to: itinerary_attraction_112,
-  mode: 'bus'
+  mode: 'bus',
+  duration: 20
 )
 
 travel_121_122 = Travel.create!(
     itinerary_attraction_from: itinerary_attraction_121,
     itinerary_attraction_to: itinerary_attraction_122,
-    mode: 'walk'
+    mode: 'walk',
+    duration: 35
 )
 
 travel_211_311 = Travel.create!(
     itinerary_attraction_from: itinerary_attraction_211,
     itinerary_attraction_to: itinerary_attraction_311,
-    mode: 'taxi'
+    mode: 'taxi',
+    duration: 15
 )
 
 

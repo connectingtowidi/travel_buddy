@@ -33,10 +33,11 @@
               <% end %>
               <div class="attraction-details">
                 <h5><%= day_attraction.attraction.name %></h5>
-                <p class="card-text"><%= day_attraction.attraction.address %></p>
+                <p class="card-text"><%= day_attraction.attraction.address_string %></p>
                 <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
                   <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                    <%= day_attraction.attraction.description %>
+                    <%# <%= TripadvisorApi.fetch_attraction_details(8077179)["description"] %>
+                     <%= day_attraction.attraction.description %>
                   </p>
                 </div>
               </div> 
