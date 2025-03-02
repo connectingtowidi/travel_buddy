@@ -1,5 +1,3 @@
-require_relative "../services/tripadvisor_api"
-
 class ItinerariesController < ApplicationController
   before_action :set_itinerary, only: [:show]
 
