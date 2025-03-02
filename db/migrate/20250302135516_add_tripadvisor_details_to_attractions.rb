@@ -1,6 +1,6 @@
 class AddTripadvisorDetailsToAttractions < ActiveRecord::Migration[7.1]
   def change
-    add_column :attractions, :location_id, :string
+    add_column :attractions, :location_id, :integer
     add_column :attractions, :rating, :decimal, precision: 3, scale: 1
     add_column :attractions, :num_reviews, :integer
     add_column :attractions, :rating_image_url, :string
@@ -10,7 +10,5 @@ class AddTripadvisorDetailsToAttractions < ActiveRecord::Migration[7.1]
     add_column :attractions, :longitude, :decimal, precision: 10, scale: 6
     add_column :attractions, :email, :string
     add_column :attractions, :website, :string
-    
-    add_index :attractions, :location_id
   end
-end 
+end
