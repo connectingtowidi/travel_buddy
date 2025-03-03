@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.1].define(version: 2025_03_01_121718) do
-=======
 ActiveRecord::Schema[7.1].define(version: 2025_03_02_142837) do
->>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,11 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_02_142837) do
 
   create_table "attractions", force: :cascade do |t|
     t.string "name"
-<<<<<<< HEAD
-    t.string "address"
-=======
     t.string "address_string"
->>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
     t.string "description"
     t.time "opening_hour"
     t.time "closing_hour"

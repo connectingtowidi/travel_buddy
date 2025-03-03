@@ -492,12 +492,7 @@ itinerary_attraction_312 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_2,
     day: 1,
-<<<<<<< HEAD
     duration: 2
-=======
-    order: 2,
-    starting_time: DateTime.new(2025, 4, 11, 13, 0, 0, "+08:00")
->>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
 )
 
 itinerary_attraction_313 = ItineraryAttraction.create!(
