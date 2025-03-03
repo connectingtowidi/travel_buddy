@@ -5,12 +5,14 @@ class ItinerariesController < ApplicationController
     @itineraries = current_user.itineraries
   end
 
-  
+
   def show
+    @selected_attraction = Attraction.find(params[:attraction_id]) if params[:attraction_id]
+
     @itinerary = Itinerary.find(params[:id])
 
     @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
-    
+
     # Create a hash to store travel durations and transport modes
     @travel_durations = {}
     @transport_modes = {}
@@ -22,7 +24,7 @@ class ItinerariesController < ApplicationController
           itinerary_attraction_from_id: itinerary_attraction.id,
           itinerary_attraction_to_id: @itinerary.itinerary_attractions[index + 1].id
         )
-        
+
         if travel
           @travel_durations[itinerary_attraction.id] = travel.itinerary_attraction_from_id
           @transport_modes[itinerary_attraction.id] = travel.mode
@@ -30,7 +32,7 @@ class ItinerariesController < ApplicationController
       end
     end
   end
-  
+
   def new
   end
 
@@ -51,9 +53,9 @@ class ItinerariesController < ApplicationController
 
   private
 
-  def itinerary_params 
+  def itinerary_params
     params.require(:itinerary).permit(:name, :description, :start_date, :end_date)
-  end    
+  end
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
