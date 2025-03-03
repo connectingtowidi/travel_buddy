@@ -1,4 +1,4 @@
-class AddInterestAndPaceToItineraries < ActiveRecord::Migration[7.1]
+class RemoveTripadvisorDetailsFromAttractions < ActiveRecord::Migration[7.1]
   def change
     remove_column :attractions, :location_id, :string
     remove_column :attractions, :rating, :decimal, precision: 3, scale: 1

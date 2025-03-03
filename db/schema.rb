@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2025_03_01_121718) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2025_03_02_142837) do
+>>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,14 +48,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_121718) do
 
   create_table "attractions", force: :cascade do |t|
     t.string "name"
+<<<<<<< HEAD
     t.string "address"
+=======
+    t.string "address_string"
+>>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
     t.string "description"
     t.time "opening_hour"
     t.time "closing_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "price"
-    t.string "location_id"
+    t.integer "duration"
+    t.integer "location_id"
     t.decimal "rating", precision: 3, scale: 1
     t.integer "num_reviews"
     t.string "rating_image_url"
@@ -61,7 +70,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_121718) do
     t.decimal "longitude", precision: 10, scale: 6
     t.string "email"
     t.string "website"
-    t.index ["location_id"], name: "index_attractions_on_location_id"
+    t.jsonb "reviews", default: []
+    t.jsonb "tripadvisor_photos", default: []
+    t.string "phone"
   end
 
   create_table "itineraries", force: :cascade do |t|
@@ -110,6 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_121718) do
     t.string "mode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration"
     t.index ["itinerary_attraction_from_id"], name: "index_travels_on_itinerary_attraction_from_id"
     t.index ["itinerary_attraction_to_id"], name: "index_travels_on_itinerary_attraction_to_id"
   end

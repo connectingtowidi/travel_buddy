@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
 Travel.destroy_all
 Payment.destroy_all
 ItineraryAttraction.destroy_all
@@ -34,7 +35,7 @@ user3 = User.create!(
 
 puts "Creating itineraries..."
 itinerary_1 = Itinerary.create!(
-    name: '(Summarised) Stories of the Straits: Singapore in a Day',
+    name: '(Summarised) Stories of the Straits: Singapore in Two Days',
     duration: 2,
     user: user1,
     interest: 'history',
@@ -60,7 +61,7 @@ itinerary_3 = Itinerary.create!(
     interest: 'kids-friendly',
     pace: 'slow',
     start_date: Date.new(2025, 4, 10),
-    end_date: Date.new(2025, 4, 13)   
+    end_date: Date.new(2025, 4, 13)
 )
 
 itinerary_4 = Itinerary.create!(
@@ -70,22 +71,22 @@ itinerary_4 = Itinerary.create!(
     interest: 'food',
     pace: 'slow',
     start_date: Date.new(2025, 3, 18),
-    end_date: Date.new(2025, 3, 20)   
+    end_date: Date.new(2025, 3, 20)
 )
 
 puts "Creating attractions..."
 
 attraction_history_1 = Attraction.create!(
     name: 'National Gallery Singapore',
-    address_string: '1 St Andrew\'s Road', 
+    address_string: '1 St Andrew\'s Road',
     description: 'The National Gallery Singapore is a visual arts institution which oversees the largest public collection of modern art in Singapore and Southeast Asia. Situated in the Downtown Core of Singapore, the museum occupies two national monuments: the former Supreme Court Building and City Hall.',
     # opening_hour: '10:00',
-    # closing_hour: '19:00', 
+    # closing_hour: '19:00',
     # duration: 2,
     price: 20.00,
     reviews: [],
-    photos: [],
-    location_id: "294265",
+    tripadvisor_photos: [],
+    location_id: 294265,
     rating: 4.5,
     num_reviews: 7391,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -100,15 +101,15 @@ attraction_history_1 = Attraction.create!(
 
 attraction_history_2 = Attraction.create!(
     name: 'National Museum of Singapore',
-    address_string: '93 Stamford Road', 
+    address_string: '93 Stamford Road',
     description: 'The National Museum of Singapore is a national museum of Singapore. It is the oldest museum in Singapore and the first national museum in Southeast Asia. The museum is located in the Civic District.',
     # opening_hour: '10:00',
     # closing_hour: '18:30',
     # duration: 2,
     price: 24.00,
     reviews: [],
-    photos: [],
-    location_id: "324650", 
+    tripadvisor_photos: [],
+    location_id: 324650, 
     rating: 4.5,
     num_reviews: 5829,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -123,15 +124,15 @@ attraction_history_2 = Attraction.create!(
 
 attraction_history_3 = Attraction.create!(
     name: 'Fort Siloso',
-    address_string: '20 Bukom Hill', 
+    address_string: '20 Bukom Hill',
     description: 'Fort Siloso is a fort located in Singapore. It is a historical fort that was built in the 19th century.',
     # opening_hour: '10:00',
     # closing_hour: '17:00',
     # duration: 3,
     price: 0.00,
     reviews: [],
-    photos: [],
-    location_id: "311897",
+    tripadvisor_photos: [],
+    location_id: 311897,
     rating: 4.0,
     num_reviews: 2341,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
@@ -146,15 +147,15 @@ attraction_history_3 = Attraction.create!(
 
 attraction_history_4 = Attraction.create!(
     name: 'Peranakan Museum',
-    address_string: '26 Armenian St', 
+    address_string: '26 Armenian St',
     description: 'The Peranakan Museum is a museum in Singapore that showcases the Peranakan culture. It is a museum that is dedicated to the Peranakan culture.',
     # opening_hour: '10:00',
     # closing_hour: '19:00',
     # duration: 1,
     price: 18.00,
     reviews: [],
-    photos: [],
-    location_id: "324908",
+    tripadvisor_photos: [],
+    location_id: 324908,
     rating: 4.5,
     num_reviews: 1523,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -169,15 +170,15 @@ attraction_history_4 = Attraction.create!(
 
 attraction_history_5 = Attraction.create!(
     name: 'Asian Civilisations Museum',
-    address_string: '1 Empress Place', 
+    address_string: '1 Empress Place',
     description: 'The Asian Civilisations Museum is a museum in Singapore that showcases the Asian civilisations. It is a museum that is dedicated to the Asian civilisations.',
     # opening_hour: '10:00',
     # closing_hour: '19:00',
     # duration: 2,
     price: 15.00,
     reviews: [],
-    photos: [],
-    location_id: "324751",
+    tripadvisor_photos: [],
+    location_id: 324751,
     rating: 4.5,
     num_reviews: 3876,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -192,15 +193,15 @@ attraction_history_5 = Attraction.create!(
 
 attraction_nature_1 = Attraction.create!(
     name: 'Flower Dome at Garden by the Bay',
-    address_string: '18 Marina Gardens Dr', 
+    address_string: '18 Marina Gardens Dr',
     description: 'The Flower Dome at Garden by the Bay is a greenhouse in Singapore that showcases the flowers. It is a greenhouse that is dedicated to the flowers.',
     # opening_hour: '09:00',
     # closing_hour: '21:00',
     # duration: 2,
     price: 20.00,
     reviews: [],
-    photos: [],
-    location_id: "2331323",
+    tripadvisor_photos: [],
+    location_id: 2331323,
     rating: 4.5,
     num_reviews: 14562,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -215,15 +216,15 @@ attraction_nature_1 = Attraction.create!(
 
 attraction_nature_2 = Attraction.create!(
     name: 'Cloud Forest at Gardens by the Bay',
-    address_string: '18 Marina Gardens Dr', 
+    address_string: '18 Marina Gardens Dr',
     description: 'The Cloud Forest at Gardens by the Bay is a greenhouse in Singapore that showcases the clouds. It is a greenhouse that is dedicated to the clouds.',
     # opening_hour: '09:00',
     # closing_hour: '20:00',
     # duration: 4,
     price: 25.00,
     reviews: [],
-    photos: [],
-    location_id: "2331324",
+    tripadvisor_photos: [],
+    location_id: 2331324,
     rating: 4.5,
     num_reviews: 14562,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -238,15 +239,15 @@ attraction_nature_2 = Attraction.create!(
 
 attraction_nature_3 = Attraction.create!(
     name: 'Singapore Botanic Gardens',
-    address_string: '1 Cluny Rd', 
+    address_string: '1 Cluny Rd',
     description: 'The Singapore Botanic Gardens is a botanical garden in Singapore. It is a botanical garden that is dedicated to the plants.',
     # opening_hour: '05:00',
     # closing_hour: '23:00',
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: [],
-    location_id: "324542",
+    tripadvisor_photos: [],
+    location_id: 324542,
     rating: 4.5,
     num_reviews: 19876,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -261,15 +262,15 @@ attraction_nature_3 = Attraction.create!(
 
 attraction_nature_4 = Attraction.create!(
     name: 'MacRitchie Reservoir',
-    address_string: '262A Upper Thomson Rd', 
+    address_string: '262A Upper Thomson Rd',
     description: 'The MacRitchie Reservoir is a reservoir in Singapore. It is a reservoir that is dedicated to the water.',
     # opening_hour: '07:00',
     # closing_hour: '19:00',
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: [],
-    location_id: "324761",
+    tripadvisor_photos: [],
+    location_id: 324761,
     rating: 4.5,
     num_reviews: 1234,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -284,15 +285,15 @@ attraction_nature_4 = Attraction.create!(
 
 attraction_nature_5 = Attraction.create!(
     name: 'Fort Canning Park',
-    address_string: 'Fort Canning Park', 
+    address_string: 'Fort Canning Park',
     description: 'The Fort Canning Park is a park in Singapore. It is a park that is dedicated to the history.',
     # opening_hour: '07:00',
     # closing_hour: '19:00',
     # duration: 2,
     price: 0.00,
     reviews: [],
-    photos: [],
-    location_id: "324757",
+    tripadvisor_photos: [],
+    location_id: 324757,
     rating: 4.0,
     num_reviews: 2345,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
@@ -307,15 +308,15 @@ attraction_nature_5 = Attraction.create!(
 
 attraction_kids_1 = Attraction.create!(
     name: 'ArtScience Museum',
-    address_string: '6 Bayfront Avenue', 
+    address_string: '6 Bayfront Avenue',
     description: 'The ArtScience Museum is a museum in Singapore. It is a museum that is dedicated to the art and science.',
     # opening_hour: '08:00',
     # closing_hour: '20:00',
     # duration: 2,
     price: 35.00,
     reviews: [],
-    photos: [],
-    location_id: "2331322",
+    tripadvisor_photos: [],
+    location_id: 2331322,
     rating: 4.5,
     num_reviews: 7654,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -330,15 +331,15 @@ attraction_kids_1 = Attraction.create!(
 
 attraction_kids_2 = Attraction.create!(
     name: 'Singapore Flyer',
-    address_string: '30 Raffles Ave', 
+    address_string: '30 Raffles Ave',
     description: 'The Singapore Flyer is a ferris wheel in Singapore. It is a ferris wheel that is dedicated to the city.',
     # opening_hour: '08:00',
     # closing_hour: '20:00',
     # duration: 1,
     price: 33.00,
     reviews: [],
-    photos: [],
-    location_id: "324761",
+    tripadvisor_photos: [],
+    location_id: 324761,
     rating: 4.0,
     num_reviews: 8765,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
@@ -353,15 +354,15 @@ attraction_kids_2 = Attraction.create!(
 
 attraction_kids_3 = Attraction.create!(
     name: 'Universal Studios Singapore',
-    address_string: '8 Sentosa Gateway', 
+    address_string: '8 Sentosa Gateway',
     description: 'The Universal Studios Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
     # duration: 3,
     price: 100.00,
     reviews: [],
-    photos: [],
-    location_id: "2331321",
+    tripadvisor_photos: [],
+    location_id: 2331321,
     rating: 4.5,
     num_reviews: 19876,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -376,15 +377,15 @@ attraction_kids_3 = Attraction.create!(
 
 attraction_kids_4 = Attraction.create!(
     name: 'Underwater World Singapore',
-    address_string: '8 Sentosa Gateway', 
+    address_string: '8 Sentosa Gateway',
     description: 'The Underwater World Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
     # duration: 2,
     price: 30.00,
     reviews: [],
-    photos: [],
-    location_id: "324752",
+    tripadvisor_photos: [],
+    location_id: 324752,
     rating: 4.0,
     num_reviews: 5432,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.0-MCID-5.png",
@@ -399,15 +400,15 @@ attraction_kids_4 = Attraction.create!(
 
 attraction_kids_5 = Attraction.create!(
     name: 'Singapore Zoo',
-    address_string: '80 Mandai Lake Road', 
+    address_string: '80 Mandai Lake Road',
     description: 'The Singapore Zoo is a zoo in Singapore. It is a zoo that is dedicated to the animals.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
     # duration: 3,
     price: 30.00,
     reviews: [],
-    photos: [],
-    location_id: "324543",
+    tripadvisor_photos: [], 
+    location_id: 324543,
     rating: 4.5,
     num_reviews: 23456,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -491,7 +492,12 @@ itinerary_attraction_312 = ItineraryAttraction.create!(
     itinerary: itinerary_3,
     attraction: attraction_kids_2,
     day: 1,
+<<<<<<< HEAD
     duration: 2
+=======
+    order: 2,
+    starting_time: DateTime.new(2025, 4, 11, 13, 0, 0, "+08:00")
+>>>>>>> 5aee90fdfded90481295ac460c82e66468ff542b
 )
 
 itinerary_attraction_313 = ItineraryAttraction.create!(
@@ -538,7 +544,7 @@ itinerary_attraction_322 = ItineraryAttraction.create!(
 # )
 
 # journey_211 = Journey.create!(
-#     itinerary_attraction: itinerary_attraction_211,   
+#     itinerary_attraction: itinerary_attraction_211,
 #     mode: 'taxi'
 # )
 
@@ -550,7 +556,7 @@ itinerary_attraction_322 = ItineraryAttraction.create!(
 # journey_312 = Journey.create!(
 #     itinerary_attraction: itinerary_attraction_312,
 #     mode: 'taxi'
-# )   
+# )
 
 # journey_321 = Journey.create!(
 #     itinerary_attraction: itinerary_attraction_321,
@@ -562,19 +568,22 @@ puts "Creating travel..."
 travel_111_112 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_111,
   itinerary_attraction_to: itinerary_attraction_112,
-  mode: 'bus'
+  mode: 'bus',
+  duration: 20
 )
 
 travel_121_122 = Travel.create!(
     itinerary_attraction_from: itinerary_attraction_121,
     itinerary_attraction_to: itinerary_attraction_122,
-    mode: 'walk'
+    mode: 'walk',
+    duration: 35
 )
 
 travel_211_311 = Travel.create!(
-    itinerary_attraction_from: itinerary_attraction_211,   
+    itinerary_attraction_from: itinerary_attraction_211,
     itinerary_attraction_to: itinerary_attraction_311,
-    mode: 'taxi'
+    mode: 'taxi',
+    duration: 15
 )
 
 
@@ -610,7 +619,7 @@ puts "Finished! Created #{Payment.count} payments."
 # Attach an image if you have one
 # attraction = Attraction.create!(
 #     name: 'Garden by the bay',
-#     address_string: '18 Marina Gardens Dr', 
+#     address_string: '18 Marina Gardens Dr',
 #     description: 'flower dome',
 #     opening_hour: '08:00',
 #     closing_hour: '16:00',
