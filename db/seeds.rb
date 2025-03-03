@@ -109,7 +109,7 @@ attraction_history_2 = Attraction.create!(
     price: 24.00,
     reviews: [],
     tripadvisor_photos: [],
-    location_id: 324650, 
+    location_id: 324650,
     rating: 4.5,
     num_reviews: 5829,
     rating_image_url: "https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/4.5-MCID-5.png",
@@ -186,7 +186,7 @@ attraction_history_5 = Attraction.create!(
     weekday_text: ["Monday: 10:00 AM - 7:00 PM", "Tuesday: 10:00 AM - 7:00 PM", "Wednesday: 10:00 AM - 7:00 PM", "Thursday: 10:00 AM - 7:00 PM", "Friday: 10:00 AM - 9:00 PM", "Saturday: 10:00 AM - 7:00 PM", "Sunday: 10:00 AM - 7:00 PM"],
     latitude: 1.287222,
     longitude: 103.851389,
-    email: "nhb_acm_enquiry@nhb.gov.sg", 
+    email: "nhb_acm_enquiry@nhb.gov.sg",
     phone: "+65 6332 7798",
     website: "http://www.acm.org.sg"
 )
@@ -258,7 +258,7 @@ attraction_nature_3 = Attraction.create!(
     email: "nparks_sbg_visitor_services@nparks.gov.sg",
     phone: "+65 6471 7138",
     website: "http://www.sbg.org.sg"
-)   
+)
 
 attraction_nature_4 = Attraction.create!(
     name: 'MacRitchie Reservoir',
@@ -407,7 +407,7 @@ attraction_kids_5 = Attraction.create!(
     # duration: 3,
     price: 30.00,
     reviews: [],
-    tripadvisor_photos: [], 
+    tripadvisor_photos: [],
     location_id: 324543,
     rating: 4.5,
     num_reviews: 23456,
@@ -436,7 +436,7 @@ itinerary_attraction_112 = ItineraryAttraction.create!(
     attraction: attraction_history_2,
     day: 1,
     duration: 2
-    
+
 )
 
 itinerary_attraction_113 = ItineraryAttraction.create!(

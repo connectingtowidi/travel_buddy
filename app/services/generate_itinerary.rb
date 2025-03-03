@@ -10,11 +10,11 @@ class GenerateItinerary
 
     prompt = <<~PROMPT
       You are a travel planner. You are given a list of attractions in Singapore.
+
       You are to generate an itinerary for a #{duration} day trip to Singapore.
       The itinerary should be in JSON format.
-      The itinerary should include the name of the attraction, 
-      the address, and the duration of the visit.
-      The itinerary should be in chronological order.
+      The itinerary should include the id of the attraction, the day that I should visit the attraction, and the duration of the visit.
+      The itinerary should include all the attractions.
 
       Here is the list of attractions:
       #{attractions_json}
@@ -22,7 +22,39 @@ class GenerateItinerary
 
     open_ai_response = client.chat(
       parameters: {
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "attractions",
+            strict: false,
+            schema: {
+              type: "object",
+              properties: {
+                id: {
+                  type: "integer",
+                  description: "Unique identifier for the attraction"
+                },
+                day: {
+                  type: "integer",
+                  description: "The day number on which the attraction is scheduled",
+                  minimum: 1,
+                  maximum: duration
+                },
+                duration: {
+                  type: "integer",
+                  description: "How long I should stay at the attraction for in hours",
+                  minimum: 1
+                }
+              },
+              required: [
+                "id",
+                "day",
+                "duration"
+              ]
+            }
+          }
+        },
         messages: [
           { role: "user", content: prompt }
         ]
@@ -33,7 +65,7 @@ class GenerateItinerary
 
     # Ensure the response is parsed correctly
     itinerary_data = JSON.parse(response_content) rescue {}
-   
+
     itinerary = Itinerary.create!(
       name: "Adventure kid friendly",
       duration: duration,
@@ -44,45 +76,17 @@ class GenerateItinerary
       end_date: end_date
     )
 
-    attractions.each do |attraction|
+    itinerary_data["itinerary"].each do |attraction|
       ItineraryAttraction.create!(
         itinerary: itinerary,
-        attraction: attraction,
-        day: find_day_for_attraction(itinerary_data, attraction.name),
-        duration: find_duration_for_attraction(itinerary_data, attraction.name)
+        attraction_id: attraction["id"],
+        day: attraction["day"],
+        duration: attraction["duration"].to_s
       )
     end
   end
 
-  private
-
   def self.client
-    @client ||= OpenAI::Client.new(access_token: ENV['OPENAI_KEY'])
-  end
-
-  def self.find_day_for_attraction(itinerary_data, attraction_name)
-    itinerary_data.dig("itinerary", "days")&.each do |day_data|
-      day_number = day_data["day"]
-      
-      day_data["activities"]&.each do |activity|
-        if activity["name"] == attraction_name
-          return day_number
-        end
-      end
-    end
-    
-    return 1 # Default to day 1 if attraction not found
-  end
-
-  def self.find_duration_for_attraction(itinerary_data, attraction_name)
-    itinerary_data.dig("itinerary", "days")&.each do |day_data|
-      day_data["activities"]&.each do |activity|
-        if activity["name"] == attraction_name
-          return activity["duration"]
-        end
-      end
-    end
-    
-    return "2 hours" # Default duration if attraction not found
+    @client ||= OpenAI::Client.new(access_token: ENV.fetch('OPENAI_KEY', nil))
   end
 end

@@ -7,6 +7,6 @@ class ItineraryAttraction < ApplicationRecord
   has_many :travels_to, class_name: 'Travel', foreign_key: 'itinerary_attraction_to_id', dependent: :destroy
 
   validates :day, presence: true, numericality: { greater_than: 0 }
-  validates :order, presence: true, numericality: { greater_than: 0 }
-  validates :starting_time, presence: true
+  # validates :order, presence: true, numericality: { greater_than: 0 }
+  # validates :starting_time, presence: true
 end
