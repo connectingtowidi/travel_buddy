@@ -3,7 +3,7 @@ require "json"
 
 class GenerateItinerary
   def self.call(user, attractions, start_date, end_date)
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_KEY'])
+    client = OpenAI::Client.new
 
     attractions_json = attractions.to_json
     duration = (end_date - start_date).to_i # Calculate duration in days
@@ -87,6 +87,6 @@ class GenerateItinerary
   end
 
   def self.client
-    @client ||= OpenAI::Client.new(access_token: ENV.fetch('OPENAI_KEY', nil))
+    @client ||= OpenAI::Client.new
   end
 end
