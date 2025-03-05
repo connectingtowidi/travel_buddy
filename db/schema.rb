@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_08_082310) do
   create_table "itinerary_attractions", force: :cascade do |t|
     t.bigint "itinerary_id", null: false
     t.bigint "attraction_id", null: false
-    t.integer "order"
+    t.integer "duration"
     t.timestamptz "starting_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
