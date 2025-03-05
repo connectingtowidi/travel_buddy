@@ -9,12 +9,24 @@ class TripadvisorApi
   API_KEY = ENV["TRIPADVISOR_API_KEY"]
 
   def self.fetch_singapore_attractions
-    response = get("/location/search", query: {
+    attractions_response = get("/location/search", query: {
       key: API_KEY,
       searchQuery: 'singapore',
-      category: 'attractions,restaurants',
+      category: 'attractions',
       language: 'en'
     })
+
+    restaurants_response = get("/location/search", query: {
+      key: API_KEY,
+      searchQuery: 'singapore', 
+      category: 'restaurants',
+      language: 'en'
+    })
+
+    # Combine the responses
+    response = {
+      "data" => (attractions_response["data"] || []) + (restaurants_response["data"] || [])
+    }
 
     return [] if response.blank? || response["data"].blank?
 

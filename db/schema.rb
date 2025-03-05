@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_02_142837) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_05_132047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_02_142837) do
     t.decimal "rating", precision: 3, scale: 1
     t.integer "num_reviews"
     t.string "rating_image_url"
-    t.jsonb "trip_types", default: []
+    t.string "trip_types"
     t.jsonb "weekday_text", default: []
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
