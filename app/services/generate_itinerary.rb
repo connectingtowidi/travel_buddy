@@ -3,7 +3,7 @@ require "json"
 
 class GenerateItinerary
   def self.call(user, attractions, start_date, end_date)
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_KEY'])
+    client = OpenAI::Client.new
 
     attractions_json = attractions.to_json
     duration = (end_date - start_date).to_i # Calculate duration in days
@@ -13,7 +13,8 @@ class GenerateItinerary
 
       You are to generate an itinerary for a #{duration} day trip to Singapore.
       The itinerary should be in JSON format.
-      The itinerary should include the id of the attraction, the day that I should visit the attraction, and the duration of the visit.
+      The itinerary should include the id of the attraction, the day that I should visit the attraction, 
+      and the duration of the visit, and the starting time 
       The itinerary should include all the attractions.
 
       Here is the list of attractions:
@@ -45,6 +46,10 @@ class GenerateItinerary
                   type: "integer",
                   description: "How long I should stay at the attraction for in hours",
                   minimum: 1
+                },
+                starting_time: {
+                  type: "string",
+                  description: "The start time at the attraction in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ",
                 }
               },
               required: [
@@ -85,12 +90,14 @@ class GenerateItinerary
         itinerary: itinerary,
         attraction_id: attraction["id"],
         day: attraction["day"],
-        duration: attraction["duration"].to_s
+        duration: attraction["duration"],
+        starting_time: attraction["starting_time"]
+        
       )
     end
   end
 
   def self.client
-    @client ||= OpenAI::Client.new(access_token: ENV.fetch('OPENAI_KEY', nil))
+    @client ||= OpenAI::Client.new
   end
 end
