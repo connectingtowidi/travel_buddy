@@ -15,9 +15,9 @@
     </div>
   </div>
 
-  <div class="row mb-3 d-flex justify-content-between">
+  <div class="row mb-3 g-5">
     <!-- Main content row with itinerary and sidebar -->
-    <div class="col-6">
+    <div class="col">
         <!-- Left column - Itinerary content -->
       <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
         <h3>Day <%= index + 1 %></h3>
@@ -60,7 +60,7 @@
       <% end %>
     </div>
     <!-- Right column - Sidebar (add your sidebar content here) -->
-    <div class="col-6 pt-10">
+    <div class="col">
       <!-- Sidebar content goes here -->
       <%= render(partial: "attractions/details") if @selected_attraction %>
     </div> <!-- Close the column -->
