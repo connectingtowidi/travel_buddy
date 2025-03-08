@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_05_132047) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_08_082310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_05_132047) do
     t.jsonb "reviews", default: []
     t.jsonb "tripadvisor_photos", default: []
     t.string "phone"
+    t.datetime "last_tripadvisor_update"
   end
 
   create_table "itineraries", force: :cascade do |t|

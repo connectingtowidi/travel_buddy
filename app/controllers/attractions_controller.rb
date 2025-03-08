@@ -37,8 +37,10 @@ class AttractionsController < ApplicationController
         # Skip if required data is missing
         # next unless attraction_data[:address] && attraction_data[:name]
         
-        attraction = Attraction.create!(
-          name: attraction_data["name"],
+        attraction = Attraction.find_or_initialize_by(location_id: details["location_id"])
+
+        # Update or set attributes
+        attraction.assign_attributes(
           address_string: attraction_data["address"]["address_string"],
           description: attraction_data["description"], 
           opening_hour: Time.strptime(details["hours"]&.dig("periods", 0, "open", "time") || '0000', '%H%M'),
@@ -58,7 +60,7 @@ class AttractionsController < ApplicationController
           tripadvisor_photos: attraction_data["photos"],
           phone: details["phone"],
         )
-        
+        attraction.save!
       end
       # Attraction.destroy_all
       

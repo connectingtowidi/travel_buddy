@@ -26,8 +26,8 @@
                 <%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
             </p>
             <div class="itinerary-card">
-              <% if day_attraction.attraction.photo.attached? %>
-                <%= image_tag day_attraction.attraction.photo, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+              <% if day_attraction.attraction.tripadvisor_photos.present? %>
+                <%= image_tag day_attraction.attraction.tripadvisor_photos.first, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
               <% else %>
                 <%= image_tag "cover-page.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
               <% end %>
