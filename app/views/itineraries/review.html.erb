@@ -35,4 +35,35 @@
         </div>
         <% end %><!--Sidebar content goes here -->
     </div> <!-- Close the row -->
+
+    <div>
+        <p><%= @itinerary.itinerary_attractions[0].attraction.name %></p>
+        <p>place_id = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["place_id"]%></p>
+        <p>latitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["navigation_points"][0]["location"]["latitude"]%></p>
+        <p>longitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["navigation_points"][0]["location"]["longitude"]%></p>
+        
+        <p><%= @itinerary.itinerary_attractions[1].attraction.name %></p>
+        <p>place_id = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["place_id"]%></p>
+        <p>latitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["navigation_points"][0]["location"]["latitude"]%></p>
+        <p>longitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["navigation_points"][0]["location"]["longitude"]%></p>
+
+    </div>
 </div> <!-- Close the container -->
+
+<%# <div %>
+  <%# id="map" %>
+  <%# data-controller="google-maps" %>
+  <%# style="width: 100%; %>
+  <%# height: 600px;" %>
+  <%# data-markers="<%= @markers.to_json %>
+<%# ></div> %>
+
+<div onload="initMap()">
+    <h1>Google Maps in Rails</h1>
+    <div id="map" style="height: 500px; width: 100%;"></div>
+</div>
+
+
+
+
+

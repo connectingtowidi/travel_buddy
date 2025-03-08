@@ -18,4 +18,6 @@ Rails.application.routes.draw do
     get '/review', to: 'itineraries#review'
   end
 
+  get 'get_route', to: 'routes#get_route'
+  
 end
