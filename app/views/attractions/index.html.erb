@@ -1,5 +1,9 @@
 <% @attractions.each do |attraction| %>
-  <%= link_to 'Details', attraction, class: "btn btn-dark btn-sm" %>
+  <div class="attraction-card">
+    <h3><%= attraction.name %></h3>
+    <p>Last updated: <%= time_ago_in_words(attraction.last_tripadvisor_update) %> ago</p>
+    <%= link_to 'Details', attraction, class: "btn btn-dark btn-sm" %>
+  </div>
 <% end %>
 
 <%= @attraction.inspect %>
