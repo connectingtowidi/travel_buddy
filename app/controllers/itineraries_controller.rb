@@ -31,17 +31,6 @@ class ItinerariesController < ApplicationController
         end
       end
     end
-
-    @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
-      {
-        lat: itinerary_attraction.attraction.latitude,
-        lng: itinerary_attraction.attraction.longitude,
-        # infoWindow: { content: render_to_string(partial: "/flats/map_box", locals: { flat: flat }) }
-        # Uncomment the above line if you want each of your markers to display a info window when clicked
-        # (you will also need to create the partial "/flats/map_box")
-      }
-    end
-
   end
 
   def new
@@ -56,10 +45,21 @@ class ItinerariesController < ApplicationController
       render :new
     end
   end
-  
+
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
     @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
+
+    @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
+      {
+        lat: itinerary_attraction.attraction.latitude.to_f,
+        lng: itinerary_attraction.attraction.longitude.to_f,
+        title: itinerary_attraction.attraction.name
+        # infoWindow: { content: render_to_string(partial: "/flats/map_box", locals: { flat: flat }) }
+        # Uncomment the above line if you want each of your markers to display a info window when clicked
+        # (you will also need to create the partial "/flats/map_box")
+      }
+    end
   end
 
   private
