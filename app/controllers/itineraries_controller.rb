@@ -11,7 +11,14 @@ class ItinerariesController < ApplicationController
 
     @itinerary = Itinerary.find(params[:id])
 
-    @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
+    # Preventing running of the Tripadvisor API every time the page is loaded
+    # @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
+
+    @tripadvisor_suggestions = Attraction.where.not(last_tripadvisor_update: nil)
+                                       .where.not(name: nil)
+                                       .where.not(location_id: nil)
+                                       .order(last_tripadvisor_update: :desc)
+                                       .limit(20)
 
     # Create a hash to store travel durations and transport modes
     @travel_durations = {}
