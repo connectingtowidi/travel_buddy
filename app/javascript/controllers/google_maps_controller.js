@@ -23,4 +23,61 @@ export default class extends Controller {
       });
     });
   }
+
+  // static values = { apiKey: String, markersUrl: String };
+
+  // async connect() {
+  //   console.log("Google Maps Controller Connected!");
+
+  //   // Load Google Maps library
+  //   await this.loadGoogleMaps();
+
+  //   // Fetch markers from the API
+  //   const markers = await this.fetchMarkers();
+    
+  //   // Initialize the map
+  //   this.initMap(markers);
+  // }
+
+  // async loadGoogleMaps() {
+  //   if (!window.google) {
+  //     const script = document.createElement("script");
+  //     script.src = `https://maps.googleapis.com/maps/api/js?key=${this.apiKeyValue}&libraries=maps,marker`;
+  //     script.async = true;
+  //     document.head.appendChild(script);
+
+  //     return new Promise((resolve) => {
+  //       script.onload = resolve;
+  //     });
+  //   }
+  // }
+
+  // async fetchMarkers() {
+  //   try {
+  //     const response = await fetch(this.markersUrlValue);
+  //     return await response.json();
+  //   } catch (error) {
+  //     console.error("Error fetching markers:", error);
+  //     return [];
+  //   }
+  // }
+
+  // async initMap(markers) {
+  //   const { Map } = await google.maps.importLibrary("maps");
+  //   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+  //   const map = new google.maps.Map(this.element, {
+  //     zoom: 4,
+  //     center: markers.length > 0 ? markers[0] : { lat: -25.363, lng: 131.044 },
+  //     mapId: "DEMO_MAP_ID",
+  //   });
+
+  //   markers.forEach((markerData) => {
+  //     new AdvancedMarkerElement({
+  //       position: { lat: markerData.lat, lng: markerData.lng },
+  //       map,
+  //       title: markerData.info_window,
+  //     });
+  //   });
+  // }
 }

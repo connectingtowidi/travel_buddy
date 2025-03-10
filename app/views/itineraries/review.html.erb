@@ -14,45 +14,55 @@
     
     <!-- Main content row with itinerary and sidebar -->
     <div class="row">
-        <% @itinerary.itinerary_attractions.each do |itinerary_attraction| %>
         <!-- Left column - Itinerary content -->
         <div class="col-md-6">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th scope="row"><%= itinerary_attraction.starting_time.strftime('%I:%M %p') %></th>
-                    <td><%= itinerary_attraction.attraction.name %></td>
-                    <td><%= itinerary_attraction.attraction.price %></td>
-                </tr>
-            </tbody>
-        </table>
+        <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
+            <h3>Day <%= index + 1 %></h3>
+            <% day_attractions_sorted = day_attractions[1].sort_by { |day_attraction| day_attraction.starting_time }  %>
+                <%# sorted_attractions = attractions.sort_by { |attraction| attraction[:ticket_price] } %>
+            <table class="table table-hover">
+                <tbody>
+                <% day_attractions_sorted.each_with_index do |day_attraction, index| %>
+                    <tr>
+                        <td style="width: 130px;"><%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %></th>
+                        <td style="text-align: left"><%= day_attraction.attraction.name %></td>
+                        <td style="text-align: end; font-weight: bold"><%= day_attraction.attraction.price %></td>
+                        
+                    </tr>
+                    <%# <p> index = <%= index %>
+                    <% if index != (day_attractions_sorted.length - 1) %>
+                        <tr>
+                            <% start_attraction_time = day_attraction.starting_time %>
+                            <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %> 
+                            <% travel_duration = @travels.find { |travel| travel.itinerary_attraction_from_id == day_attraction.id } %>
+                            <% end_travel_time = end_attraction_time + travel_duration.duration.to_i.minutes %>
+                            <td style="width: 130px;"><%= end_attraction_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %> - 
+                                <%= end_travel_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p")%></td>
+                            <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
+                                <%= day_attractions_sorted[index + 1].attraction.name%></td></td>
+                            <td style="text-align: end; font-weight: bold"><%= day_attraction.attraction.price %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+            </table>
+        <% end %>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                </div>
-            </div>
-        </div>
-        <% end %><!--Sidebar content goes here -->
-    </div> <!-- Close the row -->
-
-    <div>
-        <p><%= @itinerary.itinerary_attractions[0].attraction.name %></p>
-        <p>place_id = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["place_id"]%></p>
-        <p>latitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["navigation_points"][0]["location"]["latitude"]%></p>
-        <p>longitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[0].attraction.name)["navigation_points"][0]["location"]["longitude"]%></p>
         
-        <p><%= @itinerary.itinerary_attractions[1].attraction.name %></p>
-        <p>place_id = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["place_id"]%></p>
-        <p>latitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["navigation_points"][0]["location"]["latitude"]%></p>
-        <p>longitude = <%= GoogleMapsService.geocode_address(@itinerary.itinerary_attractions[1].attraction.name)["navigation_points"][0]["location"]["longitude"]%></p>
-
+        <div class="col-md-6">
+            <div
+                id="map"
+                data-controller="google-maps"
+                style="width: 100%;
+                height: 600px;"
+                data-markers="<%= @markers.to_json %>" ></div>    
+        </div>
+        <!--Sidebar content goes here -->
+    </div> <!-- Close the row -->
+    <div class="col-md-4 col-sm-6 text-md-end">
+      <button class="btn btn-dark">See My Journey</button>
     </div>
+    
 </div> <!-- Close the container -->
 
- <div
-  id="map"
-  data-controller="google-maps"
-  style="width: 100%;
-  height: 600px;"
-  data-markers="<%= @markers.to_json %>" ></div>
+ 

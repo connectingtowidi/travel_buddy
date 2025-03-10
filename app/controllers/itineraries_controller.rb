@@ -55,18 +55,48 @@ class ItinerariesController < ApplicationController
 
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
-    @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
+    # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
 
-    @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
-      {
+    # @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
+    #   {
+    #     lat: itinerary_attraction.attraction.latitude.to_f,
+    #     lng: itinerary_attraction.attraction.longitude.to_f,
+    #     title: itinerary_attraction.attraction.name
+    #   }
+    # end
+
+    @markers = []
+    @travels = []
+
+    # travel_map = Travel.where(itinerary_attraction_from_id: @itinerary.itinerary_attractions.pluck(:id)).index_by(&:itinerary_attraction_from_id)
+
+    @itinerary.itinerary_attractions.each do |itinerary_attraction|
+      @markers << {
         lat: itinerary_attraction.attraction.latitude.to_f,
         lng: itinerary_attraction.attraction.longitude.to_f,
         title: itinerary_attraction.attraction.name
-        # infoWindow: { content: render_to_string(partial: "/flats/map_box", locals: { flat: flat }) }
-        # Uncomment the above line if you want each of your markers to display a info window when clicked
-        # (you will also need to create the partial "/flats/map_box")
       }
+      # @itinerary_attraction_id = itinerary_attraction_id
+      travel = Travel.find_by(itinerary_attraction_from_id: itinerary_attraction.id)
+      if travel
+        @travels << travel
+      end
+
+      # travel = travel_map[itinerary_attraction.id]
+      # if travel
+      #   @travels << travel
+      # else
+      #   @travels << ["final stop"]
+      # end
+
+
     end
+
+    # @itinerary.itinerary_attractions.each do |itinerary_attraction| 
+    #   @markers['lat'] = itinerary_attraction.attraction.latitude.to_f,
+    #   @markers['lng'] = itinerary_attraction.attraction.longitude.to_f,
+    #   @markers['title'] = itinerary_attraction.attraction.name
+    # end
   end
 
   private
