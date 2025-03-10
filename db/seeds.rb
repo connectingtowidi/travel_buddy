@@ -82,7 +82,7 @@ attraction_history_1 = Attraction.create!(
     description: 'The National Gallery Singapore is a visual arts institution which oversees the largest public collection of modern art in Singapore and Southeast Asia. Situated in the Downtown Core of Singapore, the museum occupies two national monuments: the former Supreme Court Building and City Hall.',
     # opening_hour: '10:00',
     # closing_hour: '19:00',
-    # duration: 2,
+    duration: 2,
     price: 20.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -105,7 +105,7 @@ attraction_history_2 = Attraction.create!(
     description: 'The National Museum of Singapore is a national museum of Singapore. It is the oldest museum in Singapore and the first national museum in Southeast Asia. The museum is located in the Civic District.',
     # opening_hour: '10:00',
     # closing_hour: '18:30',
-    # duration: 2,
+    duration: 2,
     price: 24.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -128,7 +128,7 @@ attraction_history_3 = Attraction.create!(
     description: 'Fort Siloso is a fort located in Singapore. It is a historical fort that was built in the 19th century.',
     # opening_hour: '10:00',
     # closing_hour: '17:00',
-    # duration: 3,
+    duration: 3,
     price: 0.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -151,7 +151,7 @@ attraction_history_4 = Attraction.create!(
     description: 'The Peranakan Museum is a museum in Singapore that showcases the Peranakan culture. It is a museum that is dedicated to the Peranakan culture.',
     # opening_hour: '10:00',
     # closing_hour: '19:00',
-    # duration: 1,
+    duration: 1,
     price: 18.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -174,7 +174,7 @@ attraction_history_5 = Attraction.create!(
     description: 'The Asian Civilisations Museum is a museum in Singapore that showcases the Asian civilisations. It is a museum that is dedicated to the Asian civilisations.',
     # opening_hour: '10:00',
     # closing_hour: '19:00',
-    # duration: 2,
+    duration: 2,
     price: 15.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -197,7 +197,7 @@ attraction_nature_1 = Attraction.create!(
     description: 'The Flower Dome at Garden by the Bay is a greenhouse in Singapore that showcases the flowers. It is a greenhouse that is dedicated to the flowers.',
     # opening_hour: '09:00',
     # closing_hour: '21:00',
-    # duration: 2,
+    duration: 2,
     price: 20.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -220,7 +220,7 @@ attraction_nature_2 = Attraction.create!(
     description: 'The Cloud Forest at Gardens by the Bay is a greenhouse in Singapore that showcases the clouds. It is a greenhouse that is dedicated to the clouds.',
     # opening_hour: '09:00',
     # closing_hour: '20:00',
-    # duration: 4,
+    duration: 4,
     price: 25.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -243,7 +243,7 @@ attraction_nature_3 = Attraction.create!(
     description: 'The Singapore Botanic Gardens is a botanical garden in Singapore. It is a botanical garden that is dedicated to the plants.',
     # opening_hour: '05:00',
     # closing_hour: '23:00',
-    # duration: 2,
+    duration: 2,
     price: 0.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -266,7 +266,7 @@ attraction_nature_4 = Attraction.create!(
     description: 'The MacRitchie Reservoir is a reservoir in Singapore. It is a reservoir that is dedicated to the water.',
     # opening_hour: '07:00',
     # closing_hour: '19:00',
-    # duration: 2,
+    duration: 2,
     price: 0.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -289,7 +289,7 @@ attraction_nature_5 = Attraction.create!(
     description: 'The Fort Canning Park is a park in Singapore. It is a park that is dedicated to the history.',
     # opening_hour: '07:00',
     # closing_hour: '19:00',
-    # duration: 2,
+    duration: 2,
     price: 0.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -312,7 +312,7 @@ attraction_kids_1 = Attraction.create!(
     description: 'The ArtScience Museum is a museum in Singapore. It is a museum that is dedicated to the art and science.',
     # opening_hour: '08:00',
     # closing_hour: '20:00',
-    # duration: 2,
+    duration: 2,
     price: 35.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -335,7 +335,7 @@ attraction_kids_2 = Attraction.create!(
     description: 'The Singapore Flyer is a ferris wheel in Singapore. It is a ferris wheel that is dedicated to the city.',
     # opening_hour: '08:00',
     # closing_hour: '20:00',
-    # duration: 1,
+    duration: 1,
     price: 33.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -358,7 +358,7 @@ attraction_kids_3 = Attraction.create!(
     description: 'The Universal Studios Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
-    # duration: 3,
+    duration: 3,
     price: 100.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -381,7 +381,7 @@ attraction_kids_4 = Attraction.create!(
     description: 'The Underwater World Singapore is a theme park in Singapore. It is a theme park that is dedicated to the movies.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
-    # duration: 2,
+    duration: 2,
     price: 30.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -404,7 +404,7 @@ attraction_kids_5 = Attraction.create!(
     description: 'The Singapore Zoo is a zoo in Singapore. It is a zoo that is dedicated to the animals.',
     # opening_hour: '09:00',
     # closing_hour: '18:00',
-    # duration: 3,
+    duration: 3,
     price: 30.00,
     reviews: [],
     tripadvisor_photos: [],
@@ -528,6 +528,57 @@ itinerary_attraction_322 = ItineraryAttraction.create!(
     starting_time: DateTime.new(2025, 4, 12, 16, 0, 0, "+08:00")
 )
 
+puts "Creating travel..."
+
+travel_111_112 = Travel.create!(
+  itinerary_attraction_from: itinerary_attraction_111,
+  itinerary_attraction_to: itinerary_attraction_112,
+  mode: 'transit',
+  duration: 20  
+)
+
+travel_112_113 = Travel.create!(
+  itinerary_attraction_from: itinerary_attraction_112,
+  itinerary_attraction_to: itinerary_attraction_113,
+  mode: 'taxi',
+  duration: 40 
+)
+
+travel_121_122 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_121,
+    itinerary_attraction_to: itinerary_attraction_122,
+    mode: 'walk',
+    duration: 35
+)
+
+travel_122_123 = Travel.create!(
+  itinerary_attraction_from: itinerary_attraction_122,
+  itinerary_attraction_to: itinerary_attraction_123,
+  mode: 'transit',
+  duration: 30  
+)
+
+travel_211_212 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_211,
+    itinerary_attraction_to: itinerary_attraction_212,
+    mode: 'taxi',
+    duration: 15
+)
+
+travel_311_312 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_311,
+    itinerary_attraction_to: itinerary_attraction_312,
+    mode: 'taxi',
+    duration: 20
+)
+
+travel_312_313 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_312,
+    itinerary_attraction_to: itinerary_attraction_313,
+    mode: 'transit',
+    duration: 25
+)
+
 # puts "Creating journeys..."
 
 # journey_111 = Journey.create!(
@@ -570,30 +621,6 @@ itinerary_attraction_322 = ItineraryAttraction.create!(
 #     mode: 'bus'
 # )
 
-puts "Creating travel..."
-
-travel_111_112 = Travel.create!(
-  itinerary_attraction_from: itinerary_attraction_111,
-  itinerary_attraction_to: itinerary_attraction_112,
-  mode: 'bus',
-  duration: 20
-)
-
-travel_121_122 = Travel.create!(
-    itinerary_attraction_from: itinerary_attraction_121,
-    itinerary_attraction_to: itinerary_attraction_122,
-    mode: 'walk',
-    duration: 35
-)
-
-travel_211_311 = Travel.create!(
-    itinerary_attraction_from: itinerary_attraction_211,
-    itinerary_attraction_to: itinerary_attraction_311,
-    mode: 'taxi',
-    duration: 15
-)
-
-
 puts "Creating payments..."
 
 payment_1 = Payment.create!(
@@ -620,7 +647,7 @@ puts "Finished! Created #{User.count} users."
 puts "Finished! Created #{Itinerary.count} itineraries."
 puts "Finished! Created #{Attraction.count} attractions."
 puts "Finished! Created #{ItineraryAttraction.count} itinerary attractions."
-# puts "Finished! Created #{Journey.count} journeys."
+puts "Finished! Created #{Travel.count} travels."
 puts "Finished! Created #{Payment.count} payments."
 
 # Attach an image if you have one

@@ -152,6 +152,9 @@ GEM
     ffi (1.17.1-x86_64-linux-musl)
     font-awesome-sass (6.7.2)
       sassc (~> 2.0)
+    geocoder (1.8.5)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     httparty (0.22.0)
@@ -373,6 +376,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   font-awesome-sass (~> 6.1)
+  geocoder
   httparty
   importmap-rails
   jbuilder
