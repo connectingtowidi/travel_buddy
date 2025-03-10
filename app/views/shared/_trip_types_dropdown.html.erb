@@ -1,0 +1,9 @@
+<select id="interest-dropdown" class="form-select">
+  <% if trip_types.any? %>
+    <% trip_types.each do |type| %>
+      <option value="<%= type["id"] %>"><%= type["name"] %></option>
+    <% end %>
+  <% else %>
+    <option>Loading...</option>
+  <% end %>
+</select>

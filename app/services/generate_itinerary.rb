@@ -15,7 +15,7 @@ class GenerateItinerary
       The itinerary should be in JSON format.
       The itinerary should include the id of the attraction, the day that I should visit the attraction, 
       and the duration of the visit, and the starting time 
-      The itinerary should include all the attractions.
+      The itinerary should include all the attractions and give it suitable name for the itinerary
 
       Here is the list of attractions:
       #{attractions_json}
@@ -32,33 +32,49 @@ class GenerateItinerary
             schema: {
               type: "object",
               properties: {
-                id: {
-                  type: "integer",
-                  description: "Unique identifier for the attraction"
-                },
-                day: {
-                  type: "integer",
-                  description: "The day number on which the attraction is scheduled",
-                  minimum: 1,
-                  maximum: duration
-                },
-                duration: {
-                  type: "integer",
-                  description: "How long I should stay at the attraction for in hours",
-                  minimum: 1
-                },
-                starting_time: {
+                itinerary_name: {
                   type: "string",
-                  description: "The start time at the attraction in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ",
+                  description: "The name of the itinerary"
+                },
+                attractions: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "integer",
+                        description: "Unique identifier for the attraction"
+                      },
+                      day: {
+                        type: "integer",
+                        description: "The day number on which the attraction is scheduled",
+                        minimum: 1,
+                        maximum: "duration"
+                      },
+                      duration: {
+                        type: "integer",
+                        description: "How long I should stay at the attraction for in hours",
+                        minimum: 1
+                      },
+                      starting_time: {
+                        type: "string",
+                        description: "The start time at the attraction in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ"
+                      }
+                    },
+                    required: [
+                      "id",
+                      "day",
+                      "duration"
+                    ]
+                  }
                 }
               },
               required: [
-                "id",
-                "day",
-                "duration"
+                "attractions"
               ]
             }
           }
+          
         },
         messages: [
           { role: "user", content: prompt }
@@ -76,11 +92,10 @@ class GenerateItinerary
     pp itinerary_data
 
     itinerary = Itinerary.create!(
-      name: "Adventure kid friendly",
+      name: "xxx",
       duration: duration,
       user: user,
-      interest: "kid-focused",
-      pace: "relaxed",
+      interest: interest,
       start_date: start_date,
       end_date: end_date
     )

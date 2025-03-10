@@ -3,8 +3,15 @@ class ItinerariesController < ApplicationController
 
   def index
     @itineraries = current_user.itineraries
+    @trip_types = TripadvisorApi.fetch_trip_types
   end
 
+  def load_trip_types
+    @trip_types = TripadvisorApi.fetch_trip_types
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
 
   def show
     @selected_attraction = Attraction.find(params[:attraction_id]) if params[:attraction_id]
