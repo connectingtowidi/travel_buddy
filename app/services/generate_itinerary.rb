@@ -13,8 +13,8 @@ class GenerateItinerary
 
       You are to generate an itinerary for a #{duration} day trip to Singapore.
       The itinerary should be in JSON format.
-      The itinerary should include the id of the attraction, the day that I should visit the attraction, 
-      and the duration of the visit, and the starting time 
+      The itinerary should include the id of the attraction, the day that I should visit the attraction,
+      and the duration of the visit, and the starting time
       The itinerary should include all the attractions and give it suitable name for the itinerary
 
       Here is the list of attractions:
@@ -49,7 +49,7 @@ class GenerateItinerary
                         type: "integer",
                         description: "The day number on which the attraction is scheduled",
                         minimum: 1,
-                        maximum: "duration"
+                        maximum: duration
                       },
                       duration: {
                         type: "integer",
@@ -70,11 +70,12 @@ class GenerateItinerary
                 }
               },
               required: [
-                "attractions"
+                "attractions",
+                "itinerary_name"
               ]
             }
           }
-          
+
         },
         messages: [
           { role: "user", content: prompt }
@@ -107,7 +108,7 @@ class GenerateItinerary
         day: attraction["day"],
         duration: attraction["duration"],
         starting_time: attraction["starting_time"]
-        
+
       )
     end
   end
