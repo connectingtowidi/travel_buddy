@@ -1,4 +1,4 @@
-<div class="navbar-container">
+<div class="navbar-container"  data-controller="regenerate-itinerary">
   <div class="d-flex justify-content-between align-items-start">
     <!-- Left side: Brand -->
     <div>
@@ -41,24 +41,21 @@
   <turbo-frame id="interest-dropdown-frame">
     <%= render "shared/trip_types_dropdown", trip_types: [] %>
   </turbo-frame>
-
-  
   </div>
     
-    <div class="col-md-3 col-sm-6 col-12 mb-2" data-controller='regenerate-itinerary'>
+    <div class="col-md-3 col-sm-6 col-12 mb-2">
       <div class="filter-label">Start Date</div>
       <input type="date" class="form-control" data-regenerate-itinerary-target="startDate">
     </div>
     
-    <div class="col-md-3 col-sm-6 col-12 mb-2" data-controller='regenerate-itinerary'>
+    <div class="col-md-3 col-sm-6 col-12 mb-2">
       <div class="filter-label">End Date</div>
       <input type="date" class="form-control" data-regenerate-itinerary-target="endDate">
     </div>
     
-    <div class="col-md-2 col-sm-6 col-12 mb-2"
-      data-controller="<%= user_signed_in? ? 'regenerate-itinerary' : 'redirect' %>">
+    <div class="col-md-2 col-sm-6 col-12 mb-2">
       <div class="filter-label">&nbsp;</div> <!-- Empty label to align with other inputs -->
-      <button data-action="click-><%= user_signed_in? ? 'regenerate-itinerary#regenerate' : 'redirect#redirectToLogin' %>"
+      <button data-action="click-><%= user_signed_in? ? 'regenerate-itinerary#regenerate' : '' %>"
           class="btn btn-regenerate w-100">Regenerate
       </button>
     </div>

@@ -17,10 +17,15 @@ export default class extends Controller {
     const endDate = this.endDateTarget.value;
     const interest = document.querySelector("#interest-dropdown-frame select")?.value; // Adjust selector if needed
 
-    if (!startDate || !endDate || !interest) {
+    
+    if (!startDate || !endDate ) {
       alert("Please fill in all fields before regenerating the itinerary.");
       return;
     }
   
+    if (endDate < startDate) {
+      alert("End date must be after start date.");
+      return;
+    }
   }
 }
