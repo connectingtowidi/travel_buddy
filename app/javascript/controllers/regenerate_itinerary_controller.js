@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-
+import Swal from 'sweetalert2';
 // Connects to data-controller="regenerate-itinerary"
 export default class extends Controller {
 
@@ -19,12 +19,22 @@ export default class extends Controller {
 
     
     if (!startDate || !endDate ) {
-      alert("Please fill in all fields before regenerating the itinerary.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all fields before regenerating the itinerary.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
       return;
     }
   
     if (endDate < startDate) {
-      alert("End date must be after start date.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'End date must be after start date.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
       return;
     }
   }
