@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="row mb-3 g-5">
+  <div class="row mt-3 g-5">
     <!-- Main content row with itinerary and sidebar -->
     <div class="col">
         <!-- Left column - Itinerary content -->
@@ -42,7 +42,7 @@
                   </p>
                 </div>
               </div>
-              <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: day_attraction.attraction), class: "btn btn-dark btn-sm" %>
+              <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: day_attraction.attraction), class: "btn btn-dark btn-sm", data: { turbo_frame: "attraction_details"} %>
             </div>
           </div><!-- Close the col-md-7 -->
           <div class="row">
@@ -60,9 +60,11 @@
       <% end %>
     </div>
     <!-- Right column - Sidebar (add your sidebar content here) -->
-    <div class="col position-relative">
-      <!-- Sidebar content goes here -->
-      <%= render(partial: "attractions/details") if @selected_attraction %>
-    </div> <!-- Close the column -->
+    <div class="col position-relative pt-5">
+      <turbo-frame id="attraction_details">
+        <!-- Sidebar content goes here -->
+        <%= render(partial: "attractions/details") if @selected_attraction %>
+      </turbo-frame><!-- Close the column -->
+    </div>
   </div> <!-- Close the container -->
 </div>
