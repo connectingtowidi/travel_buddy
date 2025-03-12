@@ -3,14 +3,6 @@ class ItinerariesController < ApplicationController
 
   def index
     @itineraries = current_user.itineraries
-   # @trip_types = TripadvisorApi.fetch_trip_types
-  end
-
-  def load_trip_types
-    @trip_types = TripadvisorApi.fetch_trip_types
-    respond_to do |format|
-      format.turbo_stream
-    end
   end
 
   def show
@@ -65,8 +57,7 @@ class ItinerariesController < ApplicationController
     start_date = params[:start_date] ? Date.parse(params[:start_date]) : @itinerary.start_date
     end_date = params[:end_date] ? Date.parse(params[:end_date]) : @itinerary.end_date
   
-    attractions = Attraction.all # Replace with your actual logic
-  
+    attractions = Attraction.all 
     # Call the service class
     @itinerary = GenerateItinerary.call(current_user, attractions, interest, start_date, end_date)
   
