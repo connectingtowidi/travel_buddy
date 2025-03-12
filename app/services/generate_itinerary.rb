@@ -2,7 +2,7 @@ require "openai"
 require "json"
 
 class GenerateItinerary
-  def self.call(user, attractions, start_date, end_date)
+  def self.call(user, attractions, interest, start_date, end_date)
     client = OpenAI::Client.new
 
     attractions_json = attractions.to_json
@@ -11,7 +11,7 @@ class GenerateItinerary
     prompt = <<~PROMPT
       You are a travel planner. You are given a list of attractions in Singapore.
 
-      You are to generate an itinerary for a #{duration} day trip to Singapore.
+      You are to generate an itinerary for a #{duration} day trip to Singapore based on the interest.
       The itinerary should be in JSON format.
       The itinerary should include the id of the attraction, the day that I should visit the attraction,
       and the duration of the visit, and the starting time
@@ -93,7 +93,7 @@ class GenerateItinerary
     pp itinerary_data
 
     itinerary = Itinerary.create!(
-      name: "xxx",
+      name: itinerary_data["itinerary_name"],
       duration: duration,
       user: user,
       interest: interest,
@@ -101,7 +101,7 @@ class GenerateItinerary
       end_date: end_date
     )
 
-    itinerary_data["itinerary"].each do |attraction|
+    itinerary_data["attractions"].each do |attraction|
       ItineraryAttraction.create!(
         itinerary: itinerary,
         attraction_id: attraction["id"],

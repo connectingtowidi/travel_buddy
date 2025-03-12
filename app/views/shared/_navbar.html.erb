@@ -26,25 +26,41 @@
   <% if (!current_page?(itineraries_path)) %>
     <div class="filter-row mt-3">
     <div class="col-md-3 col-sm-6 col-12 mb-2">
+
     <div class="filter-label">Interest</div>
-    <turbo-frame id="interest-dropdown-frame">
-      <%= render "shared/trip_types_dropdown", trip_types: [] %>
-    </turbo-frame>
+
+    <select class="form-select">
+    <option selected>Kids-focused</option>
+    <option>Culture</option>
+    <option>Food</option>
+    <option>Nature</option>
+    <option>Shopping</option>
+  </select>
+  
+  <%# 
+  <turbo-frame id="interest-dropdown-frame">
+    <%= render "shared/trip_types_dropdown", trip_types: [] %>
+  </turbo-frame>
+
+  
   </div>
     
     <div class="col-md-3 col-sm-6 col-12 mb-2">
       <div class="filter-label">Start Date</div>
-      <input type="date" class="form-control" id="start-date">
+      <input type="date" class="form-control" data-regenerate-itinerary-target="startDate">
     </div>
     
     <div class="col-md-3 col-sm-6 col-12 mb-2">
       <div class="filter-label">End Date</div>
-      <input type="date" class="form-control" id="end-date">
+      <input type="date" class="form-control" data-regenerate-itinerary-target="endDate">
     </div>
     
-    <div class="col-md-2 col-sm-6 col-12 mb-2">
+    <div class="col-md-2 col-sm-6 col-12 mb-2"
+      data-controller="<%= user_signed_in? ? 'regenerate-itinerary' : 'redirect' %>">
       <div class="filter-label">&nbsp;</div> <!-- Empty label to align with other inputs -->
-      <button data-action="click->redirect#redirectToLogin" class="btn btn-regenerate w-100">Regenerate</button>
+      <button data-action="click-><%= user_signed_in? ? 'regenerate-itinerary#regenerate' : 'redirect#redirectToLogin' %>"
+          class="btn btn-regenerate w-100">Regenerate
+      </button>
     </div>
     <% end%>
 

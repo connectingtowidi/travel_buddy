@@ -3,7 +3,7 @@ class ItinerariesController < ApplicationController
 
   def index
     @itineraries = current_user.itineraries
-    @trip_types = TripadvisorApi.fetch_trip_types
+   # @trip_types = TripadvisorApi.fetch_trip_types
   end
 
   def load_trip_types
@@ -59,6 +59,25 @@ class ItinerariesController < ApplicationController
       render :new
     end
   end
+
+  def regenerate
+    interest = params[:interest] || @itinerary.interest
+    start_date = params[:start_date] ? Date.parse(params[:start_date]) : @itinerary.start_date
+    end_date = params[:end_date] ? Date.parse(params[:end_date]) : @itinerary.end_date
+  
+    attractions = Attraction.all # Replace with your actual logic
+  
+    # Call the service class
+    @itinerary = GenerateItinerary.call(current_user, attractions, interest, start_date, end_date)
+  
+    respond_to do |format|
+      format.turbo_stream
+      format.json { render json: { success: true, message: "Itinerary regenerated successfully!" } }
+    end
+  rescue => e
+    render json: { success: false, error: e.message }, status: :unprocessable_entity
+  end
+  
 
   private
 
