@@ -1,4 +1,4 @@
-<div class="navbar-container"  data-controller="regenerate-itinerary">
+<div class="navbar-container" data-controller="regenerate-itinerary" data-user-signed-in="<%= user_signed_in? %>">
   <div class="d-flex justify-content-between align-items-start">
     <!-- Left side: Brand -->
     <div>
@@ -22,52 +22,78 @@
     <% end %>
   </div>
 
-  <!-- Filters -->
-  <% if (!current_page?(itineraries_path)) %>
-    <div class="filter-row mt-3">
-    <div class="col-md-3 col-sm-6 col-12 mb-2">
-
-    <div class="filter-label">Interest</div>
-
-    <select class="form-select">
-    <option selected>Kids-focused</option>
-    <option>Culture</option>
-    <option>Food</option>
-    <option>Nature</option>
-    <option>Shopping</option>
-  </select>
-
-  <%# 
-  <turbo-frame id="interest-dropdown-frame">
-    <%= render "shared/trip_types_dropdown", trip_types: [] %>
-  </turbo-frame>
-  </div>
+ 
+<!-- Filters -->
+<% if !current_page?(itineraries_path) %>
+  <div class="filter-row mt-3 d-flex align-items-center">
     
-    <div class="col-md-3 col-sm-6 col-12 mb-2">
+    <!-- Interest Dropdown -->
+    <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <div class="filter-label">Interest</div>
+      <select class="form-select" data-regenerate-itinerary-target="interest">
+        <option selected>Kids-focused</option>
+        <option>Culture</option>
+        <option>Food</option>
+        <option>Nature</option>
+        <option>Shopping</option>
+      </select>
+    </div>
+
+    <!-- Start Date -->
+    <div class="col-md-2 col-sm-3 col-12 mb-2">
       <div class="filter-label">Start Date</div>
       <input type="date" class="form-control" data-regenerate-itinerary-target="startDate">
     </div>
-    
-    <div class="col-md-3 col-sm-6 col-12 mb-2">
+
+    <!-- End Date -->
+    <div class="col-md-2 col-sm-3 col-12 mb-2">
       <div class="filter-label">End Date</div>
       <input type="date" class="form-control" data-regenerate-itinerary-target="endDate">
     </div>
-    
-    <div class="col-md-2 col-sm-6 col-12 mb-2">
-      <div class="filter-label">&nbsp;</div> <!-- Empty label to align with other inputs -->
-      <button data-action="click-><%= user_signed_in? ? 'regenerate-itinerary#regenerate' : '' %>"
-          class="btn btn-regenerate w-100">Regenerate
+
+    <!-- Number of Pax Dropdown -->
+    <div class="col-md-2 col-sm-3 col-12 mb-2">
+    <div class="filter-label">Number of Pax</div>
+    <select class="form-select" id="paxDropdown" data-action="change->regenerate-itinerary#togglePaxInput" data-regenerate-itinerary-target="paxDropdown">
+      <option selected>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option value="10+">10+</option> <!-- Option to trigger manual input -->
+    </select>
+  
+    <!-- Custom Pax Input (hidden by default) -->
+    <input type="number" class="form-control mt-2" id="paxInput" style="display:none;" placeholder="Enter custom number of pax" data-regenerate-itinerary-target="paxInput">
+  </div>
+  
+
+    <!-- Generate/Regenerate Button (Aligned to the right) -->
+    <!-- Generate/Regenerate Button (Aligned to the right) -->
+    <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 30px;">
+      <button 
+        data-user-signed-in="<%= user_signed_in? %>"
+        data-action="click->regenerate-itinerary#regenerate"
+        class="btn btn-regenerate w-100">
+        <%= user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate' %>
       </button>
     </div>
-    <% end%>
-
-   <% if !user_signed_in? %>
-  <!-- Login Button at the top-right -->
-<div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
-    <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
-        Login
-    </button>
-</div>
+    
+  </div>
 <% end %>
+
+<% if !user_signed_in? %>
+  <!-- Login Button at the top-right -->
+  <div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
+    <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
+      Login
+    </button>
+  </div>
+<% end %>
+
 </div>
 </div>

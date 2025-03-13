@@ -2,23 +2,26 @@ require "openai"
 require "json"
 
 class GenerateItinerary
-  def self.call(user, attractions, interest, start_date, end_date)
+  def self.call(user, interest, start_date, end_date, number_of_pax)
     client = OpenAI::Client.new
 
+
+    attractions = self.nearest_attractions(interest)
     attractions_json = attractions.to_json
     duration = (end_date - start_date).to_i # Calculate duration in days
 
     prompt = <<~PROMPT
       You are a travel planner. You are given a list of attractions in Singapore.
-
-      You are to generate an itinerary for a #{duration} day trip to Singapore based on the interest.
+      You are to generate an itinerary for a #{duration} day trip to Singapore
       The itinerary should be in JSON format.
       The itinerary should include the id of the attraction, the day that I should visit the attraction,
-      and the duration of the visit, and the starting time
+      and the duration of the visit, and the starting time, make sure the starting time falls within attraction's 
+      opening and closing hours for the day and make sure the #{start_date} and #{end_date} fall within the opening days
+      of the attractions.
       The itinerary should include all the attractions and give it suitable name for the itinerary
 
       Here is the list of attractions:
-      #{attractions_json}
+      #{attractions_json} 
     PROMPT
 
     open_ai_response = client.chat(
@@ -97,6 +100,7 @@ class GenerateItinerary
       duration: duration,
       user: user,
       interest: interest,
+      number_of_pax: number_of_pax
       start_date: start_date,
       end_date: end_date
     )
@@ -113,7 +117,25 @@ class GenerateItinerary
     end
   end
 
+  private
+
   def self.client
     @client ||= OpenAI::Client.new
   end
+
+  
+  def nearest_attractions(interest)
+    response = self.client.embeddings(
+      parameters: {
+        model: 'text-embedding-3-small',
+        input: "Give me all the attractions that match the #{interest}"
+      }
+    )
+    question_embedding = response['data'][0]['embedding']
+    return Attraction.nearest_neighbors(
+      :embedding, question_embedding,
+      distance: "euclidean"
+    ) # you may want to add .first(3) here to limit the number of results
+  end
+
 end

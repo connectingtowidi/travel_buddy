@@ -57,10 +57,9 @@ class ItinerariesController < ApplicationController
     start_date = params[:start_date] ? Date.parse(params[:start_date]) : @itinerary.start_date
     end_date = params[:end_date] ? Date.parse(params[:end_date]) : @itinerary.end_date
   
-    attractions = Attraction.all 
-    # Call the service class
-    @itinerary = GenerateItinerary.call(current_user, attractions, interest, start_date, end_date)
+    @itinerary = GenerateItinerary.call(current_user, interest, start_date, end_date)
   
+    raise
     respond_to do |format|
       format.turbo_stream
       format.json { render json: { success: true, message: "Itinerary regenerated successfully!" } }

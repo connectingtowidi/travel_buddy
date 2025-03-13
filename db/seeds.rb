@@ -39,6 +39,7 @@ itinerary_1 = Itinerary.create!(
     duration: 2,
     user: user1,
     interest: 'history',
+    number_of_pax: 1,
     start_date: Date.new(2025, 3, 25),
     end_date: Date.new(2025, 3, 28)
 )
@@ -48,6 +49,7 @@ itinerary_2 = Itinerary.create!(
     duration: 1,
     user: user1,
     interest: 'nature',
+    number_of_pax: 1,
     start_date: Date.new(2025, 4, 16),
     end_date: Date.new(2025, 4, 18)
 )
@@ -57,6 +59,7 @@ itinerary_3 = Itinerary.create!(
     duration: 2,
     user: user2,
     interest: 'kids-friendly',
+    number_of_pax: 3,
     start_date: Date.new(2025, 4, 10),
     end_date: Date.new(2025, 4, 13)
 )
@@ -66,6 +69,7 @@ itinerary_4 = Itinerary.create!(
     duration: 1,
     user: user3,
     interest: 'food',
+    number_of_pax: 2,
     start_date: Date.new(2025, 3, 18),
     end_date: Date.new(2025, 3, 20)
 )
