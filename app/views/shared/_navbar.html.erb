@@ -22,58 +22,83 @@
     <% end %>
   </div>
 
- 
-<!-- Filters -->
-<% if !current_page?(itineraries_path) %>
-<%= simple_form_for :itinerary, url: regenerate_itinerary_path, method: :post, html: { class: "d-flex align-items-center filter-row mt-3" } do |f| %>
+  <!-- Filters -->
+  <% if !current_page?(itineraries_path) %>
+    <%= simple_form_for @itinerary || Itinerary.new, url: itineraries_path, method: :post, html: { class: "d-flex flex-wrap align-items-center filter-row mt-3", data: { regenerate_itinerary_target: "form" } } do |f| %>
   
-  <!-- Interest Dropdown -->
-  <div class="col-md-2 col-sm-3 col-12 mb-2">
-    <div class="filter-label">Interest</div>
-    <%= f.input :interest, as: :select, collection: ['Kids-focused', 'Culture', 'Food', 'Nature', 'Shopping'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
-  </div>
+      <!-- Interest Dropdown -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2">
+        <%= f.input :interest, as: :select, collection: ['Kids-focused', 'Culture', 'Food', 'Nature', 'Shopping'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
+      </div>
 
+      <!-- Start Date -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2">
+        <%= f.input :start_date, 
+                    as: :string, 
+                    input_html: { 
+                      class: 'form-control', 
+                      data: { 
+                        regenerate_itinerary_target: "startDate" 
+                      } 
+                    }, 
+                    placeholder: "Select start date" %>
+      </div>
 
-  <!-- Start Date -->
-  <div class="col-md-2 col-sm-3 col-12 mb-2">
-    <div class="filter-label">Start Date</div>
-    <%= f.input :start_date, as: :date, input_html: { class: 'form-control', data: { regenerate_itinerary_target: "startDate" } } %>
-  </div>
+      <!-- End Date -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2">
+        <%= f.input :end_date, 
+                    as: :string, 
+                    input_html: { 
+                      class: 'form-control', 
+                      data: { 
+                        regenerate_itinerary_target: "endDate" 
+                      } 
+                    }, 
+                    placeholder: "Select end date" %>
+      </div>
 
-  <!-- End Date -->
-  <div class="col-md-2 col-sm-3 col-12 mb-2">
-    <div class="filter-label">End Date</div>
-    <%= f.input :end_date, as: :date, input_html: { class: 'form-control', data: { regenerate_itinerary_target: "endDate" } } %>
-  </div>
+      <!-- Pax Dropdown -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="paxContainer">
+        <%= f.input :number_of_pax, 
+                    as: :select, 
+                    collection: [1, 2, 3, 4, 5, 6, 7, 8, 9, '10+'], 
+                    include_blank: false, 
+                    input_html: { 
+                      class: 'form-select', 
+                      data: { 
+                        action: "change->regenerate-itinerary#togglePaxInput", 
+                        regenerate_itinerary_target: "paxDropdown" 
+                      }
+                    } %>
+      </div>
 
-  <!-- Number of Pax Dropdown -->
-  <div class="col-md-2 col-sm-3 col-12 mb-2">
-    <div class="filter-label">Number of Pax</div>
-    <%= f.input :pax, as: :select, collection: (1..9).to_a + ['10+'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "paxDropdown", action: "change->regenerate-itinerary#togglePaxInput" } } %>
-    
-  </div>
+      <!-- Custom Pax Input (hidden by default) -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
+        <%= f.input :number_of_pax, 
+                    as: :integer, 
+                    input_html: { 
+                      class: 'form-control', 
+                      placeholder: 'Enter custom number of pax', 
+                      data: { 
+                        regenerate_itinerary_target: "paxInput" 
+                      } 
+                    } %>
+      </div>
 
-  <!-- Generate/Regenerate Button (Aligned to the right) -->
-  <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 30px;">
-    <%= f.button :submit, class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } do %>
-      <%= user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate' %>
+      <!-- Generate/Regenerate Button (Aligned to the right) -->
+      <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 20px;">
+        <%= f.button :submit, user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate', class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } %>
+      </div>
     <% end %>
-  </div>
-  
+  <% end %>
 
-<% end %>
-
-
-<% end %>
-
-<% if !user_signed_in? %>
   <!-- Login Button at the top-right -->
-  <div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
-    <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
-      Login
-    </button>
-  </div>
-<% end %>
+  <% if !user_signed_in? %>
+    <div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
+      <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
+        Login
+      </button>
+    </div>
+  <% end %>
 
-</div>
 </div>

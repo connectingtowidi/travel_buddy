@@ -1,14 +1,18 @@
 require "openai"
 require "json"
 
-class GenerateItinerary
+class GenerateItineraryService
   def self.call(user, interest, start_date, end_date, number_of_pax)
     client = OpenAI::Client.new
 
 
-    attractions = self.nearest_attractions(interest)
+    attractions = nearest_attractions(interest)
     attractions_json = attractions.to_json
-    duration = (end_date - start_date).to_i # Calculate duration in days
+    # Convert start_date and end_date to Date objects if they are strings
+    start_date = Date.parse(start_date) if start_date.is_a?(String)
+    end_date = Date.parse(end_date) if end_date.is_a?(String)
+    # Calculate the duration in days
+    duration = (end_date - start_date).to_i
 
     prompt = <<~PROMPT
       You are a travel planner. You are given a list of attractions in Singapore.
@@ -21,7 +25,7 @@ class GenerateItinerary
       The itinerary should include all the attractions and give it suitable name for the itinerary
 
       Here is the list of attractions:
-      #{attractions_json} 
+      #{nearest_attractions(interest).to_json}
     PROMPT
 
     open_ai_response = client.chat(
@@ -92,15 +96,23 @@ class GenerateItinerary
     # Ensure the response is parsed correctly
     itinerary_data = JSON.parse(response_content) rescue {}
 
-
     pp itinerary_data
+  # Parse OpenAI response
+      begin
+        itinerary_data = JSON.parse(response_content)
+      rescue JSON::ParserError => e
+        Rails.logger.error("Failed to parse OpenAI response: #{e.message}")
+        itinerary_data = {}
+      end
+      
+
 
     itinerary = Itinerary.create!(
       name: itinerary_data["itinerary_name"],
       duration: duration,
       user: user,
       interest: interest,
-      number_of_pax: number_of_pax
+      number_of_pax: number_of_pax,
       start_date: start_date,
       end_date: end_date
     )
@@ -115,7 +127,9 @@ class GenerateItinerary
 
       )
     end
+
   end
+  
 
   private
 
@@ -124,18 +138,24 @@ class GenerateItinerary
   end
 
   
-  def nearest_attractions(interest)
-    response = self.client.embeddings(
-      parameters: {
-        model: 'text-embedding-3-small',
-        input: "Give me all the attractions that match the #{interest}"
-      }
-    )
-    question_embedding = response['data'][0]['embedding']
-    return Attraction.nearest_neighbors(
-      :embedding, question_embedding,
-      distance: "euclidean"
-    ) # you may want to add .first(3) here to limit the number of results
+  def self.nearest_attractions(interest)
+      response = self.client.embeddings(
+        parameters: {
+          model: 'text-embedding-3-small',
+          input: "Give me a list of attractions that match the interest: #{interest}"
+        }
+      )
+      if response && response['data']
+        question_embedding = response['data'][0]['embedding']
+        Attraction.nearest_neighbors(
+          :embedding, question_embedding,
+          distance: "euclidean"
+        ).first(3)  # Limiting to first 3 attractions
+      else
+        []  # Return empty array if no data
+      end
   end
+
+
 
 end

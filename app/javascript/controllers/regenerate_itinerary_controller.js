@@ -4,78 +4,111 @@ import flatpickr from "flatpickr"; // You need to import this to use new flatpic
 // Connects to data-controller="regenerate-itinerary"
 export default class extends Controller {
 
-  static targets = [ "interest", "startDate", "endDate", "paxInput", "paxDropdown"];
+  static targets = [ "interest", "startDate", "endDate", "paxInput", "paxDropdown", "customPaxContainer", "paxContainer", "form"];
+
   
   connect() {
     console.log("RegenerateItineraryController is connected!");
 
-    flatpickr(this.startDateTarget)
-    flatpickr(this.endDateTarget)
+    this.initializeFlatpickr();
+  
   }
-
 
   togglePaxInput() {
-    const selectedValue = this.paxDropdownTarget.value;
-    if (selectedValue === "10+" || selectedValue === "custom") {
-      this.paxInputTarget.style.display = "block"; // Show the input field
+    const selectedPax = this.paxDropdownTarget.value;
+
+    if (selectedPax === "10+") {
+      this.customPaxContainerTarget.style.display = "block"; // Show custom pax input
+      this.paxContainerTarget.style.display = "none"; // Show custom pax input
+      this.paxInputTarget.required = true; // Make the custom input required
+      this.paxDropdownTarget.required = false;
     } else {
-      this.paxInputTarget.style.display = "none"; // Hide the input field
+      this.customPaxContainerTarget.style.display = "none"; // Hide custom pax input
+      this.paxContainerTarget.style.display = "block"; 
+      this.paxInputTarget.required = false; // Make the custom input not required
+      this.paxDropdownTarget.required = true;
     }
   }
+
+  initializeFlatpickr() {
+    // Common configuration for both date pickers
+    const dateConfig = {
+      dateFormat: "Y-m-d",
+      allowInput: true,
+      minDate: "today",
+      disableMobile: true // Better experience on mobile
+    };
+    
+    // Initialize start date picker
+    const startDatePicker = flatpickr(this.startDateTarget, {
+      ...dateConfig,
+      onChange: (selectedDates) => {
+        // Update end date min date when start date changes
+        if (selectedDates[0]) {
+          endDatePicker.set('minDate', selectedDates[0]);
+        }
+      }
+    });
+    
+    // Initialize end date picker with reference to start date
+    const endDatePicker = flatpickr(this.endDateTarget, {
+      ...dateConfig,
+      minDate: this.startDateTarget.value || "today"
+    });
+    
+    // Store references to use in other methods if needed
+    this.startDatePicker = startDatePicker;
+    this.endDatePicker = endDatePicker;
+  }
+
 
   regenerate(event) {
     event.preventDefault();
     console.log("Regenerate button clicked!");
-
+    
     const startDate = this.startDateTarget.value;
     const endDate = this.endDateTarget.value;
     const interest = this.interestTarget.value;
-    const pax = this.paxDropdownTarget.value;
-    const customPax = this.paxInputTarget.value;
+    const pax = this.paxInputTarget.value || this.paxDropdownTarget.value;
+   
+    // Check if the user is signed in
+    const userSignedIn = this.element.dataset.userSignedIn === "true";
+    if (!userSignedIn) {
+      console.log("User not signed in");
+      // If not signed in, redirect to login
+      window.location.href = "/users/sign_in"; // Adjust URL for Devise
+      return;
+    }
+    
+    if (!startDate || !endDate) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please select the start and end date before regenerating the itinerary.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+    
+    if (new Date(endDate) < new Date(startDate)) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'End date must be after start date.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    
+   // If there's a form target, submit it
+   if (this.formTarget) {
+    this.formTarget.submit(); // Trigger the form submission
+  } else {
+    console.error("Form target is not found.");
+  }
+  }
+
+
   
-      // Check if the user is signed in
-      const userSignedIn = this.element.dataset.userSignedIn === "true"; // Check the data attribute
-      if (!userSignedIn) {
-        console.log("User not signed in");
-        // If not signed in, redirect to login
-        window.location.href = "/login"; // Adjust URL as needed
-        return;
-      }
-
-      if (!startDate || !endDate || !interest || !pax) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Please fill in all fields before regenerating the itinerary.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-
-      if (endDate < startDate) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'End date must be after start date.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-
-      // If "10+" was selected, ensure the custom pax field is filled
-      if (pax === '10+' && !customPax) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Please enter a custom number of pax.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-
-
-      // Submit the form after validation passes
-      this.element.submit();  // This submits the form
-
-     }
 }

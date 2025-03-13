@@ -40,59 +40,31 @@ class ItinerariesController < ApplicationController
   end
 
   def new
-
+    @itinerary = Itinerary.new
   end
 
   def create
-    @itinerary = Itinerary.new(itinerary_params)
-    @itinerary.user = current_user
-    if @itinerary.save
-      redirect_to itinerary_path(@itinerary)
+    @itinerary = GenerateItineraryService.(
+     current_user, 
+      itinerary_params[:interest], 
+      itinerary_params[:start_date], 
+      itinerary_params[:end_date], 
+      itinerary_params[:pax]
+    )
+
+    if @itinerary.persisted?
+      redirect_to itineraries_path, notice: "Itinerary was successfully created."
     else
       render :new
     end
   end
 
 
-  private
-
-  def regenerate
-   
-        # Assign values from params, falling back to existing itinerary values
-        interest = params[:itinerary][:interest] || @itinerary.interest
-        start_date = params[:itinerary][:start_date] ? Date.parse(params[:itinerary][:start_date]) : @itinerary.start_date
-        end_date = params[:itinerary][:end_date] ? Date.parse(params[:itinerary][:end_date]) : @itinerary.end_date
-        pax = params[:itinerary][:pax] || @itinerary.pax
-    
-        # Handle custom pax if the user selects the "10+" option
-        if params[:itinerary][:pax] == '10+' && params[:itinerary][:custom_pax].present?
-          pax = params[:itinerary][:custom_pax]
-        end
-   
-        
-        # Process the values for the itinerary
-        @itinerary = GenerateItinerary.call(current_user, interest, start_date, end_date, pax)
-
-      #   @itinerary.update(interest: interest, start_date: start_date, end_date: end_date, pax: pax)
-    
-      #   # Check for errors after update
-      #   if @itinerary.save
-      #     # Handle successful regeneration (e.g., redirect, flash message)
-      #     redirect_to itineraries_path, notice: 'Itinerary successfully regenerated.'
-      #   else
-      #     # Handle failure (e.g., show error messages)
-      #     flash[:error] = 'There was an error regenerating the itinerary.'
-      #     render :new
-      #   end
-      # end
-    
-   
-   
-  end
+ private
 
   
   def itinerary_params
-    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :custom_pax)
+    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :number_of_pax)
   end
 
   def set_itinerary
