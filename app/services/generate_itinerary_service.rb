@@ -97,7 +97,7 @@ class GenerateItineraryService
     itinerary_data = JSON.parse(response_content) rescue {}
 
     pp itinerary_data
-  # Parse OpenAI response
+  # # Parse OpenAI response
       begin
         itinerary_data = JSON.parse(response_content)
       rescue JSON::ParserError => e
@@ -106,6 +106,7 @@ class GenerateItineraryService
       end
       
 
+   
 
     itinerary = Itinerary.create!(
       name: itinerary_data["itinerary_name"],
@@ -117,6 +118,7 @@ class GenerateItineraryService
       end_date: end_date
     )
 
+
     itinerary_data["attractions"].each do |attraction|
       ItineraryAttraction.create!(
         itinerary: itinerary,
@@ -127,6 +129,8 @@ class GenerateItineraryService
 
       )
     end
+
+    return itinerary
 
   end
   

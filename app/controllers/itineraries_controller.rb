@@ -52,10 +52,11 @@ class ItinerariesController < ApplicationController
       itinerary_params[:pax]
     )
 
-    if @itinerary.persisted?
+
+    if @itinerary.save!
       redirect_to itineraries_path, notice: "Itinerary was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
