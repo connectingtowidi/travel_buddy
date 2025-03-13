@@ -53,12 +53,12 @@ class ItinerariesController < ApplicationController
     )
 
 
-    if @itinerary.save!
-      redirect_to itineraries_path, notice: "Itinerary was successfully created."
-    else
-      render :new, status: :unprocessable_entity
-    end
+  if @itinerary.save!
+    redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully created."
+  else
+    render :new, status: :unprocessable_entity
   end
+end
 
 
  private
