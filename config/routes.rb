@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   get '/home', to: "pages#home"
   get '/generate', to: 'attractions#generate'
-  get '/regenerate', to: 'itineraries#regenerate'
+  post '/regenerate_itinerary', to: 'itineraries#regenerate', as: 'regenerate_itinerary'
+
 
   resources :attractions, only: [:index, :show]
   resources :itineraries, only: [:index, :show, :new, :create]

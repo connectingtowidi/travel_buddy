@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import Swal from 'sweetalert2';
+import flatpickr from "flatpickr"; // You need to import this to use new flatpickr()
 // Connects to data-controller="regenerate-itinerary"
 export default class extends Controller {
 
@@ -7,6 +8,9 @@ export default class extends Controller {
   
   connect() {
     console.log("RegenerateItineraryController is connected!");
+
+    flatpickr(this.startDateTarget)
+    flatpickr(this.endDateTarget)
   }
 
 
@@ -26,7 +30,8 @@ export default class extends Controller {
     const startDate = this.startDateTarget.value;
     const endDate = this.endDateTarget.value;
     const interest = this.interestTarget.value;
-    const numberOfPax = this.paxDropdownTarget.value;
+    const pax = this.paxDropdownTarget.value;
+    const customPax = this.paxInputTarget.value;
   
       // Check if the user is signed in
       const userSignedIn = this.element.dataset.userSignedIn === "true"; // Check the data attribute
@@ -36,37 +41,41 @@ export default class extends Controller {
         window.location.href = "/login"; // Adjust URL as needed
         return;
       }
-    if (!startDate || !endDate || !interest || !numberOfPax) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Please fill in all fields before regenerating the itinerary.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
 
-    if (endDate < startDate) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'End date must be after start date.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
+      if (!startDate || !endDate || !interest || !pax) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please fill in all fields before regenerating the itinerary.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
+
+      if (endDate < startDate) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'End date must be after start date.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
+
+      // If "10+" was selected, ensure the custom pax field is filled
+      if (pax === '10+' && !customPax) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please enter a custom number of pax.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
 
 
-    // Call Generate Itinerary service 
-    // fetch(this.formTarget.action, {
-    //   method: "POST", // Could be dynamic with Stimulus values
-    //   headers: { "Accept": "application/json" },
-    //   body: new FormData(this.formTarget)
-    // })
-    //   .then(response => response.json())
-    //   .then((data) => {
-    //     console.log(data)
-    //   })
+      // Submit the form after validation passes
+      this.element.submit();  // This submits the form
 
      }
 }

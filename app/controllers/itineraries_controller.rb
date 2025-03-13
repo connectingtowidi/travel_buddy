@@ -40,6 +40,7 @@ class ItinerariesController < ApplicationController
   end
 
   def new
+
   end
 
   def create
@@ -52,30 +53,50 @@ class ItinerariesController < ApplicationController
     end
   end
 
-  def regenerate
-    interest = params[:interest] || @itinerary.interest
-    start_date = params[:start_date] ? Date.parse(params[:start_date]) : @itinerary.start_date
-    end_date = params[:end_date] ? Date.parse(params[:end_date]) : @itinerary.end_date
-  
-    @itinerary = GenerateItinerary.call(current_user, interest, start_date, end_date)
-  
-    raise
-    respond_to do |format|
-      format.turbo_stream
-      format.json { render json: { success: true, message: "Itinerary regenerated successfully!" } }
-    end
-  rescue => e
-    render json: { success: false, error: e.message }, status: :unprocessable_entity
-  end
-  
 
   private
 
+  def regenerate
+   
+        # Assign values from params, falling back to existing itinerary values
+        interest = params[:itinerary][:interest] || @itinerary.interest
+        start_date = params[:itinerary][:start_date] ? Date.parse(params[:itinerary][:start_date]) : @itinerary.start_date
+        end_date = params[:itinerary][:end_date] ? Date.parse(params[:itinerary][:end_date]) : @itinerary.end_date
+        pax = params[:itinerary][:pax] || @itinerary.pax
+    
+        # Handle custom pax if the user selects the "10+" option
+        if params[:itinerary][:pax] == '10+' && params[:itinerary][:custom_pax].present?
+          pax = params[:itinerary][:custom_pax]
+        end
+   
+        
+        # Process the values for the itinerary
+        @itinerary = GenerateItinerary.call(current_user, interest, start_date, end_date, pax)
+
+      #   @itinerary.update(interest: interest, start_date: start_date, end_date: end_date, pax: pax)
+    
+      #   # Check for errors after update
+      #   if @itinerary.save
+      #     # Handle successful regeneration (e.g., redirect, flash message)
+      #     redirect_to itineraries_path, notice: 'Itinerary successfully regenerated.'
+      #   else
+      #     # Handle failure (e.g., show error messages)
+      #     flash[:error] = 'There was an error regenerating the itinerary.'
+      #     render :new
+      #   end
+      # end
+    
+   
+   
+  end
+
+  
   def itinerary_params
-    params.require(:itinerary).permit(:name, :description, :start_date, :end_date)
+    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :custom_pax)
   end
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
   end
+
 end

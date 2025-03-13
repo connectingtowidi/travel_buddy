@@ -25,65 +25,45 @@
  
 <!-- Filters -->
 <% if !current_page?(itineraries_path) %>
-  <div class="filter-row mt-3 d-flex align-items-center">
-    
-    <!-- Interest Dropdown -->
-    <div class="col-md-2 col-sm-3 col-12 mb-2">
-      <div class="filter-label">Interest</div>
-      <select class="form-select" data-regenerate-itinerary-target="interest">
-        <option selected>Kids-focused</option>
-        <option>Culture</option>
-        <option>Food</option>
-        <option>Nature</option>
-        <option>Shopping</option>
-      </select>
-    </div>
+<%= simple_form_for :itinerary, url: regenerate_itinerary_path, method: :post, html: { class: "d-flex align-items-center filter-row mt-3" } do |f| %>
+  
+  <!-- Interest Dropdown -->
+  <div class="col-md-2 col-sm-3 col-12 mb-2">
+    <div class="filter-label">Interest</div>
+    <%= f.input :interest, as: :select, collection: ['Kids-focused', 'Culture', 'Food', 'Nature', 'Shopping'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
+  </div>
 
-    <!-- Start Date -->
-    <div class="col-md-2 col-sm-3 col-12 mb-2">
-      <div class="filter-label">Start Date</div>
-      <input type="date" class="form-control" data-regenerate-itinerary-target="startDate">
-    </div>
 
-    <!-- End Date -->
-    <div class="col-md-2 col-sm-3 col-12 mb-2">
-      <div class="filter-label">End Date</div>
-      <input type="date" class="form-control" data-regenerate-itinerary-target="endDate">
-    </div>
+  <!-- Start Date -->
+  <div class="col-md-2 col-sm-3 col-12 mb-2">
+    <div class="filter-label">Start Date</div>
+    <%= f.input :start_date, as: :date, input_html: { class: 'form-control', data: { regenerate_itinerary_target: "startDate" } } %>
+  </div>
 
-    <!-- Number of Pax Dropdown -->
-    <div class="col-md-2 col-sm-3 col-12 mb-2">
+  <!-- End Date -->
+  <div class="col-md-2 col-sm-3 col-12 mb-2">
+    <div class="filter-label">End Date</div>
+    <%= f.input :end_date, as: :date, input_html: { class: 'form-control', data: { regenerate_itinerary_target: "endDate" } } %>
+  </div>
+
+  <!-- Number of Pax Dropdown -->
+  <div class="col-md-2 col-sm-3 col-12 mb-2">
     <div class="filter-label">Number of Pax</div>
-    <select class="form-select" id="paxDropdown" data-action="change->regenerate-itinerary#togglePaxInput" data-regenerate-itinerary-target="paxDropdown">
-      <option selected>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option value="10+">10+</option> <!-- Option to trigger manual input -->
-    </select>
-  
-    <!-- Custom Pax Input (hidden by default) -->
-    <input type="number" class="form-control mt-2" id="paxInput" style="display:none;" placeholder="Enter custom number of pax" data-regenerate-itinerary-target="paxInput">
+    <%= f.input :pax, as: :select, collection: (1..9).to_a + ['10+'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "paxDropdown", action: "change->regenerate-itinerary#togglePaxInput" } } %>
+    
+  </div>
+
+  <!-- Generate/Regenerate Button (Aligned to the right) -->
+  <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 30px;">
+    <%= f.button :submit, class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } do %>
+      <%= user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate' %>
+    <% end %>
   </div>
   
 
-    <!-- Generate/Regenerate Button (Aligned to the right) -->
-    <!-- Generate/Regenerate Button (Aligned to the right) -->
-    <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 30px;">
-      <button 
-        data-user-signed-in="<%= user_signed_in? %>"
-        data-action="click->regenerate-itinerary#regenerate"
-        class="btn btn-regenerate w-100">
-        <%= user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate' %>
-      </button>
-    </div>
-    
-  </div>
+<% end %>
+
+
 <% end %>
 
 <% if !user_signed_in? %>
