@@ -1,38 +1,34 @@
-<%= simple_form_for(resource, as: :resource_name, url: session_path(resource_name)) do |f| %>
-     <%= f.error_notification %>
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
     <div class="mb-3">
       <%= f.input :email, 
                   label: false, 
                   placeholder: "Email", 
                   input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
-
-                     <% if flash[:alert] %>
-     <div class="invalid-feedback">
-       Invalid email or password
-     </div>
-     <% end %>
+  
+      <% if flash[:alert] %>
+        <div class="invalid-feedback">
+          Invalid email or password
+        </div>
+      <% end %>
     </div>
   
     <div class="mb-3 position-relative" data-controller="password-toggle">
-    <%= f.input :password, 
-                label: false, 
-                placeholder: "Password", 
-                required: false,
-                autocomplete: "current-password",
-                value: "user1pw",
-                input_html: { 
-                  class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
-                  data: { password_toggle_target: "password" }
-                } %>
-    <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-muted"  >
-      <i class="fa-solid fa-eye-slash" data-password-toggle-target="toggleIcon"
-      data-action="click->password-toggle#toggle"></i>
-    </span>
-
-  </div>
-
+      <%= f.input :password, 
+                  label: false, 
+                  placeholder: "Password", 
+                  required: false,
+                  autocomplete: "current-password",
+                  input_html: { 
+                    class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
+                    data: { password_toggle_target: "password" }
+                  } %>
+      <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-muted">
+        <i class="fa-solid fa-eye-slash" data-password-toggle-target="toggleIcon"
+        data-action="click->password-toggle#toggle"></i>
+      </span>
+    </div>
     
-  
     <div class="d-grid">
       <%= f.button :submit, 
                    "Log in", 
