@@ -95,9 +95,11 @@
   <!-- Login Button at the top-right -->
   <% if !user_signed_in? %>
     <div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
-      <button data-action="click->redirect#redirectToLogin" class="btn" style="background-color: #808080; color: white; border-radius: 50px; padding: 10px 30px; border: none;">
-        Login
-      </button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#authModal">
+          Log in/Sign Up
+        </button>
+      <%= render 'devise/shared/auth_modal' %>
+  
     </div>
   <% end %>
 

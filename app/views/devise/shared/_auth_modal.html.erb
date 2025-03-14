@@ -1,0 +1,45 @@
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-center flex-column border-0 bg-light p-4">
+        <h5 class="modal-title fw-bold text-primary" id="authModalLabel">
+          😊😊 Welcome back
+        </h5>
+        <p class="text-muted">Log in to your account</p>
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <!-- Social Login Buttons -->
+        <div class="d-flex justify-content-center gap-2 mb-3">
+          <button class="btn btn-dark rounded px-4 py-2"><i class="fa-brands fa-apple"></i></button>
+          <button class="btn btn-primary rounded px-4 py-2"><i class="fa-brands fa-facebook-f"></i></button>
+          <button class="btn btn-light rounded border px-4 py-2"><i class="fa-brands fa-google"></i></button>
+        </div>
+
+        <!-- Separator -->
+        <div class="d-flex align-items-center my-3">
+          <hr class="flex-grow-1">
+          <span class="mx-2 text-muted">or</span>
+          <hr class="flex-grow-1">
+        </div>
+
+        <!-- Login Form -->
+        <p class="text-center fw-bold text-primary">Log in with your email address</p>
+        
+        <%= render 'devise/shared/auth_form', resource: User.new, resource_name: :user %>
+
+     
+
+        <div class="text-center mt-3">
+
+          <p class="mb-0 text-muted">No account? 
+            <%= link_to "Sign up", new_registration_path(:user), class: "text-primary fw-bold" %>
+          </p>
+        </div>
+
+         
+      </div>
+    </div>
+  </div>
+</div>

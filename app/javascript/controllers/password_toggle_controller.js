@@ -11,10 +11,16 @@ export default class extends Controller {
     const passwordField = this.passwordTarget;
     const isPassword = passwordField.type === "password";
 
-    // Toggle input type
-    passwordField.type = isPassword ? "text" : "password";
+    if (isPassword) {
+      this.passwordTarget.type = "text"
+      this.toggleIconTarget.classList.remove("fa-eye-slash")
+      this.toggleIconTarget.classList.add("fa-eye")
+    } else
+    {
+        this.passwordTarget.type = "password"
+      this.toggleIconTarget.classList.add("fa-eye-slash")
+      this.toggleIconTarget.classList.remove("fa-eye")
 
-    // Change eye icon (optional)
-    this.toggleIconTarget.textContent = isPassword ? "🙈" : "👁";
+    }
   }
 }
