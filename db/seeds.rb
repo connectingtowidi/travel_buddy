@@ -107,29 +107,57 @@ puts "Creating travel..."
 travel_111_112 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_111,
   itinerary_attraction_to: itinerary_attraction_112,
-  mode: 'transit',
+  mode: 'TRANSIT',
   duration: 20  
 )
 
 travel_112_113 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_112,
   itinerary_attraction_to: itinerary_attraction_113,
-  mode: 'taxi',
+  mode: 'DRIVE',
   duration: 40 
 )
 
 travel_121_122 = Travel.create!(
     itinerary_attraction_from: itinerary_attraction_121,
     itinerary_attraction_to: itinerary_attraction_122,
-    mode: 'walk',
+    mode: 'WALK',
     duration: 35
 )
 
 travel_122_123 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_122,
   itinerary_attraction_to: itinerary_attraction_123,
-  mode: 'transit',
+  mode: 'TRANSIT',
   duration: 30  
+)
+
+travel_211_212 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_211,
+    itinerary_attraction_to: itinerary_attraction_212,
+    mode: 'DRIVE',
+    duration: 15
+)
+
+travel_311_312 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_311,
+    itinerary_attraction_to: itinerary_attraction_312,
+    mode: 'BICYCLE',
+    duration: 20
+)
+
+travel_312_313 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_312,
+    itinerary_attraction_to: itinerary_attraction_313,
+    mode: 'TRANSIT',
+    duration: 25
+)
+
+travel_321_322 = Travel.create!(
+    itinerary_attraction_from: itinerary_attraction_321,
+    itinerary_attraction_to: itinerary_attraction_322,
+    mode: 'DRIVE',
+    duration: 40
 )
 
 puts "Creating payments..."

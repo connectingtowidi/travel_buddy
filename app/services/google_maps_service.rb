@@ -7,6 +7,7 @@ class GoogleMapsService
   include HTTParty
   
   BASE_URL = "https://maps.googleapis.com/maps/api"
+  ROUTE_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
   API_KEY = ENV["GOOGLE_MAPS_API_KEY"]
 
   # Get geolocation for an address
@@ -31,38 +32,44 @@ class GoogleMapsService
   #   ]
   # end
 
-  def self.get_route(origin, destination)
-    uri = URI("#{BASE_URL}/directions/json?origin=#{origin}&destination=#{destination}&mode=driving&key=#{API_KEY}")
-    
-    response = Net::HTTP.get(uri)
-    data = JSON.parse(response)
+  def self.create_travel(origin, destination, mode)
+    response = HTTParty.post(
+      ROUTE_URL,
+      headers: {
+        "Content-Type" => "application/json",
+        "X-Goog-Api-Key" => API_KEY,
+        "X-Goog-FieldMask" => "routes.duration,routes.distanceMeters,routes.legs,routes.polyline.encodedPolyline"
+      },
+      body: {
+        
+          "origin":{
+            "location":{
+              "latLng":{
+                "latitude": origin.latitude,
+                "longitude": origin.longitude
+              }
+            }
+          },
+          "destination":{
+            "location":{
+              "latLng":{
+                "latitude": destination.latitude,
+                "longitude": destination.longitude
+              }
+            }
+          },
+          "travelMode": mode,
+          "computeAlternativeRoutes": false,
+          "languageCode": "en-US",
+          "units": "IMPERIAL"
+      }.to_json
+    )
 
-    if data["status"] == "OK"
-      route = data["routes"].first
-      {
-        polyline: route["overview_polyline"]["points"],
-        distance: route["legs"][0]["distance"]["text"],
-        duration: route["legs"][0]["duration"]["text"]
-      }
-    else
-      nil
-    end
-  end
+    data = JSON.parse(response.body) if response.success?
+
+    { error: "Failed to fetch route", status: response.code, message: response.body }
   
-  # Fetch nearby places (e.g., restaurants, attractions)
-  # def self.nearby_search(lat, lng, type)
-  #   url = URI("#{BASE_URL}/place/nearbysearch/json?location=#{lat},#{lng}&radius=5000&type=#{type}&key=#{@api_key}")
-  #   make_request(url)
-  # end
-
-  # private
-
-  # def self.make_request(url)
-  #   response = Net::HTTP.get(url)
-  #   JSON.parse(response)
-  # rescue StandardError => e
-  #   Rails.logger.error "Google Maps API Error: #{e.message}"
-  #   nil
-  # end
+    return data
+  end
 end
 
