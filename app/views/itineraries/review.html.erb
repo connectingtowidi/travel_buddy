@@ -33,9 +33,9 @@
                     <% if index != (day_attractions_sorted.length - 1) %>
                         <tr>
                             <% start_attraction_time = day_attraction.starting_time %>
-                            <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %> 
+                            <% end_attraction_time = (start_attraction_time + (day_attraction.attraction.duration&.hours || 2)) %> 
                             <% travel_duration = @travels.find { |travel| travel.itinerary_attraction_from_id == day_attraction.id } %>
-                            <% end_travel_time = end_attraction_time + travel_duration.duration.to_i.minutes %>
+                            <% end_travel_time = end_attraction_time + (travel_duration&.duration&.to_i&.minutes || 10) %>
                             <td style="width: 130px;"><%= end_attraction_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %> - 
                                 <%= end_travel_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p")%></td>
                             <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
@@ -60,7 +60,7 @@
         <!--Sidebar content goes here -->
     </div> <!-- Close the row -->
     <div class="col-md-4 col-sm-6 text-md-end">
-      <button class="btn btn-dark">See My Journey</button>
+      <%# <button class="btn btn-dark">Purchase All Tickets</button> %>
     </div>
     
 </div> <!-- Close the container -->
