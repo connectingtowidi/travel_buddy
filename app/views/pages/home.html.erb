@@ -1,3 +1,7 @@
+<% if !user_signed_in? %>
+ 
+
+
 <%# Keep only the filters at the top and the video %>
 
 <%# Selection filters section - keep this part %>
@@ -102,10 +106,19 @@
       </span>
     </div>
     
+
+
+
+
+    
     <button class="slide-button">
-      <span class="slide-button-text">Start Planning</span>
+      <span class="slide-button-text" data-bs-toggle="modal" data-bs-target="#authModal">Start Planning</span>
+
       <span class="slide-button-icon">→</span>
+     
     </button>
+
+     <%= render 'devise/shared/auth_modal' %>
   </div>
 </div>
 
@@ -223,3 +236,4 @@
 </div>
 
 <%# No other content below this %>
+<% end %>
