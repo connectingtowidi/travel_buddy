@@ -31,7 +31,7 @@ class TripadvisorApi
     return [] if response.blank? || response["data"].blank?
 
     # Fetch details for the top 20 attractions
-    response["data"][0..20].map do |attraction|
+    response["data"][0..50].map do |attraction|
       location_id = attraction["location_id"]
       begin
         details = fetch_attraction_details(location_id)
