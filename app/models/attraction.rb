@@ -12,11 +12,7 @@ class Attraction < ApplicationRecord
   end
 
   def self.all_trip_types
-    pluck(:trip_types)
-      .compact
-      .map { |types_string| JSON.parse(types_string) rescue [] }
-      .flatten
-      .uniq
+    pluck(:trip_types).uniq
   end
 
   private

@@ -1,0 +1,32 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body text-center">
+          <div class="mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+          </div>
+          <h1 class="card-title">Payment Successful!</h1>
+          <p class="card-text">Thank you for your purchase of tickets to <%= @attraction.name %>.</p>
+          
+          <div class="payment-details my-4 p-4 bg-light rounded">
+            <h5>Payment Details</h5>
+            <p><strong>Attraction:</strong> <%= @attraction.name %></p>
+            <p><strong>Amount:</strong> $<%= @attraction.price %> SGD</p>
+            <p><strong>Date:</strong> <%= Time.now.strftime("%B %d, %Y") %></p>
+          </div>
+          
+          <div class="mt-4">
+            <p>You will receive a confirmation email shortly.</p>
+            <p>We hope you enjoy your visit!</p>
+          </div>
+          
+          <div class="mt-5">
+            <%= link_to "Back to Itinerary", itinerary_path(@attraction.itinerary_attractions.first.itinerary), class: "btn btn-primary" %>
+            <%= link_to "View All Attractions", attractions_path, class: "btn btn-outline-secondary ml-2" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

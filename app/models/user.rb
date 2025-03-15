@@ -6,5 +6,10 @@ class User < ApplicationRecord
 
   has_many :itineraries
   has_one_attached :avatar
+  has_many :purchases
+
+  def has_purchased?(attraction)
+    purchases.exists?(attraction: attraction)
+  end
 
 end

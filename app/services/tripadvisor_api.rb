@@ -38,12 +38,9 @@ class TripadvisorApi
         {
           "location_id" => location_id,
           "name" => attraction["name"], 
-          "address" => details["address"],
-          "description" => details["description"],
-          "phone" => details["phone"],
-          "duration" => details["duration"],
           "photos" => fetch_photos(location_id),
-          "reviews" => fetch_reviews(location_id)
+          "reviews" => fetch_reviews(location_id),
+          **details
         }
       rescue StandardError => e
         Rails.logger.error("Failed to fetch details for attraction #{location_id}: #{e.message}")
@@ -59,11 +56,11 @@ class TripadvisorApi
       currency: 'SGD'
     })
 
-    {
+    response.merge({
       "address" => response["address_obj"],
       "description" => response["description"],
-      "duration" => response["duration"]
-    }
+      "duration" => response["duration"],
+    })
   end
 
   def self.fetch_photos(location_id)
