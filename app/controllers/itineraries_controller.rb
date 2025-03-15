@@ -136,7 +136,8 @@ class ItinerariesController < ApplicationController
   end
 
   def edit
-    @itineraries = Itinerary.find(params[:id])
+    @itinerary = Itinerary.find(params[:id])
+    @selected_attraction = Attraction.find_by(id: params[:attraction_id]) if params[:attraction_id].present?
 
     # redirect_to root_path, alert: "Itinerary not found" if @itinerary.nil?
   end

@@ -1,3 +1,7 @@
 <div class="container m-3 p-1">
-  <h1>Edit <%= @itineraries.name %></h1>
+  <h1>Edit <%= @itinerary.name %></h1>
+
+  <% @itinerary.attractions.each do |attr| %>
+    <div><%= attr.name %></div>
+  <% end %>
 </div>
