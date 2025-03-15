@@ -7,9 +7,16 @@ class ItinerariesController < ApplicationController
 
 
   def show
-    @selected_attraction = Attraction.find(params[:attraction_id]) if params[:attraction_id]
-
     @itinerary = Itinerary.find(params[:id])
+    
+    if params[:attraction_id].present?
+      @selected_attraction = Attraction.find_by(id: params[:attraction_id])
+      
+      if @selected_attraction.nil?
+        flash[:alert] = "The selected attraction could not be found."
+        redirect_to itinerary_path(@itinerary) and return
+      end
+    end
 
     # Preventing running of the Tripadvisor API every time the page is loaded
     # @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
@@ -38,6 +45,12 @@ class ItinerariesController < ApplicationController
         end
       end
     end
+
+    # Debug any cached data
+    if current_user
+      purchased_attractions = Purchase.where(user_id: current_user.id).pluck(:attraction_id)
+      Rails.logger.debug "User #{current_user.id} has purchased attractions: #{purchased_attractions}"
+    end
   end
 
   def new
@@ -61,5 +74,11 @@ class ItinerariesController < ApplicationController
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
+  end
+
+  def test_stripe_api
+    @stripe_response = StripeApi.test_stripe_api(params[:attraction_id])
+    render json: @stripe_response
+
   end
 end

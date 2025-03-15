@@ -1,7 +1,16 @@
+    
 
 <div class="position-sticky top-0">
-  <%# <%= @selected_attraction.to_json %>
-  <%# above coded by Amanda %>
-  <h1><%= @selected_attraction.name %></h1>
-  <%= @selected_attraction.description %>
+  <% if @selected_attraction.present? %>
+    <h1><%= @selected_attraction.name %></h1>
+    <%= @selected_attraction.description %>
+    
+    <% if @itinerary %>
+      <div class="mt-4">
+        <%= link_to "Back to Itinerary", itinerary_path(@itinerary), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No attraction selected or the attraction could not be found.</p>
+  <% end %>
 </div>

@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   resources :attractions, only: [:index, :show]
   resources :itineraries, only: [:index, :show, :new, :create]
 
+  post '/checkout', to: 'payments#create_checkout', as: 'create_checkout'
+  get '/attractions/:attraction_id/payment_success', to: 'payments#success', as: 'attraction_payment_success'
 
 end
