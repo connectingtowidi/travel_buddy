@@ -13,34 +13,50 @@
     </div>
     
     <!-- Main content row with itinerary and sidebar -->
-    <div class="row">
+    <div class="row" data-controller="google-maps">
         <!-- Left column - Itinerary content -->
         <div class="col-md-6">
-        <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
+        <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>        
             <h3>Day <%= index + 1 %></h3>
             <% day_attractions_sorted = day_attractions[1].sort_by { |day_attraction| day_attraction.starting_time }  %>
                 <%# sorted_attractions = attractions.sort_by { |attraction| attraction[:ticket_price] } %>
             <table class="table table-hover">
                 <tbody>
                 <% day_attractions_sorted.each_with_index do |day_attraction, index| %>
-                    <tr>
+                    <tr data-action="click->google-maps#attraction"
+                        data-google-maps-target="attraction"
+                        data-google-maps-lat-value=<%= day_attraction.attraction.latitude %>
+                        data-google-maps-lng-value=<%= day_attraction.attraction.longitude %>>
                         <td style="width: 130px;"><%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %></th>
                         <td style="text-align: left"><%= day_attraction.attraction.name %></td>
                         <td style="text-align: end; font-weight: bold"><%= day_attraction.attraction.price %></td>
-                        
                     </tr>
                     <%# <p> index = <%= index %>
                     <% if index != (day_attractions_sorted.length - 1) %>
-                        <tr>
-                            <% start_attraction_time = day_attraction.starting_time %>
-                            <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %> 
-                            <% travel_duration = @travels.find { |travel| travel.itinerary_attraction_from_id == day_attraction.id } %>
-                            <% end_travel_time = end_attraction_time + travel_duration.duration.to_i.minutes %>
+                        <% start_attraction_time = day_attraction.starting_time %>
+                        <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %> 
+                        <% travel_info = GoogleMapsService.create_travel(day_attractions_sorted[index].attraction, day_attractions_sorted[index + 1].attraction, "TRANSIT") %>
+                        <% travel_duration = travel_info["routes"][0]["legs"][0]["duration"].gsub("s", "").to_i %>
+                        <% end_travel_time = end_attraction_time + travel_duration.seconds %>
+                        <% travel_mode = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]).mode if Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
+                        <tr data-action="click->google-maps#travel"
+                            data-google-maps-origin-lat-value=<%= day_attractions_sorted[index].attraction.latitude %>  
+                            data-google-maps-origin-lng-value=<%= day_attractions_sorted[index].attraction.longitude %>
+                            data-google-maps-destination-lat-value=<%= day_attractions_sorted[index + 1].attraction.latitude %>
+                            data-google-maps-destination-lng-value=<%= day_attractions_sorted[index + 1].attraction.longitude %>
+                            data-google-maps-mode-value=<%= travel_mode %>>
                             <td style="width: 130px;"><%= end_attraction_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %> - 
                                 <%= end_travel_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p")%></td>
                             <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
-                                <%= day_attractions_sorted[index + 1].attraction.name%></td></td>
-                            <td style="text-align: end; font-weight: bold"><%= day_attraction.attraction.price %></td>
+                                <%= day_attractions_sorted[index + 1].attraction.name%></td>
+                            <td style="text-align: end; font-weight: bold"><%= travel_duration / 60 / 5.0 %></td>
+                            <%# ["routes"][0]["legs"][0]["duration"]["text"] %>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%# <%= travel_info["routes"][0]["legs"][0]["polyline"]["encodedPolyline"] %>
+                                <%= travel_mode %>
+                            </td>
                         </tr>
                     <% end %>
                 <% end %>
@@ -52,9 +68,9 @@
         <div class="col-md-6">
             <div
                 id="map"
-                data-controller="google-maps"
+                data-google-maps-target="map"
                 style="width: 100%;
-                height: 600px;"
+                height: 400px;"
                 data-markers="<%= @markers.to_json %>" ></div>    
         </div>
         <!--Sidebar content goes here -->

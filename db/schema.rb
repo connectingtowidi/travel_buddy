@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_09_183544) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -43,32 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_183544) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "attractions", force: :cascade do |t|
-    t.string "name"
-    t.string "address_string"
-    t.string "description"
-    t.time "opening_hour"
-    t.time "closing_hour"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.decimal "price"
-    t.integer "duration"
-    t.integer "location_id"
-    t.decimal "rating", precision: 3, scale: 1
-    t.integer "num_reviews"
-    t.string "rating_image_url"
-    t.string "trip_types"
-    t.jsonb "weekday_text", default: []
-    t.decimal "latitude", precision: 10, scale: 6
-    t.decimal "longitude", precision: 10, scale: 6
-    t.string "email"
-    t.string "website"
-    t.jsonb "reviews", default: []
-    t.jsonb "tripadvisor_photos", default: []
-    t.string "phone"
-    t.datetime "last_tripadvisor_update"
-    t.vector "embedding", limit: 1536
-  end
+# Could not dump table "attractions" because of following StandardError
+#   Unknown type 'vector' for column 'embedding'
 
   create_table "itineraries", force: :cascade do |t|
     t.string "name"
