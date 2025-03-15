@@ -4,15 +4,61 @@ import flatpickr from "flatpickr"; // You need to import this to use new flatpic
 // Connects to data-controller="regenerate-itinerary"
 export default class extends Controller {
 
-  static targets = [ "interest", "startDate", "endDate", "paxInput", "paxDropdown", "customPaxContainer", "paxContainer", "form"];
+  static targets = [ "interest", "startDate", "endDate", 
+    "paxInput", "paxDropdown", 
+    "customPaxContainer", "paxContainer", 
+    "form", "loadingOverlay"];
 
   
   connect() {
     console.log("RegenerateItineraryController is connected!");
 
     this.initializeFlatpickr();
+
+    if (!this.hasLoadingOverlayTarget) {
+      this.createLoadingOverlay();
+    }
   
   }
+
+
+createLoadingOverlay() {
+  // Create the loading overlay element
+  const loadingOverlay = document.createElement('div');
+  loadingOverlay.classList.add('loading-overlay');
+  loadingOverlay.style.display = 'none';
+  
+  // Create the spinner container
+  const spinnerContainer = document.createElement('div');
+  spinnerContainer.classList.add('spinner-container');
+  
+  // Create the spinner
+  const spinner = document.createElement('div');
+  spinner.classList.add('spinner-border', 'text-primary');
+  spinner.setAttribute('role', 'status');
+  
+  // Create the visually hidden text
+  const spinnerText = document.createElement('span');
+  spinnerText.classList.add('visually-hidden');
+  spinnerText.textContent = 'Loading...';
+  
+  // Create the loading message
+  const loadingMessage = document.createElement('p');
+  loadingMessage.classList.add('mt-3');
+  loadingMessage.textContent = 'Generating your perfect itinerary...';
+  
+  // Assemble the elements
+  spinner.appendChild(spinnerText);
+  spinnerContainer.appendChild(spinner);
+  spinnerContainer.appendChild(loadingMessage);
+  loadingOverlay.appendChild(spinnerContainer);
+  
+  // Append to the body
+  document.body.appendChild(loadingOverlay);
+  
+  // Set as the loadingOverlay target
+  this.loadingOverlayTarget = loadingOverlay;
+}
 
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
@@ -65,6 +111,7 @@ export default class extends Controller {
   regenerate(event) {
     event.preventDefault();
     console.log("Regenerate button clicked!");
+
     
     const startDate = this.startDateTarget.value;
     const endDate = this.endDateTarget.value;
@@ -100,13 +147,16 @@ export default class extends Controller {
       return;
     }
 
+    if (this.formTarget) {
+      // Show loading overlay right before submitting the form
+      this.loadingOverlayTarget.style.display = "flex";
     
-   // If there's a form target, submit it
-   if (this.formTarget) {
-    this.formTarget.submit(); // Trigger the form submission
-  } else {
-    console.error("Form target is not found.");
-  }
+      this.formTarget.submit(); // Trigger the form submission
+    } else {
+      console.error("Form target is not found.");
+      // Hide loading overlay if form submission fails
+      this.loadingOverlayTarget.style.display = "none";
+    }
   }
 
 
