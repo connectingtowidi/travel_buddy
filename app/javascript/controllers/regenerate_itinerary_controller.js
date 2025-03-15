@@ -15,50 +15,9 @@ export default class extends Controller {
 
     this.initializeFlatpickr();
 
-    if (!this.hasLoadingOverlayTarget) {
-      this.createLoadingOverlay();
-    }
-  
   }
 
 
-createLoadingOverlay() {
-  // Create the loading overlay element
-  const loadingOverlay = document.createElement('div');
-  loadingOverlay.classList.add('loading-overlay');
-  loadingOverlay.style.display = 'none';
-  
-  // Create the spinner container
-  const spinnerContainer = document.createElement('div');
-  spinnerContainer.classList.add('spinner-container');
-  
-  // Create the spinner
-  const spinner = document.createElement('div');
-  spinner.classList.add('spinner-border', 'text-primary');
-  spinner.setAttribute('role', 'status');
-  
-  // Create the visually hidden text
-  const spinnerText = document.createElement('span');
-  spinnerText.classList.add('visually-hidden');
-  spinnerText.textContent = 'Loading...';
-  
-  // Create the loading message
-  const loadingMessage = document.createElement('p');
-  loadingMessage.classList.add('mt-3');
-  loadingMessage.textContent = 'Generating your perfect itinerary...';
-  
-  // Assemble the elements
-  spinner.appendChild(spinnerText);
-  spinnerContainer.appendChild(spinner);
-  spinnerContainer.appendChild(loadingMessage);
-  loadingOverlay.appendChild(spinnerContainer);
-  
-  // Append to the body
-  document.body.appendChild(loadingOverlay);
-  
-  // Set as the loadingOverlay target
-  this.loadingOverlayTarget = loadingOverlay;
-}
 
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
@@ -158,7 +117,4 @@ createLoadingOverlay() {
       this.loadingOverlayTarget.style.display = "none";
     }
   }
-
-
-  
 }
