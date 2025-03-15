@@ -74,6 +74,8 @@ itinerary_4 = Itinerary.create!(
     end_date: Date.new(2025, 3, 20)
 )
 
+return
+
 puts "Creating attractions..."
 
 attraction_history_1 = Attraction.create!(

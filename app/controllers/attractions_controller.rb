@@ -7,7 +7,20 @@ class AttractionsController < ApplicationController
   end
 
   def show
-    @attraction = Attraction.find(params[:id])
+    @attraction = Attraction.find_by(id: params[:id])
+    
+    if @attraction.nil?
+      flash[:alert] = "Attraction not found"
+      redirect_to attractions_path and return
+    end
+    
+    # Set selected attraction for the view
+    @selected_attraction = @attraction
+    
+    # If coming from an itinerary, save itinerary info for "Back" button
+    if params[:itinerary_id].present?
+      @itinerary = Itinerary.find_by(id: params[:itinerary_id])
+    end
   end
   
   def generate

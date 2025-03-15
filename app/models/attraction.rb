@@ -12,11 +12,13 @@ class Attraction < ApplicationRecord
   end
 
   def self.all_trip_types
-    pluck(:trip_types)
-      .compact
-      .map { |types_string| JSON.parse(types_string) rescue [] }
-      .flatten
-      .uniq
+      result = pluck(:trip_types).uniq
+    # Return default list if result is empty
+      if result.empty?
+        return ['Kids-focused', 'Culture', 'Food', 'Nature', 'Shopping']
+      end
+      
+      result
   end
 
   private

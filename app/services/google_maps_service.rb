@@ -71,20 +71,5 @@ class GoogleMapsService
   
     return data
   end
-
-  def self.create_route_path(polyline, map)
-    encoding = google.maps.importLibrary("geometry")    
-    decodedPath = google.maps.geometry.encoding.decodePath(polyline)
-    routePath = new google.maps.Polyline({
-        path: decodedPath,
-        geodesic: true,
-        strokeColor: "#000000",
-        strokeOpacity: 1,
-        strokeWeight: 3
-      });
-      
-    routePath.setMap(map)
-    return routePath
-  end
 end
 

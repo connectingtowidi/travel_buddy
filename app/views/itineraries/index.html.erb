@@ -2,9 +2,28 @@
     <!-- Header Section with Button -->
     <div class="d-flex justify-content-between align-items-center mt-4">
         <h4>Your Itineraries</h4>
-        <%= link_to "New Itinerary", new_itinerary_path, class: "btn btn-dark px-4" %>
+        <div class="d-flex align-items-center">
+            <div class="position-relative me-3">
+                <%= form_with url: itineraries_path, method: :get, class: "d-flex", data: { turbo_frame: "itineraries_results" } do |f| %>
+                    <div class="position-relative">
+                        <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </span>
+                        <%= text_field_tag :query,
+                        params[:query],
+                        class: "form-control rounded-pill ps-5 py-2",
+                        placeholder: "Search for itineraries",
+                        style: "min-width: 300px;",
+                        data: { controller: "search-debounce" } %>
+                    </div>
+                <% end %>
+            </div>
+            <%= link_to "New Itinerary", new_itinerary_path, class: "btn btn-dark px-4" %>
+        </div>
     </div>
-
+    
     <!-- Filter Section -->
     <div class="row mt-3">
         <div class="col-md-3 col-sm-6 col-12 mb-2">
@@ -12,25 +31,31 @@
         </div>
         <!-- Other filter columns -->
     </div>
-
+    
     <!-- Itinerary Cards Grid -->
-    <div class="row">
-        <% @itineraries.each do |itinerary| %>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <%= link_to itinerary_path(itinerary), class: "text-decoration-none" do %>
-                    <div class="card shadow-sm border-0 m-3" style="border-radius: 15px;">
-                        <%= image_tag "garden-by-the-bay.png", class: "card-img-top", 
-                            style: "height: 180px; object-fit: cover; border-radius: 15px 15px 0 0;" %>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold"><%= itinerary.name %></h5>
-                            <p class="text-muted mb-1"><%= itinerary.try(:address) || "Location unavailable" %></p>
-                            <p class="card-text text-secondary"><%= itinerary.start_date %> - <%= itinerary.end_date %></p>
-                            <div class="d-flex justify-content-end">
-                                <span class="btn btn-dark btn-sm px-3">Details</span>
+    <div class="row" id="itineraries_results">
+        <% if @itineraries.any? %>
+            <% @itineraries.each do |itinerary| %>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <%= link_to itinerary_path(itinerary), class: "text-decoration-none" do %>
+                        <div class="card shadow-sm border-0 m-3" style="border-radius: 15px;">
+                            <%= image_tag "garden-by-the-bay.png", class: "card-img-top",
+                                style: "height: 180px; object-fit: cover; border-radius: 15px 15px 0 0;" %>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold"><%= itinerary.name %></h5>
+                                <p class="text-muted mb-1"><%= itinerary.try(:address) || "Location unavailable" %></p>
+                                <p class="card-text text-secondary"><%= itinerary.start_date %> - <%= itinerary.end_date %></p>
+                                <div class="d-flex justify-content-end">
+                                    <span class="btn btn-dark btn-sm px-3">Details</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% end %>
+                    <% end %>
+                </div>
+            <% end %>
+        <% else %>
+            <div class="col-12 text-center my-5">
+                <p class="text-muted">No itineraries found matching your search.</p>
             </div>
         <% end %>
     </div>

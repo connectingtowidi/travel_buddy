@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
+>>>>>>> master
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -43,8 +47,39 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+<<<<<<< HEAD
 # Could not dump table "attractions" because of following StandardError
 #   Unknown type 'vector' for column 'embedding'
+=======
+  create_table "attractions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "day"
+    t.string "name"
+    t.string "address_string"
+    t.text "description"
+    t.integer "duration"
+    t.string "phone"
+    t.jsonb "reviews", default: []
+    t.jsonb "photos", default: []
+    t.decimal "price"
+    t.integer "location_id"
+    t.decimal "rating", precision: 3, scale: 1
+    t.integer "num_reviews"
+    t.string "rating_image_url"
+    t.string "trip_types"
+    t.jsonb "weekday_text", default: []
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.string "email"
+    t.string "website"
+    t.jsonb "tripadvisor_photos", default: []
+    t.datetime "last_tripadvisor_update"
+    t.vector "embedding", limit: 1536
+    t.time "opening_hour"
+    t.time "closing_hour"
+  end
+>>>>>>> master
 
   create_table "itineraries", force: :cascade do |t|
     t.string "name"
@@ -67,16 +102,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "day"
+    t.integer "position"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
-  end
-
-  create_table "journeys", force: :cascade do |t|
-    t.bigint "itinerary_attraction_id", null: false
-    t.string "mode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["itinerary_attraction_id"], name: "index_journeys_on_itinerary_attraction_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -85,6 +113,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["itinerary_id"], name: "index_payments_on_itinerary_id"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "attraction_id", null: false
+    t.decimal "amount"
+    t.string "payment_intent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attraction_id"], name: "index_purchases_on_attraction_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -245,8 +284,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
   add_foreign_key "itineraries", "users"
   add_foreign_key "itinerary_attractions", "attractions"
   add_foreign_key "itinerary_attractions", "itineraries"
-  add_foreign_key "journeys", "itinerary_attractions"
   add_foreign_key "payments", "itineraries"
+  add_foreign_key "purchases", "attractions"
+  add_foreign_key "purchases", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

@@ -1,3 +1,4 @@
+
 <meta name="turbo-refresh-method" content="morph">
 <meta name="turbo-refresh-scroll" content="preserve">
 
@@ -42,7 +43,28 @@
                   </p>
                 </div>
               </div>
-              <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: day_attraction.attraction), class: "btn btn-dark btn-sm", data: { turbo_frame: "attraction_details"} %>
+              <div class="d-flex">
+                <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: day_attraction.attraction), class: "btn btn-dark btn-sm me-2" %>
+                <% if day_attraction.attraction.price && day_attraction.attraction.price > 0 %>
+                  <% 
+                    # Debug logging
+                    purchase_exists = current_user && Purchase.exists?(user_id: current_user.id, attraction_id: day_attraction.attraction.id)
+                    Rails.logger.debug "User: #{current_user&.id}, Attraction: #{day_attraction.attraction.id}, Paid: #{purchase_exists}"
+                  %>
+                  
+                  <% if purchase_exists %>
+                    <span class="btn btn-success btn-sm disabled">
+                      <i class="fas fa-check-circle"></i> Paid
+                    </span>
+                  <% else %>
+                    <%= button_to "Buy Tickets - $#{day_attraction.attraction.price} SGD", 
+                                  create_checkout_path(attraction_id: day_attraction.attraction.id), 
+                                  method: :post, 
+                                  class: "btn btn-primary btn-sm", 
+                                  data: { turbo: false } %>
+                  <% end %>
+                <% end %>
+              </div>
             </div>
           </div><!-- Close the col-md-7 -->
           <div class="row">

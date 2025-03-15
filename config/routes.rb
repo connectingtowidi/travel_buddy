@@ -15,8 +15,10 @@ Rails.application.routes.draw do
   get '/generate', to: 'attractions#generate'
 
 
-
   resources :attractions, only: [:index, :show]
+
+  post '/checkout', to: 'payments#create_checkout', as: 'create_checkout'
+  get '/attractions/:attraction_id/payment_success', to: 'payments#success', as: 'attraction_payment_success'
   resources :itineraries, only: [:index, :show, :new, :create] do
     get '/review', to: 'itineraries#review'
   end

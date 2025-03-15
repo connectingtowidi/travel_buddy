@@ -3,12 +3,35 @@ class ItinerariesController < ApplicationController
 
   def index
     @itineraries = current_user.itineraries
+
+    if params[:query].present?
+      # Use the PgSearch scope for more efficient searching
+      @itineraries = @itineraries.search_by_name(params[:query])
+      
+      # Alternative: use global_search if you want to include user email in search
+      # @itineraries = @itineraries.global_search(params[:query])
+    end
+
+    @itineraries = @itineraries.order(start_date: :desc)
+
+     # Handle turbo_frame requests
+     respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("itineraries_results", partial: "itineraries/itinerary_list") }
+    end
   end
 
   def show
-    @selected_attraction = Attraction.find(params[:attraction_id]) if params[:attraction_id]
-
     @itinerary = Itinerary.find(params[:id])
+    
+    if params[:attraction_id].present?
+      @selected_attraction = Attraction.find_by(id: params[:attraction_id])
+      
+      if @selected_attraction.nil?
+        flash[:alert] = "The selected attraction could not be found."
+        redirect_to itinerary_path(@itinerary) and return
+      end
+    end
 
     # Preventing running of the Tripadvisor API every time the page is loaded
     # @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
@@ -36,6 +59,12 @@ class ItinerariesController < ApplicationController
           @transport_modes[itinerary_attraction.id] = travel.mode
         end
       end
+    end
+
+    # Debug any cached data
+    if current_user
+      purchased_attractions = Purchase.where(user_id: current_user.id).pluck(:attraction_id)
+      Rails.logger.debug "User #{current_user.id} has purchased attractions: #{purchased_attractions}"
     end
   end
 
@@ -118,5 +147,4 @@ class ItinerariesController < ApplicationController
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
   end
-
 end
