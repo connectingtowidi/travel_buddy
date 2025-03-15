@@ -4,15 +4,20 @@ import flatpickr from "flatpickr"; // You need to import this to use new flatpic
 // Connects to data-controller="regenerate-itinerary"
 export default class extends Controller {
 
-  static targets = [ "interest", "startDate", "endDate", "paxInput", "paxDropdown", "customPaxContainer", "paxContainer", "form"];
+  static targets = [ "interest", "startDate", "endDate", 
+    "paxInput", "paxDropdown", 
+    "customPaxContainer", "paxContainer", 
+    "form", "loadingOverlay"];
 
   
   connect() {
     console.log("RegenerateItineraryController is connected!");
 
     this.initializeFlatpickr();
-  
+
   }
+
+
 
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
@@ -65,6 +70,7 @@ export default class extends Controller {
   regenerate(event) {
     event.preventDefault();
     console.log("Regenerate button clicked!");
+
     
     const startDate = this.startDateTarget.value;
     const endDate = this.endDateTarget.value;
@@ -100,15 +106,15 @@ export default class extends Controller {
       return;
     }
 
+    if (this.formTarget) {
+      // Show loading overlay right before submitting the form
+      this.loadingOverlayTarget.style.display = "flex";
     
-   // If there's a form target, submit it
-   if (this.formTarget) {
-    this.formTarget.submit(); // Trigger the form submission
-  } else {
-    console.error("Form target is not found.");
+      this.formTarget.submit(); // Trigger the form submission
+    } else {
+      console.error("Form target is not found.");
+      // Hide loading overlay if form submission fails
+      this.loadingOverlayTarget.style.display = "none";
+    }
   }
-  }
-
-
-  
 }
