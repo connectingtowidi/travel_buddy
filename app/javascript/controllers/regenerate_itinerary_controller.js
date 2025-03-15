@@ -76,7 +76,7 @@ export default class extends Controller {
     if (!userSignedIn) {
       console.log("User not signed in");
       // If not signed in, redirect to login
-      window.location.href = "/users/sign_in"; // Adjust URL for Devise
+      window.location.href = "/login"; // Adjust URL for Devise
       return;
     }
     

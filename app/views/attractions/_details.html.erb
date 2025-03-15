@@ -1,4 +1,4 @@
-<div class="position-sticky top-0">
+<div class="position-sticky pt-1 top-0">
   <%# <%= @selected_attraction.to_json %>
   <%# above coded by Amanda %>
   <h1 class="my-4"><%= @selected_attraction.name %></h1>
@@ -14,7 +14,7 @@
   <div class="my-4">
   <%= @selected_attraction.description %>
   </div>
-  <table class="table table-hover">
+  <table class="table table-hover my-4">
     <tbody>
       <% @selected_attraction.weekday_text.each do |day_time| %>
         <% day, time = day_time.split(": ", 2) %>
@@ -25,5 +25,5 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'Replace Itinerary', class: "btn btn-dark btn-sm" %>
+  <%= link_to 'Remove from itinerary', root_path, class: "btn btn-dark btn-sm" %>
 </div>
