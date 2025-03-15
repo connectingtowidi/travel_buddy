@@ -396,6 +396,7 @@ DEPENDENCIES
   neighbor
   pg (~> 1.1)
   puma (>= 5.0)
+  rack
   rails (~> 7.1.5, >= 7.1.5.1)
   rspec-rails
   ruby-openai
