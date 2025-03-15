@@ -3,6 +3,22 @@ class ItinerariesController < ApplicationController
 
   def index
     @itineraries = current_user.itineraries
+
+    if params[:query].present?
+      # Use the PgSearch scope for more efficient searching
+      @itineraries = @itineraries.search_by_name(params[:query])
+      
+      # Alternative: use global_search if you want to include user email in search
+      # @itineraries = @itineraries.global_search(params[:query])
+    end
+
+    @itineraries = @itineraries.order(start_date: :desc)
+
+     # Handle turbo_frame requests
+     respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("itineraries_results", partial: "itineraries/itinerary_list") }
+    end
   end
 
   def show

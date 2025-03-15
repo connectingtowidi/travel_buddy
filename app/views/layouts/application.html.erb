@@ -20,7 +20,7 @@
   <% if user_signed_in? && 
       !current_page?(edit_user_registration_path) && 
       !devise_controller? &&
-      (current_page?(home_path) || current_page?(itineraries_path)) &&
+      (current_page?(home_path) || current_page?(itineraries_path) || current_page?(new_itinerary_path)) &&
       !flash[:alert] && 
       !flash[:error] && 
       !(defined?(resource) && resource.errors.any?) %>

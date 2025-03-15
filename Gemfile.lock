@@ -228,6 +228,9 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.9)
+    pg_search (2.3.7)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
@@ -395,6 +398,7 @@ DEPENDENCIES
   importmap-rails
   neighbor
   pg (~> 1.1)
+  pg_search
   puma (>= 5.0)
   rack
   rails (~> 7.1.5, >= 7.1.5.1)
