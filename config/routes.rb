@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }
-
+  
+ 
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,10 +14,15 @@ Rails.application.routes.draw do
   get '/home', to: "pages#home"
   get '/generate', to: 'attractions#generate'
 
+
   resources :attractions, only: [:index, :show]
-  resources :itineraries, only: [:index, :show, :new, :create]
 
   post '/checkout', to: 'payments#create_checkout', as: 'create_checkout'
   get '/attractions/:attraction_id/payment_success', to: 'payments#success', as: 'attraction_payment_success'
+  resources :itineraries, only: [:index, :show, :new, :create] do
+    get '/review', to: 'itineraries#review'
+  end
 
+  get 'get_route', to: 'routes#get_route'
+  
 end

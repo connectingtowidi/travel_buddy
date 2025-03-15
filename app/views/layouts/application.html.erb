@@ -7,32 +7,38 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css", rel: "stylesheet" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <%= javascript_importmap_tags %>
+  
   </head>
 
   <body>
   <%= render "shared/flashes" %>
   
-   <% if user_signed_in? || 
-       (!current_page?(new_user_session_path) && 
-        !current_page?(new_user_registration_path) && 
-        !current_page?(edit_user_registration_path) && 
-        !current_page?(edit_user_password_path) &&
-        !current_page?(new_user_password_path) &&
-        !current_page?(new_user_registration_path) &&
-        !current_page?(user_registration_path) &&
-        !current_page?(cancel_user_registration_path) &&
-         current_page?(home_path) &&
-         current_page?(itineraries_path) &&
-        !flash[:alert] && 
-        !flash[:error] &&
-        !(resource&.errors&.any? if defined?(resource))) %>
-    <%= render 'shared/navbar' %>
+  <% if user_signed_in? && 
+      !current_page?(edit_user_registration_path) && 
+      !devise_controller? &&
+      (current_page?(home_path) || current_page?(itineraries_path)) &&
+      !flash[:alert] && 
+      !flash[:error] && 
+      !(defined?(resource) && resource.errors.any?) %>
+  <%= render 'shared/navbar' %>
+<% elsif current_page?(root_path) %>
+  <%= render 'shared/navbar' %>
+<% end %>
 
-  <% elsif current_page?(root_path) %>
-   <%= render 'shared/navbar' %>
-  <% end %>
+
   <%= yield %>
   </div>
+  <script>
+  (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key:"<%= ENV['GOOGLE_MAPS_API_KEY'] %>",
+    v: "weekly",
+    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+    // Add other bootstrap parameters as needed, using camel case.
+  });
+</script>
 </body>
 </html>

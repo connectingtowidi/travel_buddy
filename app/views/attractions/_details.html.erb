@@ -1,16 +1,29 @@
-    
-
 <div class="position-sticky top-0">
-  <% if @selected_attraction.present? %>
-    <h1><%= @selected_attraction.name %></h1>
-    <%= @selected_attraction.description %>
-    
-    <% if @itinerary %>
-      <div class="mt-4">
-        <%= link_to "Back to Itinerary", itinerary_path(@itinerary), class: "btn btn-primary" %>
-      </div>
-    <% end %>
+  <%# <%= @selected_attraction.to_json %>
+  <%# above coded by Amanda %>
+  <h1 class="my-4"><%= @selected_attraction.name %></h1>
+  <% if @selected_attraction.tripadvisor_photos? %>
+  <div class="my-4">
+    <%= @selected_attraction.tripadvisor_photos %>
+  </div>
   <% else %>
-    <p>No attraction selected or the attraction could not be found.</p>
+  <div class="my-4">
+    <%= image_tag "cover-page.png", class: "img-fluid", style: "border-radius: 15px; height: auto;" %>
+  </div>
   <% end %>
+  <div class="my-4">
+  <%= @selected_attraction.description %>
+  </div>
+  <table class="table table-hover">
+    <tbody>
+      <% @selected_attraction.weekday_text.each do |day_time| %>
+        <% day, time = day_time.split(": ", 2) %>
+        <tr>
+          <td><strong><%= day %></strong></td>
+          <td><%= time %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Replace Itinerary', class: "btn btn-dark btn-sm" %>
 </div>

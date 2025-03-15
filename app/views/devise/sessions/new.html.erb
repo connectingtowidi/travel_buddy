@@ -23,12 +23,10 @@
               value: "user1pw",
               class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
               data: { password_toggle_target: "password" } %>
-
-        <span class="toggle-password"
-              data-password-toggle-target="toggleIcon"
-              data-action="click->password-toggle#toggle">
-          👁
-        </span>
+        <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-muted">
+        <i class="fa-solid fa-eye-slash" data-password-toggle-target="toggleIcon"
+        data-action="click->password-toggle#toggle"></i>
+      </span>
       </div>
     </div>
 
