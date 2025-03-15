@@ -1,213 +1,225 @@
-<div class="container py-4">
-    <div class="row mb-3 align-items-center">
-        <div class="col-md-8 col-sm-6">
-            <h4><strong>Adventure Kids-focused 5-days itinerary</strong></h4>
+<%# Keep only the filters at the top and the video %>
+
+<%# Selection filters section - keep this part %>
+<div class="container mt-1">
+  <div class="row">
+    <div class="col-12">
+      <%# Keep your existing filters here %>
+      <%= form_with url: generate_path, method: :get, data: { turbo: false }, class: "filters-form" do |f| %>
+        <div class="filter-container">
+          <%# Your existing filters go here %>
         </div>
-        <div class="col-md-4 col-sm-6 text-md-end">
-            <button class="btn btn-dark">See My Journey</button>
-        </div>
+      <% end %>
     </div>
-
-    <div class="row" data-controller="redirect">
-        <!-- Left column - Itinerary content -->
-        <div class="col-md-8">
-            <div class="mb-3">
-                <p>Here is your 5 days Adventure Kids-focused itinerary</p>
-                <p><span>2025-03-25</span> - <span>2025-03-28</span></p>
-            </div>
-
-            <!-- Day 1 card -->
-            <div class="mb-3">
-                <h5 class="day-title fw-bold">Day 1</h5>
-            </div>
-            <div class="itinerary-card">
-                <%= image_tag "garden-by-the-bay.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-                   <div>
-                        <h5>Gardens by the Bay</h5>
-                        <p class="card-text">18 Marina Gardens Dr</p>
-                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                          is a futuristic nature park located in the heart of Singapore...
-                        </p>
-                        </div>
-                        <p style="font-size: 18px; margin-bottom: 10px;">
-                        10:00 AM
-                        </p>
-                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
-                    </div>
-                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
-                   1 hour
-                </span>
-
-            </div>
-
-
-            <!-- Travel info -->
-            <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">
-                        15 mins on foot <i class="fa-solid fa-shoe-prints"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Day 2 card -->
-            <div class="mb-3">
-                <h5 class="day-title fw-bold">Day 2</h5>
-            </div>
-            <div class="itinerary-card">
-                <%= image_tag "esplanade.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-                   <div>
-                        <h5>Esplanade</h5>
-                        <p class="card-text">1 Esplanade Dr, Singapore 038981</p>
-                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                          is a world-renowned performing arts center...
-                        </p>
-                        </div>
-                        <p style="font-size: 18px; margin-bottom: 10px;">
-                        10:00 AM
-                        </p>
-                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
-                    </div>
-                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
-                   1 hour
-                </span>
-
-            </div>
-
-
-            <!-- Travel info -->
-            <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">
-                        5 mins by car <i class="fa-solid fa-taxi"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Day 3 card -->
-            <div class="mb-3">
-                <h5 class="day-title fw-bold">Day 3</h5>
-            </div>
-            <div class="itinerary-card">
-                <%= image_tag "merlion-park.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-                   <div>
-                        <h5>Merlion Park</h5>
-                        <p class="card-text">1 Fullerton Rd, Singapore 049213</p>
-                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                          The Merlion is a statue with the head of a lion...
-                        </p>
-                        </div>
-                        <p style="font-size: 18px; margin-bottom: 10px;">
-                        10:00 AM
-                        </p>
-                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
-                    </div>
-                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
-                   1 hour
-                </span>
-
-            </div>
-
-            <!-- Travel info -->
-            <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">
-                        5 mins by car <i class="fa-solid fa-taxi"></i>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Day 4 card -->
-            <div class="mb-3">
-                <h5 class="day-title fw-bold">Day 4</h5>
-            </div>
-            <div class="itinerary-card">
-                <%= image_tag "singapore-zoo.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-                   <div>
-                        <h5>Singapore Zoo</h5>
-                        <p class="card-text">80 Mandai Lake Rd</p>
-                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                          part of the Mandai Wildlife Reserve, which also includes Night Safari... 
-                        </p>
-                        </div>
-                        <p style="font-size: 18px; margin-bottom: 10px;">
-                        10:00 AM
-                        </p>
-                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
-                    </div>
-                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
-                   1 hour
-                </span>
-
-            </div>
-
-            <!-- Travel info -->
-            <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">
-                        5 mins by car <i class="fa-solid fa-taxi"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Day 5 card -->
-            <div class="mb-3">
-                <h5 class="day-title fw-bold">Day 5</h5>
-            </div>
-            <div class="itinerary-card">
-                <%= image_tag "botanic-gardens.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-                   <div>
-                        <h5>Botanic Garden</h5>
-                        <p class="card-text">1 Cluny Road, Singapore 259569</p>
-                           <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
-                          <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                          renowned as the world's largest tropical orchid collection... 
-                        </p>
-                        </div>
-                        <p style="font-size: 18px; margin-bottom: 10px;">
-                        10:00 AM
-                        </p>
-                        <button data-action="click->redirect#redirectToLogin" class="btn btn-dark btn-sm">Details</button>
-                    </div>
-                    <span class="ms-auto" style="font-size: smaller; white-space: nowrap;">
-                   1 hour
-                </span>
-
-            </div>
-
-            <!-- Travel info -->
-            <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">
-                        5 mins by car <i class="fa-solid fa-taxi"></i>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-
-            
-      
-        <!-- Right column - Sidebar -->
-        <% if !user_signed_in? %>
-        <div class="col-md-4 d-flex justify-content-end position-relative">
-            <div class="side-box position-absolute top-0 end-0">
-                <h4 class="fw-bold">Plan a trip that’s so local</h4>
-                <p><em>Discover hidden gems in Singapore</em></p>
-            </div>
-        </div>
-        <% end %>
-    </div>
+  </div>
 </div>
+
+<%# Video section - clean implementation %>
+
+<%# Main container with relative positioning %>
+<div style="position: relative; width: 100%; height: 100vh; overflow: hidden; margin-top: 0; padding-top: 0;">
+  
+  <%# Video background using video_tag %>
+  <div class="video-hero-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+    <div class="video-wrapper" style="width: 100%; height: 100%;">
+      <%= video_tag "SGTravelBuddyPromo.mp4", autoplay: true, muted: true, loop: true, playsinline: true, class: "hero-video", style: "width: 100%; height: 100%; object-fit: cover;" %>
+    </div>
+  </div>
+  
+  <%# Content overlay with text reveal animation %>
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; background-color: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; max-width: 600px; z-index: 3;">
+    <h1 style="margin-bottom: 1.5rem;">Discover Amazing Destinations</h1>
+    
+    <div style="overflow: hidden; margin-bottom: 1.5rem;">
+      <%# Word 1 - Plan %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.1s forwards;">
+          Plan
+        </span>
+      </span>
+      
+      <%# Word 2 - your %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;">
+          your
+        </span>
+      </span>
+      
+      <%# Word 3 - perfect %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.3s forwards;">
+          perfect
+        </span>
+      </span>
+      
+      <%# Word 4 - trip %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.4s forwards;">
+          trip
+        </span>
+      </span>
+      
+      <%# Word 5 - with %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;">
+          with
+        </span>
+      </span>
+      
+      <%# Word 6 - curated %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.6s forwards;">
+          curated
+        </span>
+      </span>
+      
+      <%# Word 7 - attractions %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.7s forwards;">
+          attractions
+        </span>
+      </span>
+      
+      <%# Word 8 - and %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.8s forwards;">
+          and
+        </span>
+      </span>
+      
+      <%# Word 9 - personalized %>
+      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.9s forwards;">
+          personalized
+        </span>
+      </span>
+      
+      <%# Word 10 - itineraries %>
+      <span style="display: inline-block; overflow: hidden;">
+        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 1.0s forwards;">
+          itineraries
+        </span>
+      </span>
+    </div>
+    
+    <button class="slide-button">
+      <span class="slide-button-text">Start Planning</span>
+      <span class="slide-button-icon">→</span>
+    </button>
+  </div>
+</div>
+
+<%# Add the necessary keyframe animations %>
+<style>
+  @keyframes textReveal {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .slide-button {
+    position: relative;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .slide-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color:rgb(92, 117, 107);
+    transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+    z-index: -1;
+  }
+  
+  .slide-button-text {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    transition: transform 0.4s ease;
+  }
+  
+  .slide-button-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(20px, -50%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 1;
+  }
+  
+  .slide-button:hover {
+    padding-right: 40px;
+    border-color: #3498db;
+  }
+  
+  .slide-button:hover::before {
+    width: 100%;
+  }
+  
+  .slide-button:hover .slide-button-text {
+    transform: translateX(-6px);
+  }
+  
+  .slide-button:hover .slide-button-icon {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+</style>
+
+<!-- Fade in and slide up on scroll -->
+<div class="opacity-0 translate-y-10 transition duration-1000 ease-out"
+     data-class-in-view="opacity-100 translate-y-0">
+  <h2 class="text-4xl font-bold">Discover Singapore</h2>
+</div>
+
+<!-- Luxury destination card with hover effects -->
+<%# <div class="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:shadow-2xl">
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 transition-opacity group-hover:opacity-90"></div>
+  
+  <img src="destination.jpg" class="w-full transition-transform duration-700 group-hover:scale-105" />
+  
+  <div class="absolute bottom-0 p-6 translate-y-2 opacity-90 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+    <h3 class="text-2xl text-white font-bold">Marina Bay</h3>
+    <p class="text-white/80 max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-20">
+      Singapore's iconic waterfront destination
+    </p>
+  </div>
+</div> %>
+
+<!-- Section change animation -->
+<section class="min-h-screen flex items-center transition-all duration-1000"
+         data-section="1">
+  <!-- Section content -->
+</section>
+
+<!-- 3D tilt effect on hover -->
+<div class="tilt-card perspective-1000 transition-transform duration-500">
+  <div class="tilt-card-inner w-full h-full preserve-3d transition-transform duration-500">
+    <!-- Card content -->
+  </div>
+</div>
+
+<%# No other content below this %>
