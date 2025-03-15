@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script><script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.0-min.js.gz"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('dcb289acf8ddaa0ea69ac456621d52c1', {"autocapture":{"elementInteractions":true}});</script>
     <title>TravelBuddy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
@@ -40,5 +41,50 @@
     // Add other bootstrap parameters as needed, using camel case.
   });
 </script>
+
+<style>
+/* Pulse Glow Effect for the Regenerate button */
+.btn-regenerate {
+  position: relative;
+  background-color:rgb(121, 160, 135) !important; /* Vibrant coral color */
+  color: white !important;
+  border: none !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Create the pulse effect using pseudo-element */
+.btn-regenerate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0;
+  transform: scale(1.5);
+  animation: pulse-glow 2s infinite;
+  pointer-events: none; /* Ensures the pseudo-element doesn't interfere with clicks */
+}
+
+.btn-regenerate:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+/* Subtle effect when clicking */
+.btn-regenerate:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Define the pulse animation */
+@keyframes pulse-glow {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.2; }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+</style>
 </body>
 </html>

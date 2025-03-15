@@ -7,8 +7,11 @@ namespace :attractions do
     logger.info "=== Starting attractions update from TripAdvisor at #{Time.current} ==="
     
     begin
-      logger.info "Fetching attractions from TripAdvisor API..."
-      attractions = TripadvisorApi.fetch_singapore_attractions
+      logger.info "Loading attractions from mock data..."
+      file_path = Rails.root.join('lib', 'tasks', 'mock_data.json')
+      # attractions = TripadvisorApi.fetch_singapore_attractions
+      attractions = JSON.parse(File.read(file_path))
+      logger.info "Loaded #{attractions.size} attractions from mock data"
       
       # Log the raw API response
       logger.info "Raw API Response: #{attractions.inspect}"
