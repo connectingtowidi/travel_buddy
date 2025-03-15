@@ -89,3 +89,4 @@ gem "solid_queue"
 gem "neighbor"
 
 gem "rack"
+gem "pg_search"
