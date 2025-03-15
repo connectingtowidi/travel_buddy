@@ -28,7 +28,7 @@
   
       <!-- Interest Dropdown -->
       <div class="col-md-2 col-sm-3 col-12 mb-2">
-        <%= f.input :interest, as: :select, collection: ['Kids-focused', 'Culture', 'Food', 'Nature', 'Shopping'], include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
+       <%= f.input :interest, as: :select, collection: Attraction.all_trip_types, include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
       </div>
 
       <!-- Start Date -->

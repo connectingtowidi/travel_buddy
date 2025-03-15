@@ -11,6 +11,14 @@ class Attraction < ApplicationRecord
     last_tripadvisor_update.nil? || last_tripadvisor_update < 2.weeks.ago
   end
 
+  def self.all_trip_types
+    pluck(:trip_types)
+      .compact
+      .map { |types_string| JSON.parse(types_string) rescue [] }
+      .flatten
+      .uniq
+  end
+
   private
 
   def set_embedding
