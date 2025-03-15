@@ -17,12 +17,13 @@
   <body>
   <%= render "shared/flashes" %>
   
-  <% if user_signed_in? || 
-       (!devise_controller? && 
-        (current_page?(home_path) || current_page?(itineraries_path)) &&
-        !flash[:alert] && 
-        !flash[:error] && 
-        !(defined?(resource) && resource.errors.any?)) %>
+  <% if user_signed_in? && 
+      !current_page?(edit_user_registration_path) && 
+      !devise_controller? &&
+      (current_page?(home_path) || current_page?(itineraries_path)) &&
+      !flash[:alert] && 
+      !flash[:error] && 
+      !(defined?(resource) && resource.errors.any?) %>
   <%= render 'shared/navbar' %>
 <% elsif current_page?(root_path) %>
   <%= render 'shared/navbar' %>
