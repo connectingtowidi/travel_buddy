@@ -16,7 +16,6 @@
         <span class="dropdown-item-text"><%= current_user.email %></span>
         <div class="dropdown-divider"></div>
         <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
-        <%= link_to "Cancel Profile", cancel_user_registration_path, class: "dropdown-item" %>
         <%= button_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
       </div>
     </div>
