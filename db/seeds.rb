@@ -74,8 +74,6 @@ itinerary_4 = Itinerary.create!(
     end_date: Date.new(2025, 3, 20)
 )
 
-return
-
 puts "Creating attractions..."
 
 attraction_history_1 = Attraction.create!(
@@ -536,14 +534,14 @@ travel_111_112 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_111,
   itinerary_attraction_to: itinerary_attraction_112,
   mode: 'transit',
-  duration: 20  
+  duration: 20
 )
 
 travel_112_113 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_112,
   itinerary_attraction_to: itinerary_attraction_113,
   mode: 'taxi',
-  duration: 40 
+  duration: 40
 )
 
 travel_121_122 = Travel.create!(
@@ -557,7 +555,7 @@ travel_122_123 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_122,
   itinerary_attraction_to: itinerary_attraction_123,
   mode: 'transit',
-  duration: 30  
+  duration: 30
 )
 
 travel_211_212 = Travel.create!(
