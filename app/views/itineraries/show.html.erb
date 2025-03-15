@@ -1,7 +1,7 @@
 <meta name="turbo-refresh-method" content="morph">
 <meta name="turbo-refresh-scroll" content="preserve">
 
-<div class="container py-4">
+<div class="container py-5">
   <div class="row mb-3 align-items-center" id="itinerary-header">
     <div class="col-md-8 col-sm-6">
       <h4><strong><%= @itinerary.name %></strong></h4>
@@ -35,10 +35,10 @@
               <div class="attraction-details">
                 <h5><%= day_attraction.attraction.name %></h5>
                 <p class="card-text"><%= day_attraction.attraction.address_string %></p>
-                <div class="d-flex flex-column" style="max-width: 60%; overflow: hidden;">
+                <div class="d-flex flex-column" style="max-width: 85%; overflow: hidden;">
                   <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                     <%# <%= TripadvisorApi.fetch_attraction_details(8077179)["description"] %>
-                     <%= day_attraction.attraction.description %>
+                    <%= day_attraction.attraction.description %>
                   </p>
                 </div>
               </div>
