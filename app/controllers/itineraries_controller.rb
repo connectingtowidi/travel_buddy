@@ -5,7 +5,6 @@ class ItinerariesController < ApplicationController
     @itineraries = current_user.itineraries
   end
 
-
   def show
     @selected_attraction = Attraction.find(params[:attraction_id]) if params[:attraction_id]
 
@@ -41,18 +40,26 @@ class ItinerariesController < ApplicationController
   end
 
   def new
+    @itinerary = Itinerary.new
   end
 
   def create
-    @itinerary = Itinerary.new(itinerary_params)
-    @itinerary.user = current_user
-    if @itinerary.save
-      redirect_to itinerary_path(@itinerary)
+    @itinerary = GenerateItineraryService.(
+     current_user, 
+      itinerary_params[:interest], 
+      itinerary_params[:start_date], 
+      itinerary_params[:end_date], 
+      itinerary_params[:pax]
+    )
+
+
+    if @itinerary.save!
+      redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
-
+  
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
     # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
@@ -101,11 +108,13 @@ class ItinerariesController < ApplicationController
 
   private
 
+  
   def itinerary_params
-    params.require(:itinerary).permit(:name, :description, :start_date, :end_date)
+    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :number_of_pax)
   end
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
   end
+
 end

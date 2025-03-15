@@ -24,9 +24,10 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+# gem "jbuilder"
 
 gem "ruby-openai"
+
 
 
 # Use Redis adapter to run Action Cable in production
@@ -81,3 +82,7 @@ group :test do
 end
 
 gem 'whenever', require: false
+
+gem "solid_cable", "~> 1.0"
+gem "solid_queue"
+gem "neighbor"

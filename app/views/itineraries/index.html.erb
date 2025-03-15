@@ -1,31 +1,37 @@
 <div class="container">
-    <h1>Your Itineraries</h1>
-    
-    <!-- Filter section -->
-    <div class="filter-row mt-3">
+    <!-- Header Section with Button -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4>Your Itineraries</h4>
+        <%= link_to "New Itinerary", new_itinerary_path, class: "btn btn-dark px-4" %>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="row mt-3">
         <div class="col-md-3 col-sm-6 col-12 mb-2">
             <!-- Your existing filter dropdowns -->
         </div>
-        <!-- ... other filter columns ... -->
+        <!-- Other filter columns -->
     </div>
 
-    <!-- Itinerary cards grid -->
+    <!-- Itinerary Cards Grid -->
     <div class="row">
         <% @itineraries.each do |itinerary| %>
-            <%= link_to itinerary_path(itinerary), class: "text-decoration-none" do %>
-                <div class="card m-3" style="width: 24rem; padding-left: 0px; padding-right: 0px; border-radius: 15px;">
-                    <%= image_tag "garden-by-the-bay.png", class: "card-img-fluid", style: "width: 100%; height: 200px; object-fit: cover; padding: 0px; border-radius: 15px 15px 0px 0px;" %>
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            #<%= itinerary.id %> - <%= itinerary.name %>
-                        </h5>
-                        <p class="card-text"><%= itinerary.start_date %> - <%= itinerary.end_date %></p>
-                        <span class="btn btn-primary">Details</span>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <%= link_to itinerary_path(itinerary), class: "text-decoration-none" do %>
+                    <div class="card shadow-sm border-0 m-3" style="border-radius: 15px;">
+                        <%= image_tag "garden-by-the-bay.png", class: "card-img-top", 
+                            style: "height: 180px; object-fit: cover; border-radius: 15px 15px 0 0;" %>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold"><%= itinerary.name %></h5>
+                            <p class="text-muted mb-1"><%= itinerary.try(:address) || "Location unavailable" %></p>
+                            <p class="card-text text-secondary"><%= itinerary.start_date %> - <%= itinerary.end_date %></p>
+                            <div class="d-flex justify-content-end">
+                                <span class="btn btn-dark btn-sm px-3">Details</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            <% end %>
+                <% end %>
+            </div>
         <% end %>
     </div>
-
-    <%= link_to "New Itinerary", new_itinerary_path, class: "btn btn-primary" %>
 </div>
