@@ -53,15 +53,60 @@ class ItinerariesController < ApplicationController
     )
 
 
-  if @itinerary.save!
-    redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully created."
-  else
-    render :new, status: :unprocessable_entity
+    if @itinerary.save!
+      redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
-end
+  
+  def review
+    @itinerary = Itinerary.find(params[:itinerary_id])
+    # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
+
+    # @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
+    #   {
+    #     lat: itinerary_attraction.attraction.latitude.to_f,
+    #     lng: itinerary_attraction.attraction.longitude.to_f,
+    #     title: itinerary_attraction.attraction.name
+    #   }
+    # end
+
+    @markers = []
+    @travels = []
+
+    # travel_map = Travel.where(itinerary_attraction_from_id: @itinerary.itinerary_attractions.pluck(:id)).index_by(&:itinerary_attraction_from_id)
+
+    @itinerary.itinerary_attractions.each do |itinerary_attraction|
+      @markers << {
+        lat: itinerary_attraction.attraction.latitude.to_f,
+        lng: itinerary_attraction.attraction.longitude.to_f,
+        title: itinerary_attraction.attraction.name
+      }
+      # @itinerary_attraction_id = itinerary_attraction_id
+      travel = Travel.find_by(itinerary_attraction_from_id: itinerary_attraction.id)
+      if travel
+        @travels << travel
+      end
+
+      # travel = travel_map[itinerary_attraction.id]
+      # if travel
+      #   @travels << travel
+      # else
+      #   @travels << ["final stop"]
+      # end
 
 
- private
+    end
+
+    # @itinerary.itinerary_attractions.each do |itinerary_attraction| 
+    #   @markers['lat'] = itinerary_attraction.attraction.latitude.to_f,
+    #   @markers['lng'] = itinerary_attraction.attraction.longitude.to_f,
+    #   @markers['title'] = itinerary_attraction.attraction.name
+    # end
+  end
+
+  private
 
   
   def itinerary_params
