@@ -1,5 +1,5 @@
 class ItinerariesController < ApplicationController
-  before_action :set_itinerary, only: [:show]
+  before_action :set_itinerary, only: [:show, :update_with_ai]
 
   def index
     @itineraries = current_user.itineraries
@@ -135,6 +135,47 @@ class ItinerariesController < ApplicationController
     #   @markers['title'] = itinerary_attraction.attraction.name
     # end
     
+  end
+
+  def update_with_ai
+    locked_attractions = params[:locked_attractions].to_s.split(',').map(&:to_i)
+
+    return render json: {
+      locked_attractions: locked_attractions
+    }
+    # Generate new suggestions while keeping locked attractions
+    new_itinerary = GenerateItineraryService.call(
+      current_user,
+      @itinerary.interest,
+      @itinerary.start_date,
+      @itinerary.end_date,
+      @itinerary.number_of_pax,
+      locked_attractions
+    )
+
+    if new_itinerary
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "itinerary_suggestions",
+            partial: "itineraries/suggestions",
+            locals: { itinerary: new_itinerary }
+          )
+        }
+        format.html { redirect_to itinerary_path(@itinerary), notice: "Itinerary updated successfully!" }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.update(
+            "flash_messages",
+            partial: "shared/flash",
+            locals: { message: "Failed to update itinerary", type: "error" }
+          )
+        }
+        format.html { redirect_to itinerary_path(@itinerary), alert: "Failed to update itinerary" }
+      end
+    end
   end
 
   private
