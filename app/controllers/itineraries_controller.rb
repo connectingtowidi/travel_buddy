@@ -1,5 +1,5 @@
 class ItinerariesController < ApplicationController
-  before_action :set_itinerary, only: [:show]
+  before_action :set_itinerary, only: [:show, :update_with_ai]
 
   def index
     @itineraries = current_user.itineraries
@@ -135,6 +135,16 @@ class ItinerariesController < ApplicationController
     #   @markers['title'] = itinerary_attraction.attraction.name
     # end
     
+  end
+
+  def update_with_ai
+    raise "TODO"
+    
+    locked_attractions = params[:locked_attractions].to_s.split(',').map(&:to_i)
+
+    return render json: {
+      locked_attractions: locked_attractions
+    }
   end
 
   private
