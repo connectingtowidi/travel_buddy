@@ -153,9 +153,9 @@ class GenerateItineraryService
         Attraction.nearest_neighbors(
           :embedding, question_embedding,
           distance: "euclidean"
-        ).first(12)  # Limiting to first 3 attractions
+        ).first(12) 
       else
-        []  # Return empty array if no data
+        [] 
       end
   end
 
