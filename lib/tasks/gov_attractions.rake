@@ -3,7 +3,22 @@ namespace :gov_attractions do
   task merge: :environment do
     pp "CAREFUL: This makes ~300 API requests to TripAdvisor API. USE SPARINGLY."
     Attraction.find_each do |attraction|
-      fetched_data = TripadvisorApi.fetch_singapore_attractions(attraction.name, attraction.latitude, attraction.longitude)
+      trip_advisor_data_file = Rails.root.join('lib', 'tasks', 'trip_advisor_data.json')
+      trip_advisor_data = JSON.parse(File.read(trip_advisor_data_file)) rescue {}
+      
+      fetched_data = nil
+
+      if trip_advisor_data[attraction.name].present?
+        pp "[LOADING FROM FILE]"
+        fetched_data = trip_advisor_data[attraction.name]
+      else
+        return # just to be safe
+        fetched_data = TripadvisorApi.fetch_singapore_attractions(attraction.name, attraction.latitude, attraction.longitude)
+        trip_advisor_data[attraction.name] = fetched_data
+        File.write('lib/tasks/trip_advisor_data.json', JSON.pretty_generate(trip_advisor_data))
+      end
+      
+      pp "Processed attraction #{attraction.id}: #{attraction.name}"
 
       if fetched_data.present?
         attraction_data = fetched_data.first
@@ -177,7 +192,6 @@ namespace :gov_attractions do
         latitude: data["LATITUDE"].to_f,
         longitude: data["LONGTITUDE"].to_f,
         website: data["URL_PATH"] || data["EXTERNAL_LINK"],
-        # reviews: attraction_data["reviews"]&.map { |r| {title: r["title"], text: r["text"]} } || [],
         tripadvisor_photos: [data["IMAGE_PATH"]],
         last_tripadvisor_update: Time.current
       }.compact)
