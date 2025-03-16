@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.1].define(version: 2025_03_13_030057) do
-=======
-ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
->>>>>>> master
+ActiveRecord::Schema[7.1].define(version: 2025_03_16_072840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -47,10 +43,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-<<<<<<< HEAD
-# Could not dump table "attractions" because of following StandardError
-#   Unknown type 'vector' for column 'embedding'
-=======
   create_table "attractions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -78,8 +70,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
     t.vector "embedding", limit: 1536
     t.time "opening_hour"
     t.time "closing_hour"
+    t.string "labels", default: [], array: true
   end
->>>>>>> master
 
   create_table "itineraries", force: :cascade do |t|
     t.string "name"

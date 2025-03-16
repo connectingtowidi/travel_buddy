@@ -29,7 +29,7 @@
             </p>
             <div class="itinerary-card">
               <% if day_attraction.attraction.tripadvisor_photos.present? %>
-                <%= image_tag day_attraction.attraction.tripadvisor_photos.first, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
+                <%= image_tag day_attraction.attraction.hero_image_url, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
               <% else %>
                 <%= image_tag "cover-page.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
               <% end %>

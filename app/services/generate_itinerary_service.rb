@@ -125,8 +125,7 @@ class GenerateItineraryService
         attraction_id: attraction["id"],
         day: attraction["day"],
         duration: attraction["duration"],
-        starting_time: attraction["starting_time"]
-
+        starting_time: Time.parse(attraction["starting_time"]) - 8.hours
       )
     end
 
@@ -154,7 +153,7 @@ class GenerateItineraryService
         Attraction.nearest_neighbors(
           :embedding, question_embedding,
           distance: "euclidean"
-        ).first(3)  # Limiting to first 3 attractions
+        ).first(12)  # Limiting to first 3 attractions
       else
         []  # Return empty array if no data
       end

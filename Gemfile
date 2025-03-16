@@ -90,3 +90,4 @@ gem "neighbor"
 
 gem "rack"
 gem "pg_search"
+gem "nokogiri"
