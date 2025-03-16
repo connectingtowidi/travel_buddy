@@ -114,6 +114,7 @@ class ItinerariesController < ApplicationController
       }
       # @itinerary_attraction_id = itinerary_attraction_id
       travel = Travel.find_by(itinerary_attraction_from_id: itinerary_attraction.id)
+      
       if travel
         @travels << travel
       end
@@ -133,6 +134,7 @@ class ItinerariesController < ApplicationController
     #   @markers['lng'] = itinerary_attraction.attraction.longitude.to_f,
     #   @markers['title'] = itinerary_attraction.attraction.name
     # end
+    
   end
 
   private
