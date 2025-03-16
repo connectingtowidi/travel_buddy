@@ -4,7 +4,29 @@
   <h1 class="my-4"><%= @selected_attraction.name %></h1>
   <% if @selected_attraction.tripadvisor_photos? %>
   <div class="my-4">
-    <%= @selected_attraction.tripadvisor_photos %>
+    <% if @selected_attraction.tripadvisor_photos.is_a?(Array) %>
+      <div id="attractionCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <% @selected_attraction.tripadvisor_photos.each_with_index do |photo_url, index| %>
+            <div class="carousel-item <%= 'active' if index == 0 %>">
+              <img src="<%= photo_url %>" class="d-block w-100 img-fluid" style="border-radius: 15px; height: auto;" alt="<%= @selected_attraction.name %> photo">
+            </div>
+          <% end %>
+        </div>
+        <% if @selected_attraction.tripadvisor_photos.length > 1 %>
+          <button class="carousel-control-prev" type="button" data-bs-target="#attractionCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#attractionCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        <% end %>
+      </div>
+    <% elsif @selected_attraction.tripadvisor_photos.is_a?(String) %>
+      <img src="<%= @selected_attraction.tripadvisor_photos %>" class="img-fluid" style="border-radius: 15px; height: auto;" alt="<%= @selected_attraction.name %> photo">
+    <% end %>
   </div>
   <% else %>
   <div class="my-4">

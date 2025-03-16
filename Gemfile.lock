@@ -397,6 +397,7 @@ DEPENDENCIES
   httparty
   importmap-rails
   neighbor
+  nokogiri
   pg (~> 1.1)
   pg_search
   puma (>= 5.0)
