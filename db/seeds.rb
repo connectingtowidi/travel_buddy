@@ -49,8 +49,7 @@ puts "Creating attractions..."
 
 Rake::Task['gov_attractions:update'].invoke
 Rake::Task['gov_attractions:clean'].invoke
-# CAUTION: The following makes ~300 API requests to TripAdvisor API
-# Rake::Task['gov_attractions:merge'].invoke
+Rake::Task['gov_attractions:merge'].invoke
 
 puts "Creating itineraries Attractions..."
 
