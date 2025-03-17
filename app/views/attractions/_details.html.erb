@@ -1,7 +1,7 @@
 <div class="position-sticky pt-1 top-0">
   <%# <%= @selected_attraction.to_json %>
   <%# above coded by Amanda %>
-  <h1 class="my-4"><%= @selected_attraction.name %></h1>
+  <h3 class="my-4"><%= @selected_attraction.name %></h3>
   <% if @selected_attraction.tripadvisor_photos? %>
   <div class="my-4">
     <% if @selected_attraction.tripadvisor_photos.is_a?(Array) %>
@@ -47,5 +47,4 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'Remove from itinerary', root_path, class: "btn btn-dark btn-sm" %>
 </div>

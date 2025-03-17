@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get '/attractions/:attraction_id/payment_success', to: 'payments#success', as: 'attraction_payment_success'
   resources :itineraries, only: [:index, :show, :new, :create] do
     get '/review', to: 'itineraries#review'
+    member do
+      post '/update_with_ai', to: 'itineraries#update_with_ai', as: 'update_with_ai'
+    end
   end
 
   get 'get_route', to: 'routes#get_route'
