@@ -2,91 +2,181 @@
 <meta name="turbo-refresh-method" content="morph">
 <meta name="turbo-refresh-scroll" content="preserve">
 
-<div class="container py-5">
-  <div class="row mb-3 align-items-center" id="itinerary-header">
+<div class="container py-5" data-controller="ai-suggestions">
+  <div class="row mb-4 align-items-center" id="itinerary-header">
     <div class="col-md-8 col-sm-6">
-      <h4><strong><%= @itinerary.name %></strong></h4>
+      <h2 class="fw-bold" style="color: rgb(121, 160, 135);"><%= @itinerary.name %></h2>
         <%# Debug information %>
         <% if @itinerary.itinerary_attractions.empty? %>
-          <p>No attractions found for this itinerary</p>
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            No attractions found for this itinerary
+          </div>
         <% end %>
     </div>
     <div class="col-md-4 col-sm-6 text-md-end">
-      <button class="btn btn-dark">See My Journey</button>
+      <button class="btn btn-dark rounded-pill px-4 py-2 shadow-sm">
+        <i class="fas fa-route me-2"></i>See My Journey
+      </button>
     </div>
   </div>
 
-  <div class="row mt-3 g-5" id="itineraries-main-content">
+  <!-- AI Prompt Section -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm rounded-3 bg-light">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold mb-3" style="color: rgb(121, 160, 135);">
+            <i class="fas fa-magic me-2"></i>Customize Your Itinerary
+          </h5>
+          <%= form_with url: update_with_ai_itinerary_path(@itinerary), method: :post, data: { ai_suggestions_target: "form" } do |f| %>
+            <div class="input-group input-group-lg">
+              <%= f.text_field :ai_prompt, class: "form-control border-end-0", 
+                  placeholder: "E.g., Add more outdoor activities, include more family-friendly options...",
+                  style: "border-radius: 25px 0 0 25px;" %>
+              <button class="btn px-4" type="submit" style="border-radius: 0 25px 25px 0; background-color: rgb(121, 160, 135); color: white;">
+                <i class="fas fa-wand-magic-sparkles me-2"></i>Update Itinerary
+              </button>
+            </div>
+            <div class="mt-2">
+              <small class="form-text text-muted fst-italic">
+                <i class="fas fa-lock me-1 text-secondary"></i>
+                Click the lock icon on attractions you want to keep in your itinerary
+              </small>
+            </div>
+            <%= f.hidden_field :locked_attractions, id: "locked_attractions_input", data: { ai_suggestions_target: "lockedAttractions" } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 g-5" id="itineraries-main-content">
     <!-- Main content row with itinerary and sidebar -->
-    <div class="col" id="itineraries-left-column"> <!-- Left column - Itinerary content -->
-      <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
-      <div class="row mb-5">
-        <h3>Day <%= index + 1 %></h3>
-        <% day_attractions[1].each_with_index do |day_attraction, index| %>
-          <div class="row">
-            <p style="font-size: 18px; margin-bottom: 10px;">
-                <%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
-            </p>
-            <div class="itinerary-card">
-              <% if day_attraction.attraction.tripadvisor_photos.present? %>
-                <%= image_tag day_attraction.attraction.hero_image_url, class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-              <% else %>
-                <%= image_tag "cover-page.png", class: "img-fluid", style: "border-radius: 15px; width: 25%; height: auto;" %>
-              <% end %>
-              <div class="attraction-details">
-                <h5><%= day_attraction.attraction.name %></h5>
-                <p class="card-text"><%= day_attraction.attraction.address_string %></p>
-                <div class="d-flex flex-column" style="max-width: 85%; overflow: hidden;">
-                  <p class="description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                    <%# <%= TripadvisorApi.fetch_attraction_details(8077179)["description"] %>
-                    <%= day_attraction.attraction.description %>
-                  </p>
+    <div class="col-md-7" id="itineraries-left-column"> <!-- Left column - Itinerary content -->
+      <div class="card border-0 shadow rounded-3 overflow-hidden">
+        <div class="card-header text-white py-3" style="background-color: rgb(121, 160, 135);">
+          <h5 class="mb-0 fw-bold">
+            <i class="fas fa-calendar-alt me-2"></i>Your Travel Plan
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
+          <div class="day-container mb-5">
+            <h3 class="day-header bg-light p-3 rounded-3 mb-4 fw-bold" style="color: rgb(121, 160, 135);">
+              <i class="fas fa-sun me-2"></i>Day <%= index + 1 %>
+            </h3>
+            <% day_attractions[1].each_with_index do |day_attraction, index| %>
+              <div class="timeline-item">
+                <div class="timeline-time badge text-white rounded-pill px-3 py-2 mb-2" style="background-color: rgb(121, 160, 135);">
+                  <i class="far fa-clock me-1"></i>
+                  <%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %>
+                </div>
+                <div class="itinerary-card bg-white p-3 rounded-3 shadow-sm mb-3" style="border-left: 4px solid rgb(121, 160, 135);" data-attraction-id="<%= day_attraction.attraction.id %>">
+                  <div class="row">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                      <% if day_attraction.attraction.tripadvisor_photos.present? %>
+                        <%= image_tag day_attraction.attraction.hero_image_url, 
+                            class: "img-fluid attraction-thumbnail rounded-3 shadow-sm", 
+                            style: "object-fit: cover; height: 180px; width: 100%;" %>
+                      <% else %>
+                        <%= image_tag "cover-page.png", 
+                            class: "img-fluid attraction-thumbnail rounded-3 shadow-sm", 
+                            style: "object-fit: cover; height: 180px; width: 100%;" %>
+                      <% end %>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="attraction-details">
+                        <div class="d-flex justify-content-between align-items-start">
+                          <h5 class="fw-bold" style="color: rgb(121, 160, 135);"><%= day_attraction.attraction.name %></h5>
+                          <button class="btn btn-sm btn-outline-secondary lock-attraction" 
+                                  data-action="click->ai-suggestions#toggleLock"
+                                  data-attraction-id="<%= day_attraction.attraction.id %>" 
+                                  title="Lock this attraction">
+                            <i class="fas fa-unlock"></i>
+                          </button>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                          <small>
+                            <i class="fas fa-map-marker-alt text-danger me-1"></i> 
+                            <%= day_attraction.attraction.address_string %>
+                          </small>
+                        </p>
+                        <div class="attraction-description">
+                          <p class="description text-secondary" style="font-size: 0.95rem; line-height: 1.5;">
+                            <%= day_attraction.attraction.description %>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="d-flex mt-3 flex-wrap gap-2">
+                        <%= link_to itinerary_path(@itinerary, attraction_id: day_attraction.attraction), 
+                            class: "btn btn-outline-secondary btn-sm rounded-pill px-3", style: "border-color: rgb(121, 160, 135); color: rgb(121, 160, 135);" do %>
+                          <i class="fas fa-info-circle me-1"></i> View Details
+                        <% end %>
+                        <% if day_attraction.attraction.price && day_attraction.attraction.price > 0 %>
+                          <% 
+                            # Debug logging
+                            purchase_exists = current_user && Purchase.exists?(user_id: current_user.id, attraction_id: day_attraction.attraction.id)
+                            Rails.logger.debug "User: #{current_user&.id}, Attraction: #{day_attraction.attraction.id}, Paid: #{purchase_exists}"
+                          %>
+                          
+                          <% if purchase_exists %>
+                            <span class="btn btn-success btn-sm rounded-pill px-3 disabled">
+                              <i class="fas fa-check-circle me-1"></i> Paid
+                            </span>
+                          <% else %>
+                            <%= button_to create_checkout_path(attraction_id: day_attraction.attraction.id), 
+                                        method: :post, 
+                                        class: "btn btn-sm rounded-pill px-3", 
+                                        style: "background-color: rgb(121, 160, 135); color: white;",
+                                        data: { turbo: false } do %>
+                              <i class="fas fa-ticket-alt me-1"></i> Buy Tickets - $<%= day_attraction.attraction.price %> SGD
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="d-flex">
-                <%= link_to 'Details', itinerary_path(@itinerary, attraction_id: day_attraction.attraction), class: "btn btn-dark btn-sm me-2" %>
-                <% if day_attraction.attraction.price && day_attraction.attraction.price > 0 %>
-                  <% 
-                    # Debug logging
-                    purchase_exists = current_user && Purchase.exists?(user_id: current_user.id, attraction_id: day_attraction.attraction.id)
-                    Rails.logger.debug "User: #{current_user&.id}, Attraction: #{day_attraction.attraction.id}, Paid: #{purchase_exists}"
-                  %>
-                  
-                  <% if purchase_exists %>
-                    <span class="btn btn-success btn-sm disabled">
-                      <i class="fas fa-check-circle"></i> Paid
-                    </span>
-                  <% else %>
-                    <%= button_to "Buy Tickets - $#{day_attraction.attraction.price} SGD", 
-                                  create_checkout_path(attraction_id: day_attraction.attraction.id), 
-                                  method: :post, 
-                                  class: "btn btn-primary btn-sm", 
-                                  data: { turbo: false } %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <% if index < day_attractions[1].size - 1 %>
-              <div class="d-flex justify-content-center my-2">
-                <div class="text-center">
-                    <div class="travel-line"></div>
-                    <div class="travel-text">15 mins on foot
-                    </div>
-                 </div>
-              </div>
+              <% if index < day_attractions[1].size - 1 %>
+                <div class="travel-info text-center my-3">
+                  <div class="travel-line bg-secondary" style="height: 2px; width: 100px; margin: 0 auto;"></div>
+                  <div class="travel-text badge bg-secondary text-white rounded-pill px-3 py-2 my-2">
+                    <i class="fas fa-walking me-1"></i> 15 mins on foot
+                  </div>
+                  <div class="travel-line bg-secondary" style="height: 2px; width: 100px; margin: 0 auto;"></div>
+                </div>
+              <% end %>
             <% end %>
           </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-      <% end %>
     </div>
-    <div class="col position-relative pt-5" id="itineraries-right-column"><!-- Right column - Sidebar (add your sidebar content here) -->
-      <turbo-frame id="attraction_details">
-        <!-- Sidebar content goes here -->
-        <%= render(partial: "attractions/details") if @selected_attraction %>
-      </turbo-frame><!-- Close the column -->
+    <div class="col-md-5 position-relative" id="itineraries-right-column"><!-- Right column - Attraction Details -->
+      <div class="card border-0 shadow rounded-3 overflow-hidden sticky-top" style="top: 20px;">
+        <div class="card-header text-white py-3" style="background-color: rgb(121, 160, 135);">
+          <h5 class="mb-0 fw-bold">
+            <i class="fas fa-info-circle me-2"></i>Attraction Details
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <turbo-frame id="attraction_details">
+            <% if @selected_attraction %>
+              <%= render(partial: "attractions/details") %>
+            <% else %>
+              <div class="text-center py-5">
+                <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                  <i class="fas fa-map-marked-alt fa-3x" style="color: rgb(121, 160, 135);"></i>
+                </div>
+                <h5 class="text-secondary mb-2">No Attraction Selected</h5>
+                <p class="text-muted">Select an attraction from your itinerary to view details</p>
+              </div>
+            <% end %>
+          </turbo-frame>
+        </div>
+      </div>
     </div>
   </div>
 </div><!-- Close the container -->
