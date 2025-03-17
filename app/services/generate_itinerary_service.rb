@@ -119,17 +119,25 @@ class GenerateItineraryService
     )
 
 
-    itinerary_data["attractions"].each do |attraction|
-      ItineraryAttraction.create!(
-        itinerary: itinerary,
-        attraction_id: attraction["id"],
-        day: attraction["day"],
-        duration: attraction["duration"],
-        starting_time: Time.parse(attraction["starting_time"]) - 8.hours
-      )
-    end
+    valid_attraction_ids = Attraction.where(id: itinerary_data["attractions"].map { |a| a["id"] }).pluck(:id)
+    valid_attractions = itinerary_data["attractions"].select { |a| valid_attraction_ids.include?(a["id"]) }
 
-    return itinerary
+  valid_attractions.each do |attraction|
+    itinerary_attraction = ItineraryAttraction.new(
+      itinerary: itinerary,
+      attraction_id: attraction["id"],
+      day: attraction["day"],
+      duration: attraction["duration"],
+      starting_time: attraction["starting_time"]
+    )
+    
+    unless itinerary_attraction.save
+      Rails.logger.warn("Failed to create itinerary attraction: #{itinerary_attraction.errors.full_messages.join(', ')}")
+
+    end
+  end
+
+  return itinerary
 
   end
   
