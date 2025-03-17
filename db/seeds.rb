@@ -41,6 +41,7 @@ itinerary_1 = Itinerary.create!(
     user: user1,
     interest: 'history',
     number_of_pax: 1,
+    dietary_preferences: 'Vegetarian',
     start_date: Date.new(2025, 3, 25),
     end_date: Date.new(2025, 3, 28)
 )

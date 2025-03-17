@@ -37,12 +37,12 @@
     <%= simple_form_for @itinerary || Itinerary.new, url: itineraries_path, method: :post, html: { class: "d-flex flex-wrap align-items-center filter-row mt-3", data: { regenerate_itinerary_target: "form" } } do |f| %>
   
       <!-- Interest Dropdown -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
        <%= f.input :interest, as: :select, collection: Attraction.all_trip_types, include_blank: false, input_html: { class: 'form-select', data: { regenerate_itinerary_target: "interest" } } %>
       </div>
 
       <!-- Start Date -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
         <%= f.input :start_date, 
                     as: :string, 
                     input_html: { 
@@ -55,7 +55,7 @@
       </div>
 
       <!-- End Date -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
         <%= f.input :end_date, 
                     as: :string, 
                     input_html: { 
@@ -68,7 +68,7 @@
       </div>
 
       <!-- Pax Dropdown -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="paxContainer">
+      <div class="col-md-1 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="paxContainer">
         <%= f.input :number_of_pax, 
                     as: :select, 
                     collection: [1, 2, 3, 4, 5, 6, 7, 8, 9, '10+'], 
@@ -83,7 +83,7 @@
       </div>
 
       <!-- Custom Pax Input (hidden by default) -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
+      <div class="col-md-1 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
         <%= f.input :number_of_pax, 
                     as: :integer, 
                     input_html: { 
@@ -95,22 +95,19 @@
                     } %>
       </div>
 
+      <!-- Dietary Preferences Dropdown -->
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
+        <%= f.input :dietary_preferences, 
+                    as: :select, 
+                    collection: ["No Preference", "Vegetarian", "Vegan", "Gluten-Free", "Halal", "Kosher"], 
+                    include_blank: false, 
+                    input_html: { class: 'form-select', data: { regenerate_itinerary_target: "dietaryPreferences" } } %>
+      </div>
+
       <!-- Generate/Regenerate Button (Aligned to the right) -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 20px;">
+      <div class="col-md-2 col-sm-2 col-12 mb-2 d-flex justify-content-end" style="margin-top: 20px;">
         <%= f.button :submit, user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate', class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } %>
       </div>
     <% end %>
   <% end %>
-
-  <!-- Login Button at the top-right -->
-  <% if !user_signed_in? %>
-    <div class="login-button-container" style="position: absolute; top: 30px; right: 50px;" data-controller="redirect">
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-          Log in/Sign Up
-        </button>
-      <%= render 'devise/shared/auth_modal' %>
-  
-    </div>
-  <% end %>
-
 </div>

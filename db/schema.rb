@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_16_072840) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_121436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_16_072840) do
     t.date "end_date"
     t.string "interest"
     t.integer "number_of_pax"
+    t.string "dietary_preferences"
     t.index ["user_id"], name: "index_itineraries_on_user_id"
   end
 
@@ -94,6 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_16_072840) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "day"
+    t.integer "position"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
   end
