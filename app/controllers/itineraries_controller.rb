@@ -7,7 +7,7 @@ class ItinerariesController < ApplicationController
     if params[:query].present?
       # Use the PgSearch scope for more efficient searching
       @itineraries = @itineraries.search_by_name(params[:query])
-      
+
       # Alternative: use global_search if you want to include user email in search
       # @itineraries = @itineraries.global_search(params[:query])
     end
@@ -23,10 +23,10 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
-    
+
     if params[:attraction_id].present?
       @selected_attraction = Attraction.find_by(id: params[:attraction_id])
-      
+
       if @selected_attraction.nil?
         flash[:alert] = "The selected attraction could not be found."
         redirect_to itinerary_path(@itinerary) and return
@@ -74,10 +74,10 @@ class ItinerariesController < ApplicationController
 
   def create
     @itinerary = GenerateItineraryService.(
-     current_user, 
-      itinerary_params[:interest], 
-      itinerary_params[:start_date], 
-      itinerary_params[:end_date], 
+     current_user,
+      itinerary_params[:interest],
+      itinerary_params[:start_date],
+      itinerary_params[:end_date],
       itinerary_params[:pax]
     )
 
@@ -88,7 +88,7 @@ class ItinerariesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
     # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
@@ -114,7 +114,7 @@ class ItinerariesController < ApplicationController
       }
       # @itinerary_attraction_id = itinerary_attraction_id
       travel = Travel.find_by(itinerary_attraction_from_id: itinerary_attraction.id)
-      
+
       if travel
         @travels << travel
       end
@@ -129,18 +129,26 @@ class ItinerariesController < ApplicationController
 
     end
 
-    # @itinerary.itinerary_attractions.each do |itinerary_attraction| 
+    # @itinerary.itinerary_attractions.each do |itinerary_attraction|
     #   @markers['lat'] = itinerary_attraction.attraction.latitude.to_f,
     #   @markers['lng'] = itinerary_attraction.attraction.longitude.to_f,
     #   @markers['title'] = itinerary_attraction.attraction.name
     # end
-    
+
   end
 
   def update_with_ai
     raise "TODO"
-    
-    locked_attractions = params[:locked_attractions].to_s.split(',').map(&:to_i)
+
+    user_prompt = params[:ai_prompt]
+    locked_attractions_ids = params[:locked_attractions].to_s.split(',').map(&:to_i)
+    locked_attractions = Attraction.where(id: locked_attractions_ids)
+
+    TweakItineraryService.call(
+      user_prompt:,
+      locked_attractions:,
+      itinerary: @itinerary
+    )
 
     return render json: {
       locked_attractions: locked_attractions
@@ -149,7 +157,7 @@ class ItinerariesController < ApplicationController
 
   private
 
-  
+
   def itinerary_params
     params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :number_of_pax)
   end
