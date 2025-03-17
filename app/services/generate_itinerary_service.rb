@@ -133,6 +133,7 @@ class GenerateItineraryService
     
     unless itinerary_attraction.save
       Rails.logger.warn("Failed to create itinerary attraction: #{itinerary_attraction.errors.full_messages.join(', ')}")
+
     end
   end
 
@@ -160,9 +161,9 @@ class GenerateItineraryService
         Attraction.nearest_neighbors(
           :embedding, question_embedding,
           distance: "euclidean"
-        ).first(3)  # Limiting to first 3 attractions
+        ).first(12) 
       else
-        []  # Return empty array if no data
+        [] 
       end
   end
 

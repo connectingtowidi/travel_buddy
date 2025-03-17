@@ -8,45 +8,42 @@ class TripadvisorApi
 
   API_KEY = ENV["TRIPADVISOR_API_KEY"]
 
-  def self.fetch_singapore_attractions
+  def self.fetch_singapore_attractions(name, latitude, longitude)
+    pp "Fetching #{name}"
     attractions_response = get("/location/search", query: {
       key: API_KEY,
-      searchQuery: 'singapore',
+      searchQuery: name,
       category: 'attractions',
-      language: 'en'
+      language: 'en',
+      latLong: "#{latitude},#{longitude}"
     })
 
-    restaurants_response = get("/location/search", query: {
-      key: API_KEY,
-      searchQuery: 'singapore', 
-      category: 'restaurants',
-      language: 'en'
-    })
-
-    # Combine the responses
     response = {
-      "data" => (attractions_response["data"] || []) + (restaurants_response["data"] || [])
+      "data" => attractions_response["data"] || []
     }
 
     return [] if response.blank? || response["data"].blank?
 
-    # Fetch details for the top 20 attractions
-    response["data"][0..20].map do |attraction|
-      location_id = attraction["location_id"]
-      begin
-        details = fetch_attraction_details(location_id)
-        {
-          "location_id" => location_id,
-          "name" => attraction["name"], 
-          "photos" => fetch_photos(location_id),
-          "reviews" => fetch_reviews(location_id),
-          **details
-        }
-      rescue StandardError => e
-        Rails.logger.error("Failed to fetch details for attraction #{location_id}: #{e.message}")
-        nil
-      end
-    end.compact
+    attraction = response["data"][0]
+    location_id = attraction["location_id"]
+
+    final_response = begin
+      details = fetch_attraction_details(location_id)
+      pp "Found #{attraction["name"]}"
+      pp "========================"
+      {
+        "location_id" => location_id,
+        "name" => attraction["name"], 
+        "photos" => fetch_photos(location_id),
+        "reviews" => fetch_reviews(location_id),
+        **details
+      }
+    rescue StandardError => e
+      Rails.logger.error("Failed to fetch details for attraction #{location_id}: #{e.message}")
+      nil
+    end
+
+    [final_response].compact
   end
 
   def self.fetch_attraction_details(location_id)

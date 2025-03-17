@@ -47,7 +47,10 @@ itinerary_1 = Itinerary.create!(
 
 puts "Creating attractions..."
 
-Rake::Task['attractions:update'].invoke
+Rake::Task['gov_attractions:update'].invoke
+Rake::Task['gov_attractions:clean'].invoke
+# CAUTION: The following makes ~300 API requests to TripAdvisor API
+# Rake::Task['gov_attractions:merge'].invoke
 
 puts "Creating itineraries Attractions..."
 
@@ -107,28 +110,28 @@ puts "Creating travel..."
 travel_111_112 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_111,
   itinerary_attraction_to: itinerary_attraction_112,
-  mode: 'transit',
+  mode: 'TRANSIT',
   duration: 20  
 )
 
 travel_112_113 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_112,
   itinerary_attraction_to: itinerary_attraction_113,
-  mode: 'taxi',
+  mode: 'DRIVE',
   duration: 40 
 )
 
 travel_121_122 = Travel.create!(
     itinerary_attraction_from: itinerary_attraction_121,
     itinerary_attraction_to: itinerary_attraction_122,
-    mode: 'walk',
+    mode: 'WALK',
     duration: 35
 )
 
 travel_122_123 = Travel.create!(
   itinerary_attraction_from: itinerary_attraction_122,
   itinerary_attraction_to: itinerary_attraction_123,
-  mode: 'transit',
+  mode: 'TRANSIT',
   duration: 30  
 )
 

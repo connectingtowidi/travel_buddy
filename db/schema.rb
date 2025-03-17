@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_16_072840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_15_040100) do
     t.vector "embedding", limit: 1536
     t.time "opening_hour"
     t.time "closing_hour"
+    t.string "labels", default: [], array: true
   end
 
   create_table "itineraries", force: :cascade do |t|
