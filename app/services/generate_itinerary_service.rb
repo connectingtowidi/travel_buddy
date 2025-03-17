@@ -128,7 +128,7 @@ class GenerateItineraryService
       attraction_id: attraction["id"],
       day: attraction["day"],
       duration: attraction["duration"],
-      starting_time: attraction["starting_time"]
+      starting_time: Time.parse(attraction["starting_time"]) - 8.hours
     )
     
     unless itinerary_attraction.save
