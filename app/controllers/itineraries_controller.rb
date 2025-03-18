@@ -136,9 +136,6 @@ class ItinerariesController < ApplicationController
     redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully updated."
   end
 
-    end
-  end
-
   # This is the AJAX request to fetch the route and duration
   def fetch_route
     @travel = Travel.new(travel_params)
@@ -181,7 +178,7 @@ class ItinerariesController < ApplicationController
       end
     end
   end
-  
+
   private
 
 
