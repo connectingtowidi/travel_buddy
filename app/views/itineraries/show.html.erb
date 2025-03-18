@@ -114,7 +114,14 @@
                             <%= day_attraction.attraction.description %>
                           </p>
                         </div>
-
+                        <%= link_to itinerary_path(@itinerary, attraction_id: day_attraction.attraction), 
+                            data: {
+                              turbo_frame: :attraction_details,
+                              turbo_action: :advance
+                            }, 
+                            class: "btn btn-outline-secondary btn-sm rounded-pill px-3", style: "border-color: rgb(121, 160, 135); color: rgb(121, 160, 135);" do %>
+                            <i class="fas fa-info-circle me-1"></i> View Details
+                        <% end %>
                         <!-- Insert the restaurant recommendations collapsible here -->
                         <%= render partial: 'restaurant_recommendations', locals: { day_attraction: day_attraction } %>
                       </div>
@@ -125,6 +132,30 @@
             <% end %>
           </div>
           <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 position-relative" id="itineraries-right-column"><!-- Right column - Attraction Details -->
+      <div class="card border-0 shadow rounded-3 overflow-hidden sticky-top" style="top: 20px;">
+        <div class="card-header text-white py-3" style="background-color: rgb(121, 160, 135);">
+          <h5 class="mb-0 fw-bold">
+            <i class="fas fa-info-circle me-2"></i>Attraction Details
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <turbo-frame id="attraction_details">
+            <% if @selected_attraction %>
+              <%= render(partial: "attractions/details") %>
+            <% else %>
+              <div class="text-center py-5">
+                <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                  <i class="fas fa-map-marked-alt fa-3x" style="color: rgb(121, 160, 135);"></i>
+                </div>
+                <h5 class="text-secondary mb-2">No Attraction Selected</h5>
+                <p class="text-muted">Select an attraction from your itinerary to view details</p>
+              </div>
+            <% end %>
+          </turbo-frame>
         </div>
       </div>
     </div>

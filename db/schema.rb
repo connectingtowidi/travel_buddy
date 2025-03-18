@@ -96,7 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_045416) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "day"
-    t.integer "position"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
   end
