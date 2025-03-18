@@ -32,12 +32,6 @@ export default class extends Controller {
     }
   }
 
-
-  showLoadingOverlay() {
-    console.log("Form submitted, showing loading overlay")
-    this.loadingOverlayTarget.style.display = 'flex'
-  }
-
   initializeFlatpickr() {
     // Common configuration for both date pickers
     const dateConfig = {
@@ -110,12 +104,9 @@ export default class extends Controller {
 
     if (this.formTarget) {
       // Show loading overlay right before submitting the form
-      this.loadingOverlayTarget.style.display = "flex"; // Ensure the overlay is shown
-      
-      // Optionally add some delay to ensure the overlay appears before form submission
-      setTimeout(() => {
-        this.formTarget.submit(); // Trigger the form submission
-      }, 100); // Small delay before submitting
+      this.loadingOverlayTarget.style.display = "flex";
+
+      this.formTarget.submit(); // Trigger the form submission
     } else {
       console.error("Form target is not found.");
       // Hide loading overlay if form submission fails

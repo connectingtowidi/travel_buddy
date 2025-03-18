@@ -7,9 +7,9 @@
   
 <div class="collapse mt-2" id="restaurantRecommendations_<%= day_attraction.id %>">
     <div class="card card-body border-0 bg-light">
-      <% if day_itinerary_attraction.recommend_restaurants.present? %>
+      <% if day_attraction.recommend_restaurants.present? %>
         <div class="row">
-          <% day_itinerary_attraction.recommend_restaurants.each do |restaurant| %>
+          <% day_attraction.recommend_restaurants.each do |restaurant| %>
             <div class="col-md-6 mb-2">
               <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
