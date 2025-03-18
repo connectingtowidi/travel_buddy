@@ -14,10 +14,7 @@ export default class extends Controller {
     console.log("RegenerateItineraryController is connected!");
 
     this.initializeFlatpickr();
-
   }
-
-
 
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
@@ -66,7 +63,6 @@ export default class extends Controller {
     this.endDatePicker = endDatePicker;
   }
 
-
   regenerate(event) {
     event.preventDefault();
     console.log("Regenerate button clicked!");
@@ -109,7 +105,7 @@ export default class extends Controller {
     if (this.formTarget) {
       // Show loading overlay right before submitting the form
       this.loadingOverlayTarget.style.display = "flex";
-    
+
       this.formTarget.submit(); // Trigger the form submission
     } else {
       console.error("Form target is not found.");

@@ -14,7 +14,8 @@ class ItineraryAttraction < ApplicationRecord
 
 
   def recommend_restaurants
-    restaurant_recommendation_service = RestaurantRecommendationService.new(latitude: attraction.latitude, longitude: attraction.longitude, dietary_requirements: attraction.dietary_requirements)
+    restaurant_recommendation_service = RestaurantRecommendationService.get_recommendations(latitude: attraction.latitude, longitude: attraction.longitude, 
+    dietary_preferences: itinerary.dietary_preferences)
   end
 
 end

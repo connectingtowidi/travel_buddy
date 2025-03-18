@@ -37,10 +37,12 @@ puts "Creating itineraries..."
 
 itinerary_1 = Itinerary.create!(
     name: '(Summarised) Stories of the Straits: Singapore in Two Days',
+    remark: "This itinerary takes you through some of Singapore's most iconic and culturally rich attractions over two days. all the way, making it longer longeeeeeee",
     duration: 2,
     user: user1,
     interest: 'history',
     number_of_pax: 1,
+    dietary_preferences: ['Vegetarian', 'Halal'],
     start_date: Date.new(2025, 3, 25),
     end_date: Date.new(2025, 3, 28)
 )

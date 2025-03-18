@@ -32,7 +32,10 @@ class RestaurantRecommendationService
 
     return { error: "Failed to fetch recommendations", status: response.body } unless response.success?
 
+
+
     restaurants = JSON.parse(response.body)["places"] || []
+
   
     restaurants.map do |restaurant|
       {
@@ -46,4 +49,4 @@ class RestaurantRecommendationService
       }
     end
   end
-end 
+end
