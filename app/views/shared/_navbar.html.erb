@@ -85,7 +85,7 @@
       </div>
 
       <!-- Custom Pax Input (hidden by default) -->
-      <div class="col-md-2 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
+      <div class="col-md-1 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
         <%= f.input :number_of_pax, 
                     as: :integer, 
                     input_html: { 
@@ -97,9 +97,10 @@
                     } %>
       </div>
 
+   
       <!-- Dietary Preferences Dropdown -->
-      <div class="col-md-2 col-sm-2 col-12 mb-2">
-        <%= f.input :dietary_preferences, 
+      <div class="col-md-2 col-sm-2 col-12 mt-5">
+      <%= f.input :dietary_preferences, 
             as: :select, 
             collection: ["No Preference", "Vegetarian", "Vegan", "Gluten-Free", "Halal", "Kosher"], 
             include_blank: false,
@@ -116,10 +117,10 @@
               } 
             } 
         %>
-      </div>
+    </div>
 
       <!-- Generate/Regenerate Button (Aligned to the right) -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <div class="col-md-1 col-sm-3 col-12 mt-2">
       <%= f.button :submit, user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate', class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } %>
       </div>
     <% end %>
