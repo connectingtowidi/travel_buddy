@@ -139,21 +139,17 @@ class ItinerariesController < ApplicationController
   end
 
   def update_with_ai
-    raise "TODO"
-
     user_prompt = params[:ai_prompt]
     locked_attractions_ids = params[:locked_attractions].to_s.split(',').map(&:to_i)
     locked_attractions = Attraction.where(id: locked_attractions_ids)
 
-    TweakItineraryService.call(
+    TweakItineraryService.(
       user_prompt:,
       locked_attractions:,
       itinerary: @itinerary
     )
 
-    return render json: {
-      locked_attractions: locked_attractions
-    }
+    redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully updated."
   end
 
   private
