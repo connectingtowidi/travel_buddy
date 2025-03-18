@@ -10,7 +10,7 @@ class ItineraryAttraction < ApplicationRecord
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :starting_time, presence: true
 
-  # after_create :recommend_restaurants
+  after_create :recommend_restaurants
 
 
   def recommend_restaurants
