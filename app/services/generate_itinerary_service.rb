@@ -114,6 +114,7 @@ class GenerateItineraryService
 
     itinerary = Itinerary.create!(
       name: itinerary_data["itinerary_name"],
+      remark: itinerary_data["remarks"],
       duration: duration,
       user: user,
       interest: interest,

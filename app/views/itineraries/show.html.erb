@@ -114,6 +114,10 @@
                             <%= day_attraction.attraction.description %>
                           </p>
                         </div>
+
+                        <!-- Insert the restaurant recommendations collapsible here -->
+                        <%= render partial: 'restaurant_recommendations', locals: { day_attraction: day_attraction } %>
+                        <!-- Or insert the entire code from the artifact here -->
                       </div>
                     </div>
                   </div>

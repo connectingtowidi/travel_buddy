@@ -14,10 +14,7 @@ export default class extends Controller {
     console.log("RegenerateItineraryController is connected!");
 
     this.initializeFlatpickr();
-
   }
-
-
 
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
@@ -33,6 +30,12 @@ export default class extends Controller {
       this.paxInputTarget.required = false; // Make the custom input not required
       this.paxDropdownTarget.required = true;
     }
+  }
+
+
+  showLoadingOverlay() {
+    console.log("Form submitted, showing loading overlay")
+    this.loadingOverlayTarget.style.display = 'flex'
   }
 
   initializeFlatpickr() {
@@ -65,7 +68,6 @@ export default class extends Controller {
     this.startDatePicker = startDatePicker;
     this.endDatePicker = endDatePicker;
   }
-
 
   regenerate(event) {
     event.preventDefault();
@@ -108,9 +110,12 @@ export default class extends Controller {
 
     if (this.formTarget) {
       // Show loading overlay right before submitting the form
-      this.loadingOverlayTarget.style.display = "flex";
-    
-      this.formTarget.submit(); // Trigger the form submission
+      this.loadingOverlayTarget.style.display = "flex"; // Ensure the overlay is shown
+      
+      // Optionally add some delay to ensure the overlay appears before form submission
+      setTimeout(() => {
+        this.formTarget.submit(); // Trigger the form submission
+      }, 100); // Small delay before submitting
     } else {
       console.error("Form target is not found.");
       // Hide loading overlay if form submission fails
