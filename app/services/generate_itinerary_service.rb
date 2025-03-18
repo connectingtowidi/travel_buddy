@@ -87,7 +87,7 @@ class GenerateItineraryService
               ]
             }
           }
-        }
+        },
         messages: [
           { role: "user", content: prompt }
         ]

@@ -150,10 +150,10 @@ class ItinerariesController < ApplicationController
 
   private
 
-  
+  # app/controllers/itineraries_controller.rb
   def itinerary_params
-    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :number_of_pax, :dietary_preferences)
-  end
+    params.require(:itinerary).permit(:start_date, :end_date, :interest, :number_of_pax, dietary_preferences: [])
+  end  
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])

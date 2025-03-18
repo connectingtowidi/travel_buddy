@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_17_121436) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_18_045416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -83,7 +83,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_17_121436) do
     t.date "end_date"
     t.string "interest"
     t.integer "number_of_pax"
-    t.string "dietary_preferences"
+    t.string "remark"
+    t.string "dietary_preferences", default: [], array: true
     t.index ["user_id"], name: "index_itineraries_on_user_id"
   end
 
