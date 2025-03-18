@@ -1,0 +1,40 @@
+// app/assets/stylesheets/components/_animations.scss
+
+.remark-container {
+    position: relative;
+    overflow: hidden;
+    
+    // Nested selectors in SCSS
+    .animate-slide {
+      animation: fadeSlideIn 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+    
+  // Keyframe definition
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // You can add variables for reusability
+  $animation-duration: 0.8s;
+  $animation-easing: ease-out;
+  
+  // Additional animation classes you might want to use elsewhere
+  .fade-in {
+    animation: fadeIn $animation-duration $animation-easing forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

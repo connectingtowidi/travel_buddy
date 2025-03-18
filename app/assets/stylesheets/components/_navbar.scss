@@ -74,3 +74,23 @@
 .spinner-container {
   text-align: center;
 }
+
+
+/* Highlight the "No Preference" option */
+.highlight-default {
+  font-weight: bold;
+  background-color: #f8f9fa; /* Light background color */
+  color: #007bff; /* Blue color for contrast */
+}
+
+/* Optional: You can also change the appearance of the select when the default is selected */
+.form-select option:checked.highlight-default {
+  background-color: #e0f7fa; /* Light cyan background when selected */
+  color: #0056b3; /* Dark blue text color */
+}
+
+.form-select option:checked {
+  font-weight: bold;
+  background-color: #f0f8ff; /* Light background color */
+  color: #007bff; /* Blue text color */
+}

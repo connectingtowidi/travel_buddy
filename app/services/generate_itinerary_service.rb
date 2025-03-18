@@ -2,7 +2,7 @@ require "openai"
 require "json"
 
 class GenerateItineraryService
-  def self.call(user, interest, start_date, end_date, number_of_pax)
+  def self.call(user, interest, start_date, end_date, number_of_pax, dietary_preferences)
     client = OpenAI::Client.new
 
 
@@ -21,7 +21,7 @@ class GenerateItineraryService
       The itinerary should include the id of the attraction, the day that I should visit the attraction,
       and the duration of the visit, and the starting time, make sure the starting time falls within attraction's 
       opening and closing hours for the day and make sure the #{start_date} and #{end_date} fall within the opening days
-      of the attractions.
+      of the attractions. You should also add a remark about each attractions so as to make it more personalize.
       The itinerary should include all the attractions and give it suitable name for the itinerary
 
       Here is the list of attractions:
@@ -42,6 +42,10 @@ class GenerateItineraryService
                 itinerary_name: {
                   type: "string",
                   description: "The name of the itinerary"
+                },
+                remarks: {
+                  type: "string",
+                  description: "A summary of the attractions included in the itinerary"
                 },
                 attractions: {
                   type: "array",
@@ -77,12 +81,12 @@ class GenerateItineraryService
                 }
               },
               required: [
-                "attractions",
-                "itinerary_name"
+                "itinerary_name",
+                "remarks",
+                "attractions"
               ]
             }
           }
-
         },
         messages: [
           { role: "user", content: prompt }
@@ -110,10 +114,12 @@ class GenerateItineraryService
 
     itinerary = Itinerary.create!(
       name: itinerary_data["itinerary_name"],
+      remark: itinerary_data["remarks"],
       duration: duration,
       user: user,
       interest: interest,
       number_of_pax: number_of_pax,
+      dietary_preferences: dietary_preferences,
       start_date: start_date,
       end_date: end_date
     )

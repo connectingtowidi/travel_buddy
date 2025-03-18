@@ -74,11 +74,12 @@ class ItinerariesController < ApplicationController
 
   def create
     @itinerary = GenerateItineraryService.(
-     current_user,
-      itinerary_params[:interest],
-      itinerary_params[:start_date],
-      itinerary_params[:end_date],
-      itinerary_params[:pax]
+     current_user, 
+      itinerary_params[:interest], 
+      itinerary_params[:start_date], 
+      itinerary_params[:end_date], 
+      itinerary_params[:pax],
+      itinerary_params[:dietary_preferences],
     )
 
 
@@ -157,10 +158,9 @@ class ItinerariesController < ApplicationController
 
   private
 
-
   def itinerary_params
-    params.require(:itinerary).permit(:interest, :start_date, :end_date, :pax, :number_of_pax)
-  end
+    params.require(:itinerary).permit(:start_date, :end_date, :interest, :number_of_pax, dietary_preferences: [])
+  end  
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])

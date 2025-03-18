@@ -1,239 +1,289 @@
 <% if !user_signed_in? %>
- 
+  <%# Keep only the filters at the top and the video %>
 
+  <%# Selection filters section - keep this part %>
+  <div class="container mt-1">
+    <div class="row">
+      <div class="col-12">
+        <%# Keep your existing filters here %>
+        <%= form_with url: generate_path, method: :get, data: { turbo: false }, class: "filters-form" do |f| %>
+          <div class="filter-container">
+            <%# Your existing filters go here %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<%# Keep only the filters at the top and the video %>
+  <%# Video section - clean implementation %>
 
-<%# Selection filters section - keep this part %>
-<div class="container mt-1">
-  <div class="row">
-    <div class="col-12">
-      <%# Keep your existing filters here %>
-      <%= form_with url: generate_path, method: :get, data: { turbo: false }, class: "filters-form" do |f| %>
-        <div class="filter-container">
-          <%# Your existing filters go here %>
+  <%# Main container with relative positioning %>
+  <div style="position: relative; width: 100%; height: 100vh; overflow: hidden; margin-top: 0; padding-top: 0;">
+    
+    <%# Video background using video_tag %>
+    <div class="video-hero-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+      <div class="video-wrapper" style="width: 100%; height: 100%;">
+        <%= video_tag "SGTravelBuddyPromo.mp4", autoplay: true, muted: true, loop: true, playsinline: true, class: "hero-video", style: "width: 100%; height: 100%; object-fit: cover;" %>
+      </div>
+    </div>
+    
+    <%# Content overlay with text reveal animation %>
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; background-color: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; max-width: 600px; z-index: 3;">
+      <h1 style="margin-bottom: 1.5rem;">Discover Amazing Destinations</h1>
+      
+      <div style="overflow: hidden; margin-bottom: 1.5rem;">
+        <%# Word 1 - Plan %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.1s forwards;">
+            Plan
+          </span>
+        </span>
+        
+        <%# Word 2 - your %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;">
+            your
+          </span>
+        </span>
+        
+        <%# Word 3 - perfect %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.3s forwards;">
+            perfect
+          </span>
+        </span>
+        
+        <%# Word 4 - trip %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.4s forwards;">
+            trip
+          </span>
+        </span>
+        
+        <%# Word 5 - with %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;">
+            with
+          </span>
+        </span>
+        
+        <%# Word 6 - curated %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.6s forwards;">
+            curated
+          </span>
+        </span>
+        
+        <%# Word 7 - attractions %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.7s forwards;">
+            attractions
+          </span>
+        </span>
+        
+        <%# Word 8 - and %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.8s forwards;">
+            and
+          </span>
+        </span>
+        
+        <%# Word 9 - personalized %>
+        <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.9s forwards;">
+            personalized
+          </span>
+        </span>
+        
+        <%# Word 10 - itineraries %>
+        <span style="display: inline-block; overflow: hidden;">
+          <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 1.0s forwards;">
+            itineraries
+          </span>
+        </span>
+      </div>
+      
+      <button class="slide-button" data-bs-toggle="modal" data-bs-target="#authModal">
+        <span class="slide-button-text">Start Planning</span>
+        <span class="slide-button-icon">→</span>
+      </button>
+    </div>
+  </div>
+
+  <%# Auth Modal %>
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header text-center flex-column border-0 bg-light p-4">
+          <h5 class="modal-title fw-bold text-primary" id="authModalLabel">
+            😊😊 Welcome back
+          </h5>
+          <p class="text-muted">Log in to your account</p>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      <% end %>
+        
+        <div class="modal-body p-4">
+          <!-- Social Login Buttons -->
+          <div class="d-flex justify-content-center gap-2 mb-3">
+            <button class="btn btn-dark rounded px-4 py-2"><i class="fa-brands fa-apple"></i></button>
+            <button class="btn btn-primary rounded px-4 py-2"><i class="fa-brands fa-facebook-f"></i></button>
+            <button class="btn btn-light rounded border px-4 py-2"><i class="fa-brands fa-google"></i></button>
+          </div>
+          
+          <!-- Separator -->
+          <div class="d-flex align-items-center my-3">
+            <hr class="flex-grow-1">
+            <span class="mx-2 text-muted">or</span>
+            <hr class="flex-grow-1">
+          </div>
+          
+          <!-- Login Form -->
+          <p class="text-center fw-bold text-primary">Log in with your email address</p>
+          
+          <%= simple_form_for(User.new, as: :user, url: session_path(:user), data: { turbo: false }) do |f| %>
+            <%= f.error_notification %>
+            <div class="mb-3">
+              <%= f.input :email, 
+                        label: false, 
+                        placeholder: "Email", 
+                        input_html: { autocomplete: "email", class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle"} %>
+          
+              <% if flash[:alert] %>
+                <div class="invalid-feedback">
+                  Invalid email or password
+                </div>
+              <% end %>
+            </div>
+          
+            <div class="mb-3 position-relative" data-controller="password-toggle">
+              <%= f.input :password, 
+                        label: false, 
+                        placeholder: "Password", 
+                        required: false,
+                        autocomplete: "current-password",
+                        input_html: { 
+                          class: "form-control #{'is-invalid' if flash[:alert]} bg-secondary-subtle",
+                          data: { password_toggle_target: "password" }
+                        } %>
+              <span class="position-absolute end-0 top-50 translate-middle-y me-3 text-muted">
+                <i class="fa-solid fa-eye-slash" data-password-toggle-target="toggleIcon"
+                data-action="click->password-toggle#toggle"></i>
+              </span>
+            </div>
+            
+            <div class="d-grid">
+              <%= f.button :submit, 
+                         "Log in", 
+                         class: "btn-primary btn-lg" %>
+            </div>
+          <% end %>
+          
+          <div class="text-center mt-3">
+            <p class="mb-0 text-muted">No account?
+              <%= link_to "Sign up", new_registration_path(:user), class: "text-primary fw-bold" %>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<%# Video section - clean implementation %>
-
-<%# Main container with relative positioning %>
-<div style="position: relative; width: 100%; height: 100vh; overflow: hidden; margin-top: 0; padding-top: 0;">
-  
-  <%# Video background using video_tag %>
-  <div class="video-hero-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-    <div class="video-wrapper" style="width: 100%; height: 100%;">
-      <%= video_tag "SGTravelBuddyPromo.mp4", autoplay: true, muted: true, loop: true, playsinline: true, class: "hero-video", style: "width: 100%; height: 100%; object-fit: cover;" %>
-    </div>
-  </div>
-  
-  <%# Content overlay with text reveal animation %>
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; background-color: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; max-width: 600px; z-index: 3;">
-    <h1 style="margin-bottom: 1.5rem;">Discover Amazing Destinations</h1>
-    
-    <div style="overflow: hidden; margin-bottom: 1.5rem;">
-      <%# Word 1 - Plan %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.1s forwards;">
-          Plan
-        </span>
-      </span>
-      
-      <%# Word 2 - your %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;">
-          your
-        </span>
-      </span>
-      
-      <%# Word 3 - perfect %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.3s forwards;">
-          perfect
-        </span>
-      </span>
-      
-      <%# Word 4 - trip %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.4s forwards;">
-          trip
-        </span>
-      </span>
-      
-      <%# Word 5 - with %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;">
-          with
-        </span>
-      </span>
-      
-      <%# Word 6 - curated %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.6s forwards;">
-          curated
-        </span>
-      </span>
-      
-      <%# Word 7 - attractions %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.7s forwards;">
-          attractions
-        </span>
-      </span>
-      
-      <%# Word 8 - and %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.8s forwards;">
-          and
-        </span>
-      </span>
-      
-      <%# Word 9 - personalized %>
-      <span style="display: inline-block; overflow: hidden; margin-right: 5px;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.9s forwards;">
-          personalized
-        </span>
-      </span>
-      
-      <%# Word 10 - itineraries %>
-      <span style="display: inline-block; overflow: hidden;">
-        <span style="display: inline-block; transform: translateY(100%); opacity: 0; animation: textReveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 1.0s forwards;">
-          itineraries
-        </span>
-      </span>
-    </div>
-    
-
-
-
-
-    
-    <button class="slide-button">
-      <span class="slide-button-text" data-bs-toggle="modal" data-bs-target="#authModal">Start Planning</span>
-
-      <span class="slide-button-icon">→</span>
-     
-    </button>
-
-     <%= render 'devise/shared/auth_modal' %>
-  </div>
-</div>
-
-<%# Add the necessary keyframe animations %>
-<style>
-  @keyframes textReveal {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
+  <%# Add the necessary keyframe animations %>
+  <style>
+    @keyframes textReveal {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
-    100% {
-      transform: translateY(0);
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .slide-button {
+      position: relative;
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    
+    .slide-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color:rgb(92, 117, 107);
+      transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+      z-index: -1;
+    }
+    
+    .slide-button-text {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+    
+    .slide-button-icon {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translate(20px, -50%);
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 1;
+    }
+    
+    .slide-button:hover {
+      padding-right: 40px;
+      border-color: #3498db;
+    }
+    
+    .slide-button:hover::before {
+      width: 100%;
+    }
+    
+    .slide-button:hover .slide-button-text {
+      transform: translateX(-6px);
+    }
+    
+    .slide-button:hover .slide-button-icon {
+      transform: translate(0, -50%);
       opacity: 1;
     }
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  </style>
 
-  .slide-button {
-    position: relative;
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-    padding: 12px 28px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-  }
-  
-  .slide-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color:rgb(92, 117, 107);
-    transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-    z-index: -1;
-  }
-  
-  .slide-button-text {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    transition: transform 0.4s ease;
-  }
-  
-  .slide-button-icon {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translate(20px, -50%);
-    opacity: 0;
-    transition: all 0.4s ease;
-    z-index: 1;
-  }
-  
-  .slide-button:hover {
-    padding-right: 40px;
-    border-color: #3498db;
-  }
-  
-  .slide-button:hover::before {
-    width: 100%;
-  }
-  
-  .slide-button:hover .slide-button-text {
-    transform: translateX(-6px);
-  }
-  
-  .slide-button:hover .slide-button-icon {
-    transform: translate(0, -50%);
-    opacity: 1;
-  }
-</style>
-
-<!-- Fade in and slide up on scroll -->
-<div class="opacity-0 translate-y-10 transition duration-1000 ease-out"
-     data-class-in-view="opacity-100 translate-y-0">
-  <h2 class="text-4xl font-bold">Discover Singapore</h2>
-</div>
-
-<!-- Luxury destination card with hover effects -->
-<%# <div class="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:shadow-2xl">
-  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 transition-opacity group-hover:opacity-90"></div>
-  
-  <img src="destination.jpg" class="w-full transition-transform duration-700 group-hover:scale-105" />
-  
-  <div class="absolute bottom-0 p-6 translate-y-2 opacity-90 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-    <h3 class="text-2xl text-white font-bold">Marina Bay</h3>
-    <p class="text-white/80 max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-20">
-      Singapore's iconic waterfront destination
-    </p>
+  <!-- Fade in and slide up on scroll -->
+  <div class="opacity-0 translate-y-10 transition duration-1000 ease-out"
+       data-class-in-view="opacity-100 translate-y-0">
+    <h2 class="text-4xl font-bold">Discover Singapore</h2>
   </div>
-</div> %>
 
-<!-- Section change animation -->
-<section class="min-h-screen flex items-center transition-all duration-1000"
-         data-section="1">
-  <!-- Section content -->
-</section>
+  <!-- Section change animation -->
+  <section class="min-h-screen flex items-center transition-all duration-1000"
+           data-section="1">
+    <!-- Section content -->
+  </section>
 
-<!-- 3D tilt effect on hover -->
-<div class="tilt-card perspective-1000 transition-transform duration-500">
-  <div class="tilt-card-inner w-full h-full preserve-3d transition-transform duration-500">
-    <!-- Card content -->
+  <!-- 3D tilt effect on hover -->
+  <div class="tilt-card perspective-1000 transition-transform duration-500">
+    <div class="tilt-card-inner w-full h-full preserve-3d transition-transform duration-500">
+      <!-- Card content -->
+    </div>
   </div>
-</div>
-
-<%# No other content below this %>
 <% end %>

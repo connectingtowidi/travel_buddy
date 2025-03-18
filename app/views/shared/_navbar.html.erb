@@ -47,6 +47,7 @@
                     as: :string, 
                     input_html: { 
                       class: 'form-control', 
+                        autocomplete: 'off',
                       data: { 
                         regenerate_itinerary_target: "startDate" 
                       } 
@@ -60,6 +61,7 @@
                     as: :string, 
                     input_html: { 
                       class: 'form-control', 
+                        autocomplete: 'off',
                       data: { 
                         regenerate_itinerary_target: "endDate" 
                       } 
@@ -68,7 +70,7 @@
       </div>
 
       <!-- Pax Dropdown -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="paxContainer">
+      <div class="col-md-1 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="paxContainer">
         <%= f.input :number_of_pax, 
                     as: :select, 
                     collection: [1, 2, 3, 4, 5, 6, 7, 8, 9, '10+'], 
@@ -83,7 +85,7 @@
       </div>
 
       <!-- Custom Pax Input (hidden by default) -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
+      <div class="col-md-2 col-sm-2 col-12 mb-2" data-regenerate-itinerary-target="customPaxContainer" style="display:none;">
         <%= f.input :number_of_pax, 
                     as: :integer, 
                     input_html: { 
@@ -95,9 +97,30 @@
                     } %>
       </div>
 
+      <!-- Dietary Preferences Dropdown -->
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
+        <%= f.input :dietary_preferences, 
+            as: :select, 
+            collection: ["No Preference", "Vegetarian", "Vegan", "Gluten-Free", "Halal", "Kosher"], 
+            include_blank: false,
+            selected: @itinerary&.dietary_preferences || "No Preference",  # Default to "No Preference"
+            label_html: { class: 'mb-2' },
+            input_html: { 
+              multiple: true, 
+              class: 'form-select', 
+              data: { 
+                controller: "dietary-preferences",
+                action: "change->dietary-preferences#change",
+                regenerate_itinerary_target: "dietaryPreferences",
+                tickable: true
+              } 
+            } 
+        %>
+      </div>
+
       <!-- Generate/Regenerate Button (Aligned to the right) -->
-      <div class="col-md-2 col-sm-3 col-12 mb-2 d-flex justify-content-end" style="margin-top: 20px;">
-        <%= f.button :submit, user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate', class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } %>
+      <div class="col-md-2 col-sm-3 col-12 mb-2">
+      <%= f.button :submit, user_signed_in? && current_user.itineraries.exists? ? 'Regenerate' : 'Generate', class: 'btn btn-regenerate w-100', data: { action: "click->regenerate-itinerary#regenerate" } %>
       </div>
     <% end %>
   <% end %>
