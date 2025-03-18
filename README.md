@@ -7,4 +7,5 @@ OPENAPI_KEY=<your openAI API secret key>
 STRIPE_API_KEY=<your stripe API secret key>
 TRIPADVISOR_API_KEY=<your trip advisor API secret key>
 TRIPADVISOR_REFERRER=<your trip advisor referer key>
+GOOGLE_MAPS_API_KEY=<your google map API key>
 ```
