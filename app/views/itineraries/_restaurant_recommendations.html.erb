@@ -10,19 +10,20 @@
       <% if day_attraction.recommend_restaurants.present? %>
         <div class="row">
           <% day_attraction.recommend_restaurants.each do |restaurant| %>
-           
+         
             <div class="col-md-6 mb-2">
               <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
                   <h6 class="card-title fw-bold" style="color: rgb(121, 160, 135);">
-                    <i class="fas fa-utensils me-1"></i><%= restaurant.name %>
+               
+                    <i class="fas fa-utensils me-1"></i><%= restaurant[:name] %>
                   </h6>
                   <p class="card-text small text-muted">
-                    <i class="fas fa-map-marker-alt text-danger me-1"></i><%= restaurant.address || "No address available" %>
+                    <i class="fas fa-map-marker-alt text-danger me-1"></i><%= restaurant[:address] || "No address available" %>
                   </p>
-                  <% if restaurant.cuisine.present? %>
+                  <% if restaurant[:cuisine].present? %>
                     <span class="badge bg-light text-dark border">
-                      <%= restaurant.cuisine %>
+                      <%= restaurant[:cuisine] %>
                     </span>
                   <% end %>
                 </div>
