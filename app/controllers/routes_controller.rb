@@ -21,4 +21,10 @@ class RoutesController < ApplicationController
       render json: { error: "Failed to fetch route" }, status: :bad_request
     end
   end
+
+  private
+
+  def travel_params
+    params.require(:travel).permit(:travel_mode)
+  end
 end

@@ -119,23 +119,7 @@ class ItinerariesController < ApplicationController
       if travel
         @travels << travel
       end
-
-      # travel = travel_map[itinerary_attraction.id]
-      # if travel
-      #   @travels << travel
-      # else
-      #   @travels << ["final stop"]
-      # end
-
-
     end
-
-    # @itinerary.itinerary_attractions.each do |itinerary_attraction|
-    #   @markers['lat'] = itinerary_attraction.attraction.latitude.to_f,
-    #   @markers['lng'] = itinerary_attraction.attraction.longitude.to_f,
-    #   @markers['title'] = itinerary_attraction.attraction.name
-    # end
-
   end
 
   def update_with_ai
@@ -152,7 +136,54 @@ class ItinerariesController < ApplicationController
     redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully updated."
   end
 
+    end
+  end
+
+  # This is the AJAX request to fetch the route and duration
+  def fetch_route
+    @travel = Travel.new(travel_params)
+    
+    # @travel.itinerary_attraction_from = ItineraryAttraction.find(travel_params[:itinerary_attraction_from_id])
+    # @travel.itinerary_attraction_to = ItineraryAttraction.find(travel_params[:itinerary_attraction_to_id])
+  
+    respond_to do |format|
+      if @travel.save
+        travel_data = GoogleMapsService.create_travel(
+          @travel.itinerary_attraction_from.attraction,
+          @travel.itinerary_attraction_to.attraction,
+          @travel.mode
+        )
+
+        if travel_data && !travel_data[:error] && travel_data["routes"].present?
+          duration_text = travel_data["routes"][0]["duration"]
+          # The duration comes back as something like "3600s", so we remove the "s" and convert to integer
+          duration = duration_text.gsub("s", "").to_i / 60
+
+          # Calculate start and end travel times
+          end_travel_time = @travel.itinerary_attraction_to.starting_time
+          start_travel_time = end_travel_time - duration.minutes
+
+          format.json { render json: { 
+            travel_id: @travel.id,
+            itinerary_attraction_from: @travel.itinerary_attraction_from.attraction.name,
+            itinerary_attraction_to: @travel.itinerary_attraction_to.attraction.name,
+            duration: duration.round(0),
+            mode: @travel.mode,
+            start_travel_time: start_travel_time,
+            end_travel_time: end_travel_time
+          } }
+        else
+          error_message = travel_data[:error] || "No route found"
+          format.json { render json: { error: error_message }, status: :unprocessable_entity }
+        end
+      else
+        format.json { render json: { error: @travel.errors.full_messages }, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   private
+
 
   def itinerary_params
     params.require(:itinerary).permit(:start_date, :end_date, :interest, :number_of_pax, dietary_preferences: [])
@@ -160,5 +191,9 @@ class ItinerariesController < ApplicationController
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
+  end
+
+  def travel_params
+    params.require(:travel).permit(:mode, :itinerary_attraction_from_id, :itinerary_attraction_to_id)
   end
 end

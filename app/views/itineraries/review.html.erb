@@ -29,35 +29,60 @@
                         data-google-maps-lng-value=<%= day_attraction.attraction.longitude %>>
                         <td style="width: 130px;"><%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %></th>
                         <td style="text-align: left"><%= day_attraction.attraction.name %></td>
-                        <td style="text-align: end; font-weight: bold"><%= day_attraction.attraction.price %></td>
+                        <td style="text-align: end; font-weight: bold"><%= rand(1..20)*4.0 %></td>
                     </tr>
                     <%# <p> index = <%= index %>
                     <% if index != (day_attractions_sorted.length - 1) %>
-                        <% start_attraction_time = day_attraction.starting_time %>
-                        <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %> 
-                        <% travel_info = GoogleMapsService.create_travel(day_attractions_sorted[index].attraction, day_attractions_sorted[index + 1].attraction, "TRANSIT") %>
-                        <% travel_duration = travel_info["routes"][0]["legs"][0]["duration"].gsub("s", "").to_i %>
-                        <% end_travel_time = end_attraction_time + travel_duration.seconds %>
-                        <% travel_mode = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]).mode if Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
-                        <tr data-action="click->google-maps#travel"
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <%# <%= travel_info["routes"][0]["legs"][0]["polyline"]["encodedPolyline"] %>
+                                <%= simple_form_for :travel, url: itinerary_fetch_route_path(@itinerary), html: { 
+                                    data: { google_maps_target: "form", 
+                                    action: "submit->google-maps#fetchDuration",
+                                    form_id: day_attractions_sorted[index].id } 
+                                } do |f| %>
+                                  <%= f.input :itinerary_attraction_from_id, as: :hidden, input_html: { value: day_attractions_sorted[index].id } %>
+                                  <%= f.input :itinerary_attraction_to_id, as: :hidden, input_html: { value: day_attractions_sorted[index + 1].id } %>
+                                  <%= f.input :mode, collection: [["Public Transport", "TRANSIT"], ["Taxi", "DRIVE"], ["Walk", "WALK"], ["Bike", "BICYCLE"]], label: "Choose Travel Mode", include_blank: "Select mode", input_html: { class: "form-control" } %>
+                                  <%= f.submit "Get travel duration", class: "btn btn-primary", data: { action: "click->google-maps#fetchDuration" } %>
+                                <% end %>                                
+                            </td>
+                        
+                            <%# <td data-google-maps-target="durationResult" data-form-id="<%= day_attractions_sorted[index].id %>
+                            <%# "  %>
+                            <%# class="mt-2"> %>
+                              <!-- Duration will be displayed here -->
+                            <%# </td> %>
+                        </tr>
+                        <%# <% start_attraction_time = day_attraction.starting_time %>
+                        <%# <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %>
+                        <%# <% travel_info = GoogleMapsService.create_travel(day_attractions_sorted[index].attraction, day_attractions_sorted[index + 1].attraction, "TRANSIT") %>
+                        <%# <% travel_duration = travel_info["routes"][0]["legs"][0]["duration"].gsub("s", "").to_i %>
+                        <%# <% end_travel_time = end_attraction_time + travel_duration.seconds %>
+                        <%# <% travel_mode = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]).mode if Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
+                        <% travel_info = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
+                        <% end_travel_time = day_attractions_sorted[index + 1].starting_time %>
+                        <% start_travel_time = end_travel_time - travel_info.duration.minutes %>
+                        <% travel_mode = travel_info.mode %>
+                        <tr data-action="click->google-maps#fetchRoute"
                             data-google-maps-origin-lat-value=<%= day_attractions_sorted[index].attraction.latitude %>  
                             data-google-maps-origin-lng-value=<%= day_attractions_sorted[index].attraction.longitude %>
                             data-google-maps-destination-lat-value=<%= day_attractions_sorted[index + 1].attraction.latitude %>
                             data-google-maps-destination-lng-value=<%= day_attractions_sorted[index + 1].attraction.longitude %>
                             data-google-maps-mode-value=<%= travel_mode %>>
-                            <td style="width: 130px;"><%= end_attraction_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %> - 
-                                <%= end_travel_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p")%></td>
+                            <td style="width: 130px;" 
+                                data-form-id="<%= day_attractions_sorted[index].id %>"
+                                data-google-maps-target="durationResult">                                
+                                 <!-- Duration will be displayed here after form submission -->
+                            </td>
                             <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
                                 <%= day_attractions_sorted[index + 1].attraction.name%></td>
-                            <td style="text-align: end; font-weight: bold"><%= travel_duration / 60 / 5.0 %></td>
+                            <td style="text-align: end; font-weight: bold"><%= travel_info.duration.seconds / 60 / 5.0 %></td>
                             <%# ["routes"][0]["legs"][0]["duration"]["text"] %>
                         </tr>
-                        <tr>
-                            <td>
-                                <%# <%= travel_info["routes"][0]["legs"][0]["polyline"]["encodedPolyline"] %>
-                                <%= travel_mode %>
-                            </td>
-                        </tr>
+                        
                     <% end %>
                 <% end %>
                 </tbody>

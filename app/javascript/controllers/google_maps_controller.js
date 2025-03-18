@@ -4,12 +4,14 @@ let map;
 
 // Connects to data-controller="google-maps"
 export default class extends Controller {
-  static targets = ["map", "attraction", "travel"]
+  static targets = ["map", "attraction", "travel", "form", "durationResult"]
 
   static values = {
     lat: Number,
     lng: Number
   }
+
+  ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
 
   async connect() {
     console.log(this.mapTarget)
@@ -59,13 +61,10 @@ export default class extends Controller {
     
   }
 
-  travel(event) {
+  fetchRoute(event) {
+    // This is the AJAX request to fetch the route and duration
     console.log("Travel clicked")
     let clickedTravel = event.currentTarget;
-    // console.log(parseFloat(clickedTravel.dataset.googleMapsOriginLatValue));
-    // console.log(parseFloat(clickedTravel.dataset.googleMapsOriginLngValue));
-    // console.log(parseFloat(clickedTravel.dataset.googleMapsDestinationLatValue));
-    // console.log(parseFloat(clickedTravel.dataset.googleMapsDestinationLngValue));
 
     const origin = {
       latitude: parseFloat(clickedTravel.dataset.googleMapsOriginLatValue),
@@ -82,6 +81,7 @@ export default class extends Controller {
     console.log(origin);
     console.log(destination);
     console.log(mode);
+
     // Since GoogleMapsService.create_route likely returns a Promise
     // we need to use async/await or .then() to handle it properly
     
@@ -144,11 +144,70 @@ export default class extends Controller {
       })
       .catch(error => {
         console.error("Error fetching route:", error);
-      });
-
-      
+      });      
   }
 
+  fetchDuration(event) {
+    event.preventDefault();
+    console.log("Fetch duration clicked")
+    const formId = event.currentTarget.closest('form').dataset.formId;
+    const form = this.formTargets.find(
+      form => form.dataset.formId === formId
+    );
+    // console.log(form);
+    const formData = new FormData(form);
+    // console.log(formData);
+
+    // Find the corresponding result div for this form
+    const resultDiv = this.durationResultTargets.find(
+      target => target.dataset.formId === formId
+    );
+
+    // Show loading state
+    resultDiv.innerHTML = '<span class="text-muted">Loading...</span>';
+
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Accept": "application/json"
+        // 'X-CSRF-Token': document.querySelector("[name='csrf-token']").content
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        resultDiv.innerHTML = `<span class="text-danger">Error: ${data.error}</span>`;
+        return;
+      }
+
+      // Find the corresponding result div for this form
+      const resultDiv = this.durationResultTargets.find(
+        target => target.dataset.formId === formId
+      );
+
+      // Convert the times to Date objects and format them
+      const startTime = new Date(data.start_travel_time);
+      const endTime = new Date(data.end_travel_time);
+      
+      // Format the times in 12-hour format with AM/PM
+      const formatTime = (date) => {
+        return date.toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          hour12: true,
+          timeZone: 'Asia/Singapore'
+        });
+      };
+
+      // Insert data into the result div
+      resultDiv.innerHTML = 
+        `${formatTime(startTime)} - ${formatTime(endTime)}`;
+    })
+    .catch(error => {
+      console.error("Error fetching duration:", error);
+    });    
+  };
 
   
 }

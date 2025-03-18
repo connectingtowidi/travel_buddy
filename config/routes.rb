@@ -24,8 +24,6 @@ Rails.application.routes.draw do
     member do
       post '/update_with_ai', to: 'itineraries#update_with_ai', as: 'update_with_ai'
     end
+    post '/fetch_route', to: 'itineraries#fetch_route', as: 'fetch_route'
   end
-
-  get 'get_route', to: 'routes#get_route'
-  
 end
