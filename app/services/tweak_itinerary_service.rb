@@ -13,12 +13,13 @@ class TweakItineraryService
     current_attractions = itinerary.attractions.to_json(only: [:id, :name])
 
     prompt = <<~PROMPT
-      You are a Singapore travel planner helping to modify the current itinerary based on input: #{user_prompt}.
+      You are a Singapore travel planner helping to modify the current itinerary based on user request: #{user_prompt}.
       The attractions in the current itinerary are #{current_attractions}.
-      The new modified itinerary must include #{locked_attractions}.
-      You can choose to include #{recommendations} in the new itinerary based on the input.
-      The itinerary should be in JSON format.
-      The itinerary should include the id of the attraction, the day that I should visit the attraction, and the duration of the visit.
+      The new modified itinerary must include #{locked_attractions}. 
+      You may choose to include #{recommendations} in the new itinerary if it makes sense for the user request.
+      Try not to remove any existing attractions from the current itinerary unless it is absolutely necessary to accommodate the new attractions.
+      Keep it to a #{itinerary.duration} day trip.
+
     PROMPT
 
     open_ai_response = client.chat(
