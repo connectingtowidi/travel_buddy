@@ -16,6 +16,30 @@ export default class extends Controller {
     this.initializeFlatpickr();
   }
 
+  // Function to show the loading overlay and change the message
+  showLoadingOverlay(message) {
+    // Show the loading overlay
+    this.loadingOverlayTarget.style.display = "flex";
+
+    // Update the loading message text
+    const loadingMessage = document.getElementById("loading-message");
+
+    if (loadingMessage) {
+  
+      // Delay setting the text until after DOM has been updated
+      setTimeout(() => {
+        loadingMessage.innerText = message;
+      }, 0); // Set message in the next event loop
+    }
+
+   
+  }
+
+  // Function to hide the loading overlay
+  hideLoadingOverlay() {
+    this.loadingOverlayTarget.style.display = "none";
+  }
+
   togglePaxInput() {
     const selectedPax = this.paxDropdownTarget.value;
 
@@ -103,10 +127,32 @@ export default class extends Controller {
     }
 
     if (this.formTarget) {
-      // Show loading overlay right before submitting the form
-      this.loadingOverlayTarget.style.display = "flex";
+   
+      // Submit the form first (trigger the form submission)
+      this.formTarget.submit();
 
+      // After form submission, show the loading overlay and initial message
+      this.showLoadingOverlay(`Generating your perfect itinerary for ${interest}...`);
+
+      // Sequence of messages to engage the user
+    setTimeout(() => {
+      this.showLoadingOverlay(`Gathering the best options for you in ${interest} from ${startDate} to ${endDate} for ${pax} people with dietary preferences: ${dietaryPreferences}...`);
+    }, 2000); // After 3 seconds, change the text
+
+    setTimeout(() => {
+      this.showLoadingOverlay(`Optimizing your trip from ${startDate} to ${endDate} for ${pax} people with dietary preferences: ${dietaryPreferences}...`);
+    }, 4000); // After another 3 seconds, update the message
+
+    setTimeout(() => {
+      this.showLoadingOverlay(`Almost there, finalizing your itinerary for ${interest}...`);
+    }, 9000); // After another 3 seconds, change the message
+
+    // Submit the form after the final message
+    setTimeout(() => {
       this.formTarget.submit(); // Trigger the form submission
+      this.hideLoadingOverlay(); // Hide the loading overlay once done
+    }, 12000); // Final step after 12 seconds (simulate the end of the process)
+
     } else {
       console.error("Form target is not found.");
       // Hide loading overlay if form submission fails
