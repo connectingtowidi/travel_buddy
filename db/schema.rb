@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_18_045416) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_19_132029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -96,8 +96,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_045416) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "day"
+    t.integer "position"
     t.index ["attraction_id"], name: "index_itinerary_attractions_on_attraction_id"
     t.index ["itinerary_id"], name: "index_itinerary_attractions_on_itinerary_id"
+  end
+
+  create_table "itinerary_prompts", force: :cascade do |t|
+    t.bigint "itinerary_id", null: false
+    t.text "prompt"
+    t.text "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_id"], name: "index_itinerary_prompts_on_itinerary_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -277,6 +287,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_045416) do
   add_foreign_key "itineraries", "users"
   add_foreign_key "itinerary_attractions", "attractions"
   add_foreign_key "itinerary_attractions", "itineraries"
+  add_foreign_key "itinerary_prompts", "itineraries"
   add_foreign_key "payments", "itineraries"
   add_foreign_key "purchases", "attractions"
   add_foreign_key "purchases", "users"
