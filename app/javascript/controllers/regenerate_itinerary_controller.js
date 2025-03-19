@@ -96,6 +96,8 @@ export default class extends Controller {
     const endDate = this.endDateTarget.value;
     const interest = this.interestTarget.value;
     const pax = this.paxInputTarget.value || this.paxDropdownTarget.value;
+    const dietaryPreferences = this.dietaryPreferencesTarget ? this.dietaryPreferencesTarget.value : "No Preference"; // Assuming dietary preferences have a target
+
    
     // Check if the user is signed in
     const userSignedIn = this.element.dataset.userSignedIn === "true";
