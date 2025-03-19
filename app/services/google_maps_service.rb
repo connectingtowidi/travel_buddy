@@ -20,18 +20,6 @@ class GoogleMapsService
     # place_id
   end
 
-  # def self.fetch_markers
-  #   # Normally, this would fetch data from a database or an external API.
-  #   # Example: Location.all.map { |loc| { lat: loc.latitude, lng: loc.longitude, info_window: loc.name } }
-  #   url = URI("#{BASE_URL}/geocode/json?address=#{URI.encode_www_form_component(address)}&key=#{API_KEY}")
-  #   url_serialized = URI.parse(url).read
-  #   url_details = JSON.parse(address_serialized)["results"][0]
-  #   [
-  #     { lat: 37.7749, lng: -122.4194, info_window: "San Francisco" },
-  #     { lat: 34.0522, lng: -118.2437, info_window: "Los Angeles" }
-  #   ]
-  # end
-
   def self.create_travel(origin, destination, mode)
     response = HTTParty.post(
       ROUTE_URL,
@@ -65,9 +53,11 @@ class GoogleMapsService
       }.to_json
     )
 
-    data = JSON.parse(response.body) if response.success?
-
-    { error: "Failed to fetch route", status: response.code, message: response.body }
+    if response.success?
+      data = JSON.parse(response.body) 
+    else
+      { error: "Failed to fetch route", status: response.code, message: response.body }
+    end
   
     return data
   end
