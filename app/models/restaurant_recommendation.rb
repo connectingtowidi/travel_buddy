@@ -1,3 +1,3 @@
 class RestaurantRecommendation < ApplicationRecord
-    belongs_to :attraction
+    belongs_to :itinerary_attraction
 end
