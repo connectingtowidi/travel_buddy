@@ -1,0 +1,37 @@
+/* Loading Overlay */
+.loading-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;  /* Ensure it's fixed on the screen */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+    z-index: 9999;  /* Ensure it's above other elements */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Spinner Container */
+  .spinner-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;  /* Center the text */
+    max-width: 400px;  /* Limit the width of the loading message */
+    word-wrap: break-word;  /* Ensure long words break and wrap */
+    overflow-wrap: break-word;  /* Ensure long words wrap correctly */
+  }
+  
+  /* Loading Message */
+  #loading-message {
+    color: white;  /* Ensure text is readable on the overlay */
+    font-size: 1.2em;
+    margin-top: 10px;  /* Some spacing between the spinner and the text */
+    text-align: center;  /* Center-align the text */
+    white-space: normal;  /* Allow text to wrap */
+  }
+  

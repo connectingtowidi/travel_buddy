@@ -98,25 +98,28 @@
       </div>
 
    
+
       <!-- Dietary Preferences Dropdown -->
-      <div class="col-md-2 col-sm-2 col-12 mt-5">
-      <%= f.input :dietary_preferences, 
-            as: :select, 
-            collection: ["No Preference", "Vegetarian", "Vegan", "Gluten-Free", "Halal", "Kosher"], 
-            include_blank: false,
-            selected: @itinerary&.dietary_preferences || "No Preference",  # Default to "No Preference"
-            label_html: { class: 'mb-2' },
-            input_html: { 
-              multiple: true, 
-              class: 'form-select', 
-              data: { 
-                controller: "dietary-preferences",
-                action: "change->dietary-preferences#change",
-                regenerate_itinerary_target: "dietaryPreferences",
-                tickable: true
-              } 
-            } 
-        %>
+      <div class="col-md-2 col-sm-2 col-12 mb-2">
+      <div class="dietary-preferences-wrapper">
+       <%= f.input :dietary_preferences, 
+        as: :check_boxes, 
+        collection: ["No Preference", "Vegetarian", "Vegan", "Gluten-Free", "Halal", "Kosher"], 
+        include_blank: false,
+        item_wrapper_class: "form-check",
+        label_method: :to_s,
+        value_method: :to_s,
+        selected: @itinerary&.dietary_preferences || "No Preference",
+        input_html: {
+          class: 'form-check-input',
+          data: { 
+            controller: "regenerate-itinerary",
+            action: "change->regenerate-itinerary#toggle",
+            regenerate_itinerary_target: "dietaryPreferences",
+          }
+        }
+      %>
+    </div>
     </div>
 
       <!-- Generate/Regenerate Button (Aligned to the right) -->

@@ -5,7 +5,7 @@ import flatpickr from "flatpickr"; // You need to import this to use new flatpic
 export default class extends Controller {
 
   static targets = [ "interest", "startDate", "endDate", 
-    "paxInput", "paxDropdown", 
+    "paxInput", "paxDropdown", "dietaryPreferences",
     "customPaxContainer", "paxContainer", 
     "form", "loadingOverlay"];
 
@@ -14,6 +14,7 @@ export default class extends Controller {
     console.log("RegenerateItineraryController is connected!");
 
     this.initializeFlatpickr();
+
   }
 
   // Function to show the loading overlay and change the message
@@ -56,6 +57,56 @@ export default class extends Controller {
     }
   }
 
+  toggle(event) {
+    // Get the clicked checkbox
+    const clickedCheckbox = event.target;
+    const checkboxName = clickedCheckbox.name;
+    const allCheckboxes = document.querySelectorAll(`input[name="${checkboxName}"]`);
+    
+    // If the clicked checkbox is NOT "No Preference" and it was checked
+    if (clickedCheckbox.value !== "No Preference" && clickedCheckbox.checked) {
+      // Find and uncheck the "No Preference" checkbox
+      const noPreferenceCheckbox = Array.from(allCheckboxes).find(checkbox => 
+        checkbox.value === "No Preference"
+      );
+      
+      if (noPreferenceCheckbox) {
+        noPreferenceCheckbox.checked = false;
+      }
+    }
+    
+    // If the clicked checkbox IS "No Preference" and it was checked
+    if (clickedCheckbox.value === "No Preference" && clickedCheckbox.checked) {
+      // Uncheck all other checkboxes
+      allCheckboxes.forEach(checkbox => {
+        if (checkbox.value !== "No Preference") {
+          checkbox.checked = false;
+        }
+      });
+    }
+    
+    // Check if any checkbox is checked at all
+    const anyChecked = Array.from(allCheckboxes).some(checkbox => checkbox.checked);
+    
+    // If no checkbox is checked, check "No Preference" by default
+    if (!anyChecked) {
+      const noPreferenceCheckbox = Array.from(allCheckboxes).find(checkbox => 
+        checkbox.value === "No Preference"
+      );
+      
+      if (noPreferenceCheckbox) {
+        noPreferenceCheckbox.checked = true;
+      }
+    }
+    
+    // Get final checked values for logging
+    const checkedValues = Array.from(allCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+    
+    console.log('Selected dietary preferences:', checkedValues);
+  }
+  
   initializeFlatpickr() {
     // Common configuration for both date pickers
     const dateConfig = {
@@ -96,9 +147,20 @@ export default class extends Controller {
     const endDate = this.endDateTarget.value;
     const interest = this.interestTarget.value;
     const pax = this.paxInputTarget.value || this.paxDropdownTarget.value;
-    const dietaryPreferences = this.dietaryPreferencesTarget ? this.dietaryPreferencesTarget.value : "No Preference"; // Assuming dietary preferences have a target
-
    
+    // Get all checkboxes with the dietary preferences name
+  const dietaryCheckboxes = document.querySelectorAll('input[name="itinerary[dietary_preferences][]"]');
+  
+  // Get all checked dietary preferences
+  const checkedDietaryPreferences = Array.from(dietaryCheckboxes)
+    .filter(checkbox => checkbox.checked)
+    .map(checkbox => checkbox.value);
+  
+  // Join the values with commas for display
+  const dietaryPreferences = checkedDietaryPreferences.length > 0 
+    ? checkedDietaryPreferences.join(', ') 
+    : "No Preference";
+
     // Check if the user is signed in
     const userSignedIn = this.element.dataset.userSignedIn === "true";
     if (!userSignedIn) {

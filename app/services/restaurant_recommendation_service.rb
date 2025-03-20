@@ -1,12 +1,29 @@
 require 'httparty'
 
 class RestaurantRecommendationService
+
+  # https://developers.google.com/maps/documentation/places/web-service/nearby-search
   include HTTParty
   
   BASE_URL = "https://places.googleapis.com/v1/places:searchNearby"
   API_KEY = ENV["GOOGLE_MAPS_API_KEY"]
 
   def self.get_recommendations(latitude:, longitude:, dietary_preferences: [])
+
+    includedTypes = [];
+
+    if dietary_preferences.include?("vegetarian")
+      includedTypes << "vegetarian_restaurant"
+    elsif dietary_preferences.include?("vegan")
+      includedTypes << "vegan_restaurant"
+    elsif dietary_preferences.include?("halal")
+      includedTypes << "indian_restaurant"
+    elsif dietary_preferences.include?("kosher")
+      includedTypes << "mediterranean_restaurant"
+    else 
+        includedTypes << "restaurant"
+    end
+
     response = HTTParty.post(
       BASE_URL,
       headers: {
@@ -25,7 +42,7 @@ class RestaurantRecommendationService
           }
         },
         # TODO: explore https://developers.google.com/maps/documentation/places/web-service/place-types#food-and-drink
-        includedTypes: ["restaurant"],
+        includedTypes: includedTypes,
         maxResultCount: 5
       }.to_json
     )

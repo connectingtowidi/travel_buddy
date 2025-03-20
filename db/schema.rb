@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_19_132029) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_19_231048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -127,6 +127,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_132029) do
     t.datetime "updated_at", null: false
     t.index ["attraction_id"], name: "index_purchases_on_attraction_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
+  create_table "restaurant_recommendations", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.float "rating"
+    t.integer "user_ratings_total"
+    t.text "description"
+    t.json "types"
+    t.string "google_maps_uri"
+    t.bigint "itinerary_attraction_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_attraction_id"], name: "index_restaurant_recommendations_on_itinerary_attraction_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -291,6 +305,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_132029) do
   add_foreign_key "payments", "itineraries"
   add_foreign_key "purchases", "attractions"
   add_foreign_key "purchases", "users"
+  add_foreign_key "restaurant_recommendations", "itinerary_attractions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
