@@ -12,6 +12,7 @@ class ItineraryAttraction < ApplicationRecord
 
   after_create :recommend_restaurants
 
+  private
 
   def recommend_restaurants
     restaurant_recommendation_service = RestaurantRecommendationService.get_recommendations(latitude: attraction.latitude, longitude: attraction.longitude, 
