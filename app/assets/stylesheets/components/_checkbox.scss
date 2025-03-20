@@ -1,0 +1,47 @@
+ /* Make the container match other form elements */
+  .dietary-preferences-wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    height: 38px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Show dropdown on hover/focus */
+  .dietary-preferences-wrapper:hover,
+  .dietary-preferences-wrapper:focus-within {
+    height: auto;
+    min-height: 38px;
+    z-index: 1000;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+
+  /* Style for dietary preferences */
+.dietary-preferences-container {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 8px;
+    background-color: #fff;
+    max-height: 38px;
+    overflow: hidden;
+    transition: max-height 0.3s;
+  }
+  
+  .dietary-preferences-container:hover,
+  .dietary-preferences-container:focus-within {
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Style for form checks */
+  .form-check {
+    margin-bottom: 0.3rem;
+  }
+  
+  .form-check-input {
+    margin-right: 0.5rem;
+  }

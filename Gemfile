@@ -85,7 +85,6 @@ end
 gem 'whenever', require: false
 
 gem "solid_cable", "~> 1.0"
-gem "solid_queue"
 gem "neighbor"
 
 gem "rack"
