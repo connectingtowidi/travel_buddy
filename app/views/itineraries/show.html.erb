@@ -68,12 +68,12 @@
           </h5>
         </div>
         <div class="card-body p-4">
-          <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>
+       <% @grouped_attractions.each_with_index do |(day, day_attractions), index| %>
           <div class="day-container mb-5">
             <h3 class="day-header bg-light p-3 rounded-3 mb-4 fw-bold" style="color: rgb(121, 160, 135);">
-              <i class="fas fa-sun me-2"></i>Day <%= index + 1 %>
+              <i class="fas fa-sun me-2"></i>Day <%= day %>
             </h3>
-            <% day_attractions[1].each_with_index do |day_attraction, index| %>
+            <% day_attractions.each do |day_attraction| %>
               <div class="timeline-item">
                 <div class="timeline-time badge text-white rounded-pill px-3 py-2 mb-2" style="background-color: rgb(121, 160, 135);">
                   <i class="far fa-clock me-1"></i>

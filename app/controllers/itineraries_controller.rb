@@ -33,39 +33,12 @@ class ItinerariesController < ApplicationController
       end
     end
 
-    # Preventing running of the Tripadvisor API every time the page is loaded
-    # @tripadvisor_suggestions = TripadvisorApi.fetch_singapore_attractions
+    @grouped_attractions = @itinerary.itinerary_attractions
+    .includes(:attraction, :restaurant_recommendations)
+    .order(:day)
+    .group_by(&:day)
 
-    @tripadvisor_suggestions = Attraction.where.not(last_tripadvisor_update: nil)
-                                       .where.not(name: nil)
-                                       .where.not(location_id: nil)
-                                       .order(last_tripadvisor_update: :desc)
-                                       .limit(20)
-
-    # Create a hash to store travel durations and transport modes
-    @travel_durations = {}
-    @transport_modes = {}
-
-    @itinerary.itinerary_attractions.each_with_index do |itinerary_attraction, index|
-      if index < @itinerary.itinerary_attractions.size - 1
-        # Find the corresponding travel record
-        travel = Travel.find_by(
-          itinerary_attraction_from_id: itinerary_attraction.id,
-          itinerary_attraction_to_id: @itinerary.itinerary_attractions[index + 1].id
-        )
-
-        if travel
-          @travel_durations[itinerary_attraction.id] = travel.itinerary_attraction_from_id
-          @transport_modes[itinerary_attraction.id] = travel.mode
-        end
-      end
-    end
-
-    # Debug any cached data
-    if current_user
-      purchased_attractions = Purchase.where(user_id: current_user.id).pluck(:attraction_id)
-      Rails.logger.debug "User #{current_user.id} has purchased attractions: #{purchased_attractions}"
-    end
+    
   end
 
   def new

@@ -5,22 +5,40 @@ class TweakItineraryService
   def self.call(user_prompt:, locked_attractions:, itinerary:)
     client = OpenAI::Client.new
 
+    # Save current prompt
+    current_prompt = itinerary.itinerary_prompts.create!(prompt: user_prompt)
+    
+    # Get previous prompts (last 3)
+    previous_prompts = itinerary.itinerary_prompts.where.not(id: current_prompt.id).last(3)
+    
     locked_attractions = locked_attractions.to_json(only: [:id, :name])
     new_recommendations = nearest_attractions(user_prompt).to_json(only: [:id, :name])
     random_recommendations = Attraction.order("RANDOM()").take(5).to_json(only: [:id, :name])
     recommendations = new_recommendations + random_recommendations
-
     current_attractions = itinerary.attractions.to_json(only: [:id, :name])
-
+    
+    # Build conversation history
+    conversation_context = ""
+    if previous_prompts.any?
+      conversation_context = "Previous requests for this itinerary:\n"
+      previous_prompts.each do |p|
+        conversation_context += "- User asked: #{p.prompt}\n"
+      end
+      conversation_context += "\nPlease consider this history when responding to the current request.\n\n"
+    end
+    
+    # Add conversation context to prompt
     prompt = <<~PROMPT
-      You are a Singapore travel planner helping to modify the current itinerary based on input: #{user_prompt}.
+      You are a Singapore travel planner helping to modify the current itinerary based on user request: #{user_prompt}.
+      
+      #{conversation_context}
       The attractions in the current itinerary are #{current_attractions}.
-      The new modified itinerary must include #{locked_attractions}.
-      You can choose to include #{recommendations} in the new itinerary based on the input.
-      The itinerary should be in JSON format.
-      The itinerary should include the id of the attraction, the day that I should visit the attraction, and the duration of the visit.
+      The new modified itinerary must include #{locked_attractions}. 
+      You may choose to include #{recommendations} in the new itinerary if it makes sense for the user request.
+      Try not to remove any existing attractions from the current itinerary unless it is absolutely necessary to accommodate the new attractions.
+      Keep it to a #{itinerary.duration} day trip.
     PROMPT
-
+    
     open_ai_response = client.chat(
       parameters: {
         model: "gpt-4o-mini",
@@ -87,10 +105,13 @@ class TweakItineraryService
       }
     )
 
-    response_content = open_ai_response.dig("choices", 0, "message", "content")
+    ai_response = open_ai_response.dig("choices", 0, "message", "content")
 
     # Ensure the response is parsed correctly
-    itinerary_data = JSON.parse(response_content) rescue {}
+    itinerary_data = JSON.parse(ai_response) rescue {}
+    # Save response
+    current_prompt.update(response: ai_response)
+    
 
     itinerary.update!(
       name: itinerary_data["itinerary_name"],
@@ -113,11 +134,11 @@ class TweakItineraryService
     
       unless itinerary_attraction.save
         Rails.logger.warn("Failed to create itinerary attraction: #{itinerary_attraction.errors.full_messages.join(', ')}")
-
       end
     end
 
-    itinerary
+    # Return the response
+    ai_response
   end
 
 

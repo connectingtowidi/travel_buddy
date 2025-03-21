@@ -3,6 +3,7 @@ class Itinerary < ApplicationRecord
   has_many :itinerary_attractions, dependent: :destroy
   has_many :attractions, through: :itinerary_attractions
   has_one :payment, dependent: :destroy
+  has_many :itinerary_prompts, dependent: :destroy
 
   validates :name, presence: true
 
