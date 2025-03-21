@@ -1,109 +1,191 @@
-<div class="container py-4">
-    <div class="row mb-3 align-items-center">
+<div class="container py-5" data-controller="google-maps">
+    <div class="row mb-4 align-items-center" id="itinerary-header">
         <div class="col-md-8 col-sm-6">
-            <h4><strong>My Journey</strong></h4>
-            <p><%= @itinerary.name %></p>
-            <%# Debug information %>
+            <h2 class="fw-bold" style="color: rgb(121, 160, 135);"><%= @itinerary.name %></h2>
             <% if @itinerary.itinerary_attractions.empty? %>
-              <p>No attractions found for this itinerary</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    No attractions found for this itinerary
+                </div>
             <% end %>
         </div>
         <div class="col-md-4 col-sm-6 text-md-end">
+            <%= link_to itinerary_review_path(@itinerary), class: "btn btn-dark rounded-pill px-4 py-2 shadow-sm", data: { bs_toggle: "offcanvas", bs_target: "#cartSidebar" } do %>
+              <i class="fas fa-check-circle me-2"></i>Confirm
+            <% end %>
         </div>
     </div>
     
     <!-- Main content row with itinerary and sidebar -->
-    <div class="row" data-controller="google-maps">
+    <div class="row mt-4 g-5">
+        <% attraction_prices = {} %>
         <!-- Left column - Itinerary content -->
-        <div class="col-md-6">
-        <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>        
-            <h3>Day <%= index + 1 %></h3>
-            <% day_attractions_sorted = day_attractions[1].sort_by { |day_attraction| day_attraction.starting_time }  %>
-                <%# sorted_attractions = attractions.sort_by { |attraction| attraction[:ticket_price] } %>
-            <table class="table table-hover">
-                <tbody>
-                <% day_attractions_sorted.each_with_index do |day_attraction, index| %>
-                    <tr data-action="click->google-maps#attraction"
-                        data-google-maps-target="attraction"
-                        data-google-maps-lat-value=<%= day_attraction.attraction.latitude %>
-                        data-google-maps-lng-value=<%= day_attraction.attraction.longitude %>>
-                        <td style="width: 130px;"><%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %></th>
-                        <td style="text-align: left"><%= day_attraction.attraction.name %></td>
-                        <td style="text-align: end; font-weight: bold"><%= rand(1..20)*4.0 %></td>
-                    </tr>
-                    <%# <p> index = <%= index %>
-                    <% if index != (day_attractions_sorted.length - 1) %>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <%# <%= travel_info["routes"][0]["legs"][0]["polyline"]["encodedPolyline"] %>
-                                <%= simple_form_for :travel, url: itinerary_fetch_route_path(@itinerary), html: { 
-                                    data: { google_maps_target: "form", 
-                                    action: "submit->google-maps#fetchDuration",
-                                    form_id: day_attractions_sorted[index].id } 
-                                } do |f| %>
-                                  <%= f.input :itinerary_attraction_from_id, as: :hidden, input_html: { value: day_attractions_sorted[index].id } %>
-                                  <%= f.input :itinerary_attraction_to_id, as: :hidden, input_html: { value: day_attractions_sorted[index + 1].id } %>
-                                  <%= f.input :mode, collection: [["Public Transport", "TRANSIT"], ["Taxi", "DRIVE"], ["Walk", "WALK"], ["Bike", "BICYCLE"]], label: "Choose Travel Mode", include_blank: "Select mode", input_html: { class: "form-control" } %>
-                                  <%= f.submit "Get travel duration", class: "btn btn-primary", data: { action: "click->google-maps#fetchDuration" } %>
-                                <% end %>                                
-                            </td>
-                        
-                            <%# <td data-google-maps-target="durationResult" data-form-id="<%= day_attractions_sorted[index].id %>
-                            <%# "  %>
-                            <%# class="mt-2"> %>
-                              <!-- Duration will be displayed here -->
-                            <%# </td> %>
-                        </tr>
-                        <%# <% start_attraction_time = day_attraction.starting_time %>
-                        <%# <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %>
-                        <%# <% travel_info = GoogleMapsService.create_travel(day_attractions_sorted[index].attraction, day_attractions_sorted[index + 1].attraction, "TRANSIT") %>
-                        <%# <% travel_duration = travel_info["routes"][0]["legs"][0]["duration"].gsub("s", "").to_i %>
-                        <%# <% end_travel_time = end_attraction_time + travel_duration.seconds %>
-                        <%# <% travel_mode = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]).mode if Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
-                        <% travel_info = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
-                        <% end_travel_time = day_attractions_sorted[index + 1].starting_time %>
-                        <% start_travel_time = end_travel_time - travel_info.duration.minutes %>
-                        <% travel_mode = travel_info.mode %>
-                        <tr data-action="click->google-maps#fetchRoute"
-                            data-google-maps-origin-lat-value=<%= day_attractions_sorted[index].attraction.latitude %>  
-                            data-google-maps-origin-lng-value=<%= day_attractions_sorted[index].attraction.longitude %>
-                            data-google-maps-destination-lat-value=<%= day_attractions_sorted[index + 1].attraction.latitude %>
-                            data-google-maps-destination-lng-value=<%= day_attractions_sorted[index + 1].attraction.longitude %>
-                            data-google-maps-mode-value=<%= travel_mode %>>
-                            <td style="width: 130px;" 
-                                data-form-id="<%= day_attractions_sorted[index].id %>"
-                                data-google-maps-target="durationResult">                                
-                                 <!-- Duration will be displayed here after form submission -->
-                            </td>
-                            <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
-                                <%= day_attractions_sorted[index + 1].attraction.name%></td>
-                            <td style="text-align: end; font-weight: bold"><%= travel_info.duration.seconds / 60 / 5.0 %></td>
-                            <%# ["routes"][0]["legs"][0]["duration"]["text"] %>
-                        </tr>
-                        
-                    <% end %>
-                <% end %>
-                </tbody>
-            </table>
-        <% end %>
+        <div class="col-md-7">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                    <div class="card-header text-white py-3" style="background-color: rgb(121, 160, 135);">
+                      <h5 class="mb-0 fw-bold">
+                        <i class="fas fa-calendar-alt me-2"></i>Your Travel Summary
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                        <% @itinerary.itinerary_attractions.group_by(&:day).each_with_index do |day_attractions, index| %>        
+
+                            <h3 class="fw-bold" style="color: rgb(121, 160, 135); margin-top: 20px;"> 
+                                <%= (@itinerary.start_date + index.days).strftime("%d %B %Y") %>
+                            </h3>
+
+                            <% day_attractions_sorted = day_attractions[1].sort_by { |day_attraction| day_attraction.starting_time }  %>
+                                <%# sorted_attractions = attractions.sort_by { |attraction| attraction[:ticket_price] } %>
+                            <table class="table table-hover">
+                                <tbody>
+                                <% day_attractions_sorted.each_with_index do |day_attraction, index| %>
+                                    <% attraction_prices[day_attraction.id] = rand(1..20)*4.0 %>
+                                    <tr data-action="click->google-maps#attraction"
+                                        data-google-maps-target="attraction"
+                                        data-google-maps-lat-value=<%= day_attraction.attraction.latitude %>
+                                        data-google-maps-lng-value=<%= day_attraction.attraction.longitude %>>
+                                        <td style="width: 130px;"><%= day_attraction.starting_time.in_time_zone("Asia/Singapore").strftime("%I:%M %p") %></th>
+                                        <td style="text-align: left"><%= day_attraction.attraction.name %></td>
+                                        <td style="text-align: end; font-weight: bold"><%= attraction_prices[day_attraction.id] %></td>
+                                    </tr>
+                                    <%# <p> index = <%= index %>
+                                    <% if index != (day_attractions_sorted.length - 1) %>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <%# <%= travel_info["routes"][0]["legs"][0]["polyline"]["encodedPolyline"] %>
+                                                <%= simple_form_for :travel, url: itinerary_fetch_route_path(@itinerary), html: { 
+                                                    data: { google_maps_target: "form", 
+                                                    action: "submit->google-maps#fetchDuration",
+                                                    form_id: day_attractions_sorted[index].id } 
+                                                } do |f| %>
+                                                <%= f.input :itinerary_attraction_from_id, as: :hidden, input_html: { value: day_attractions_sorted[index].id } %>
+                                                <%= f.input :itinerary_attraction_to_id, as: :hidden, input_html: { value: day_attractions_sorted[index + 1].id } %>
+                                                <div class="d-flex gap-2 flex-row">
+                                                    <%= f.input :mode, collection: [["Public Transport", "TRANSIT"], ["Taxi", "DRIVE"], ["Walk", "WALK"], ["Bike", "BICYCLE"]], label: false, include_blank: "Select transport mode", input_html: { class: "form-control" }, style: "align-items: center;" %>
+                                                    <button type="submit" class="btn" data-action="click->google-maps#fetchDuration" 
+                                                        style= "background-color: rgb(121, 160, 135); 
+                                                                color: white; 
+                                                                height: 36px; width: 36px; 
+                                                                display: flex; justify-content: center; align-items: center;"
+                                                        title="Find duration">
+                                                      <i class="fas fa-clock"></i>
+                                                    </button>
+                                                </div>
+                                                <% end %>    
+                                            </td>
+                                            <td>               
+                                            </td>
+                                            <%# <td data-google-maps-target="durationResult" data-form-id="<%= day_attractions_sorted[index].id %>
+                                            <%# "  %>
+                                            <%# class="mt-2"> %>
+                                            <!-- Duration will be displayed here -->
+                                            <%# </td> %>
+                                        </tr>
+                                        <%# <% start_attraction_time = day_attraction.starting_time %>
+                                        <%# <% end_attraction_time = (start_attraction_time + day_attraction.attraction.duration.hours) %>
+                                        <%# <% travel_info = GoogleMapsService.create_travel(day_attractions_sorted[index].attraction, day_attractions_sorted[index + 1].attraction, "TRANSIT") %>
+                                        <%# <% travel_duration = travel_info["routes"][0]["legs"][0]["duration"].gsub("s", "").to_i %>
+                                        <%# <% end_travel_time = end_attraction_time + travel_duration.seconds %>
+                                        <%# <% travel_mode = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]).mode if Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
+                                        <% travel_info = Travel.find_by(itinerary_attraction_from: day_attractions_sorted[index]) %>
+
+                                        <% travel_mode = travel_info&.mode %>
+                                        <tr data-action="click->google-maps#toggleRoute"
+                                            <%# data-google-maps-toggle-state-value="false" %>
+                                            data-google-maps-toggle-travel-id-value="<%= travel_info.id %>"
+                                            data-google-maps-origin-lat-value=<%= day_attractions_sorted[index].attraction.latitude %>  
+                                            data-google-maps-origin-lng-value=<%= day_attractions_sorted[index].attraction.longitude %>
+                                            data-google-maps-destination-lat-value=<%= day_attractions_sorted[index + 1].attraction.latitude %>
+                                            data-google-maps-destination-lng-value=<%= day_attractions_sorted[index + 1].attraction.longitude %>
+                                            data-google-maps-mode-value=<%= travel_mode %>>
+                                            <td style="width: 130px;" 
+                                                data-form-id="<%= day_attractions_sorted[index].id %>"
+                                                data-google-maps-target="durationResult">                                
+                                                <!-- Duration will be displayed here after form submission -->
+                                            </td>
+                                            <td style="text-align: left"><%= day_attractions_sorted[index].attraction.name %> - 
+                                                <%= day_attractions_sorted[index + 1].attraction.name%></td>
+                                            <td style="text-align: end; font-weight: bold"></td>
+                                        </tr>
+
+                                    <% end %>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="col-md-6">
-            <div
-                id="map"
-                data-google-maps-target="map"
-                style="width: 100%;
-                height: 400px;"
-                data-markers="<%= @markers.to_json %>" ></div>    
+        <div class="col-md-5 position-relative">
+            <div class="card border-0 shadow rounded-3 overflow-hidden sticky-top" style="top: 20px;">
+                <div class="card-header text-white py-3" style="background-color: rgb(121, 160, 135);">
+                  <h5 class="mb-0 fw-bold">
+                    <i class="fas fa-info-circle me-2"></i>Your Travel Map
+                  </h5>
+                </div>
+                <div class="card-body">
+                    <div
+                        data-google-maps-target="map"
+                        style="width: 100%;
+                        height: 300px;"
+                        data-markers="<%= @markers.to_json %>" >
+                    </div>    
+                </div>
+            </div>
         </div>
         <!--Sidebar content goes here -->
-    </div> <!-- Close the row -->
-    <div class="col-md-4 col-sm-6 text-md-end">
-      <button class="btn btn-dark">See My Journey</button>
-    </div>
-    
+    </div> <!-- Close the row -->    
 </div> <!-- Close the container -->
 
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Your Ticketed Attractions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <% total_price = 0 %>
+        <% index = 0 %>
+        <% @itinerary.itinerary_attractions.group_by(&:day).each do |day_attractions| %>        
+            <% day_attractions_sorted = day_attractions[1].sort_by { |day_attraction| day_attraction.starting_time }  %>
+            <% day_attractions_sorted.each do |day_attraction| %>    
+            <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td scope="row" style="width: 40px;"> <%= index + 1 %> </td>
+                    <td style="text-align: left"><%= day_attraction.attraction.name %></td>
+                    <td style="text-align: end; font-weight: bold"><%= attraction_prices[day_attraction.id] %></td>
+                    <% total_price += attraction_prices[day_attraction.id] %>
+                    <% index += 1 %>
+                  </tr>
+                </tbody>
+            </table>
+            <% end %>
+        <% end %>
+
+        <p class="mt-3"><strong>Total:</strong> $<span id="cart-total"> <%= total_price %> </span></p>
+        <button class="btn btn-success w-100" id="checkout-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Confirm Itinerary Now</button>
+    </div>
+</div>
  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Welcome to Singapore!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your booking is confirmed!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
