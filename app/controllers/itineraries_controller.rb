@@ -65,6 +65,7 @@ class ItinerariesController < ApplicationController
 
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
+  
     # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
 
     # @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
