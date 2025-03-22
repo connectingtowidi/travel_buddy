@@ -55,7 +55,7 @@ gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "httparty"
-gem 'stripe'
+# gem 'stripe'
 gem "geocoder"
 
 group :development, :test do
