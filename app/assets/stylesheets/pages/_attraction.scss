@@ -3,3 +3,8 @@
   overflow-y: auto;
   padding: 15px;
 }
+
+.carousel-item img {
+  height: 500px;
+  object-fit: contain;
+}
