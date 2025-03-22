@@ -11,6 +11,8 @@ export default class extends Controller {
     lng: Number
   }
 
+  routePath = null;
+
   ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
 
   async connect() {
@@ -41,6 +43,9 @@ export default class extends Controller {
         map.setCenter(marker.position);
       }); 
     });
+
+    this.routePaths = {};
+    this.toggleStates = {};
   };  
 
   attraction(event) {
@@ -65,6 +70,7 @@ export default class extends Controller {
     // This is the AJAX request to fetch the route and duration
     console.log("Travel clicked")
     let clickedTravel = event.currentTarget;
+    let travelId = clickedTravel.dataset.googleMapsToggleTravelIdValue;
 
     const origin = {
       latitude: parseFloat(clickedTravel.dataset.googleMapsOriginLatValue),
@@ -133,7 +139,9 @@ export default class extends Controller {
             decodedLevels.push(level);
         }
 
-        const routePath = new Polyline({
+        let travelId = clickedTravel.dataset.googleMapsToggleTravelIdValue;
+
+        this.routePaths[travelId] = new Polyline({
           path: decodedPath,
           levels: decodedLevels,
           strokeColor: "#FF0000",
@@ -141,10 +149,42 @@ export default class extends Controller {
           strokeWeight: 2,
           map: map
         });
+
+        this.toggleStates[travelId] = "true";
+
+        const newLat = (parseFloat(clickedTravel.dataset.googleMapsOriginLatValue) + parseFloat(clickedTravel.dataset.googleMapsDestinationLatValue)) / 2;
+        const newLng = (parseFloat(clickedTravel.dataset.googleMapsOriginLngValue) + parseFloat(clickedTravel.dataset.googleMapsDestinationLngValue)) / 2;
+        map.setCenter({ lat: newLat, lng: newLng });
+        map.setZoom(13);
       })
       .catch(error => {
         console.error("Error fetching route:", error);
       });      
+  }
+
+  toggleRoute(event) {
+    console.log("Toggle route clicked")
+    // console.log(event.currentTarget.dataset.googleMapsToggleStateValue);
+    // let clickedTravel = event.currentTarget;
+    
+    // let toggleState = clickedTravel.dataset.googleMapsToggleStateValue;
+    // Clear existing route first, if any
+    // if (this.routePath) {
+    //   this.routePath.setMap(null)
+    // }
+
+    let travelId = event.currentTarget.dataset.googleMapsToggleTravelIdValue;
+    console.log(travelId);
+
+    if (this.toggleStates[travelId] === "true") {
+      console.log("Clearing route")
+      this.toggleStates[travelId] = "false";
+      this.routePaths[travelId].setMap(null);
+    } else {
+      console.log("Fetching route")
+      this.toggleStates[travelId] = "true";
+      this.fetchRoute(event);
+    }
   }
 
   fetchDuration(event) {
