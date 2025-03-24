@@ -32,7 +32,6 @@ export default class extends Controller {
         loadingMessage.innerText = message;
       }, 0); // Set message in the next event loop
     }
-
    
   }
 
@@ -201,7 +200,7 @@ export default class extends Controller {
       // Sequence of messages to engage the user
     setTimeout(() => {
       const personText = pax === 1 ? 'person' : 'people';
-      this.showLoadingOverlay(`Gathering the best options for you in ${interest} from ${startDate} to ${endDate} for ${pax} ${personTex} with dietary preferences: ${dietaryPreferences}...`);
+      this.showLoadingOverlay(`Gathering the best options for you in ${interest} from ${startDate} to ${endDate} for ${pax} ${personText} with dietary preferences: ${dietaryPreferences}...`);
     }, 2000); // After 2 seconds, change the text
 
     setTimeout(() => {
@@ -232,4 +231,6 @@ export default class extends Controller {
       this.loadingOverlayTarget.style.display = "none";
     }
   }
+
+
 }
