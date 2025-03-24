@@ -22,7 +22,8 @@ class GenerateItineraryService
       and the duration of the visit, and the starting time, make sure the starting time falls within attraction's 
       opening and closing hours for the day and make sure the #{start_date} and #{end_date} fall within the opening days
       of the attractions. You should also add a remark about each attractions so as to make it more personalize.
-      The itinerary should include all the attractions and give it suitable name for the itinerary
+      The itinerary should include all the attractions and give it suitable name for the itinerary. Make sure to use plural for the word day
+      if the number of day is more than 1
 
       Here is the list of attractions:
       #{nearest_attractions(interest).to_json}

@@ -95,7 +95,7 @@
                                         <% travel_mode = travel_info&.mode %>
                                         <tr data-action="click->google-maps#toggleRoute"
                                             <%# data-google-maps-toggle-state-value="false" %>
-                                            data-google-maps-toggle-travel-id-value="<%= travel_info.id %>"
+                                            data-google-maps-toggle-travel-id-value="<%= travel_info&.id %>"
                                             data-google-maps-origin-lat-value=<%= day_attractions_sorted[index].attraction.latitude %>  
                                             data-google-maps-origin-lng-value=<%= day_attractions_sorted[index].attraction.longitude %>
                                             data-google-maps-destination-lat-value=<%= day_attractions_sorted[index + 1].attraction.latitude %>

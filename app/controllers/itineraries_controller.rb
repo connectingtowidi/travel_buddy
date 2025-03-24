@@ -65,6 +65,7 @@ class ItinerariesController < ApplicationController
 
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
+  
     # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
 
     # @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
@@ -98,8 +99,9 @@ class ItinerariesController < ApplicationController
   def update_with_ai
     user_prompt = params[:ai_prompt]
     locked_attractions_ids = params[:locked_attractions].to_s.split(',').map(&:to_i)
+  
     locked_attractions = Attraction.where(id: locked_attractions_ids)
-
+    
     TweakItineraryService.(
       user_prompt:,
       locked_attractions:,

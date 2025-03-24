@@ -5,7 +5,7 @@ class ItineraryAttraction < ApplicationRecord
   # Change these lines:
   has_many :travels_from, class_name: 'Travel', foreign_key: 'itinerary_attraction_from_id', dependent: :destroy
   has_many :travels_to, class_name: 'Travel', foreign_key: 'itinerary_attraction_to_id', dependent: :destroy
-  has_many :restaurant_recommendations
+  has_many :restaurant_recommendations, dependent: :destroy
   validates :day, presence: true, numericality: { greater_than: 0 }
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :starting_time, presence: true
