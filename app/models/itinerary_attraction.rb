@@ -15,10 +15,20 @@ class ItineraryAttraction < ApplicationRecord
   private
 
   def recommend_restaurants
-    restaurant_recommendation_service = RestaurantRecommendationService.get_recommendations(latitude: attraction.latitude, longitude: attraction.longitude, 
-    dietary_preferences: itinerary.dietary_preferences)
-
-    restaurant_recommendation_service.each do | restaurant |
+    return unless attraction && itinerary  # Ensure these exist
+  
+    recommendations = RestaurantRecommendationService.get_recommendations(
+      latitude: attraction.latitude,
+      longitude: attraction.longitude,
+      dietary_preferences: itinerary.dietary_preferences
+    )
+  
+    unless recommendations.is_a?(Array)
+      Rails.logger.warn("Unexpected recommendations format: #{recommendations.inspect}")
+      return
+    end
+  
+    recommendations.each do |restaurant|
       restaurant_recommendations.create!(
         name: restaurant[:name], 
         address: restaurant[:address],
@@ -30,5 +40,6 @@ class ItineraryAttraction < ApplicationRecord
       )
     end
   end
+  
 
 end
