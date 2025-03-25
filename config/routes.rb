@@ -25,5 +25,6 @@ Rails.application.routes.draw do
       post '/update_with_ai', to: 'itineraries#update_with_ai', as: 'update_with_ai'
     end
     post '/fetch_route', to: 'itineraries#fetch_route', as: 'fetch_route'
+    post '/update_ticket_booking_status', to: 'itineraries#update_ticket_booking_status', as: 'update_ticket_booking_status'
   end
 end
