@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_19_231048) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_23_190959) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_231048) do
     t.integer "number_of_pax"
     t.string "remark"
     t.string "dietary_preferences", default: [], array: true
+    t.string "ticket_booking_status", default: "pending"
     t.index ["user_id"], name: "index_itineraries_on_user_id"
   end
 
