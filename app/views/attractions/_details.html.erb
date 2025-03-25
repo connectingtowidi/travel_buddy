@@ -1,7 +1,24 @@
-<div class="position-sticky pt-1 top-0">
+<div class="position-sticky pt-1 top-0 attraction-details">
   <%# <%= @selected_attraction.to_json %>
   <%# above coded by Amanda %>
-  <h3 class="my-4"><%= @selected_attraction.name %></h3>
+  <h3 class="mt-4"><%= @selected_attraction.name %></h3>
+  <div class="mb-4">
+    <p>
+    Rating: <%= @selected_attraction.rating %>
+    <% full_stars = @selected_attraction.rating.floor %>
+    <% half_star = @selected_attraction.rating % 1 >= 0.5 %>
+
+    <% full_stars.times do %>
+      <i class="fas fa-star text-warning"></i>
+    <% end %>
+
+    <% if half_star %>
+      <i class="fas fa-star-half-alt text-warning"></i>
+    <% end %>
+
+    (<%= @selected_attraction.num_reviews %> reviews)
+  </p>
+  </div>
   <% if @selected_attraction.tripadvisor_photos? %>
   <div class="my-4">
     <% if @selected_attraction.tripadvisor_photos.is_a?(Array) %>
@@ -9,7 +26,7 @@
         <div class="carousel-inner">
           <% @selected_attraction.tripadvisor_photos.each_with_index do |photo_url, index| %>
             <div class="carousel-item <%= 'active' if index == 0 %>">
-              <img src="<%= photo_url %>" class="d-block w-100 img-fluid" style="border-radius: 15px; height: auto;" alt="<%= @selected_attraction.name %> photo">
+              <img src="<%= photo_url %>" class="d-block w-100 img-fluid" alt="<%= @selected_attraction.name %> photo">
             </div>
           <% end %>
         </div>

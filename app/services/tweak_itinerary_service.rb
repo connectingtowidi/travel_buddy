@@ -36,7 +36,9 @@ class TweakItineraryService
       The new modified itinerary must include #{locked_attractions}. 
       You may choose to include #{recommendations} in the new itinerary if it makes sense for the user request.
       Try not to remove any existing attractions from the current itinerary unless it is absolutely necessary to accommodate the new attractions.
-      Keep it to a #{itinerary.duration} day trip.
+      Keep it to a #{itinerary.duration} day trip. You should come up with a new remark of this updated itinerary giving a seamless personalised summary 
+      without mentioning the word modified but give an overall remark as if it's a brand new itinerary generated with the change request on the attractions
+      
     PROMPT
     
     open_ai_response = client.chat(

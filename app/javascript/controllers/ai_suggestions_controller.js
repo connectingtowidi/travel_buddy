@@ -1,13 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "lockedAttractions"]
+  static targets = ["form", "lockedAttractions", "loadingOverlay", "aiPrompt"]
+
   static values = {
     locked: { type: Array, default: [] }
   }
 
   connect() {
     this.updateLockedAttractions()
+
   }
 
   toggleLock(event) {
@@ -39,14 +41,52 @@ export default class extends Controller {
     }
   }
 
+  // Function to show the loading overlay and change the message
+  showLoadingOverlay(message) {
+    // Show the loading overlay
+    this.loadingOverlayTarget.style.display = "flex";
+
+    // Update the loading message text
+    const loadingMessage = document.getElementById("loading-message");
+
+    if (loadingMessage) {
+  
+      // Delay setting the text until after DOM has been updated
+      setTimeout(() => {
+        loadingMessage.innerText = message;
+      }, 0); // Set message in the next event loop
+    }
+
+   
+  }
+
   submitForm(event) {
     event.preventDefault()
     if (!this.hasFormTarget) return
 
+    const promptValue = this.aiPromptTarget.value
+    console.log("AI Prompt:", promptValue)
     // Update the hidden field with locked attractions
     this.updateLockedAttractions()
 
-    // Submit the form
-    this.formTarget.submit()
-  }
-} 
+    try {
+      // Show the loading overlay BEFORE submitting the form
+      this.loadingOverlayTarget.style.display = "flex"
+      console.log("Set display to flex")
+      
+      // Update message
+      const loadingMessage = document.getElementById("loading-message")
+      if (loadingMessage) {
+        loadingMessage.textContent = `Generating an update to your perfect itinerary based on your request: ${promptValue}`
+      }
+      
+      // Then submit the form
+      this.formTarget.submit()
+      
+    } catch (error) {
+      console.error("Error showing loading overlay:", error)
+      // If there's an error showing the overlay, still submit the form
+      this.formTarget.submit()
+    }
+  } 
+}
