@@ -38,7 +38,7 @@ class ItinerariesController < ApplicationController
     .order(:day)
     .group_by(&:day)
 
-    
+
   end
 
   def new
@@ -46,15 +46,8 @@ class ItinerariesController < ApplicationController
   end
 
   def create
-    @itinerary = GenerateItineraryService.(
-     current_user, 
-      itinerary_params[:interest], 
-      itinerary_params[:start_date], 
-      itinerary_params[:end_date], 
-      itinerary_params[:pax],
-      itinerary_params[:dietary_preferences],
-    )
-
+    itinerary_params[:dietary_preferences] = itinerary_params[:dietary_preferences].slice!(0)
+    @itinerary = GenerateItineraryService.call(current_user, itinerary_params)
 
     if @itinerary.save!
       redirect_to itinerary_path(@itinerary), notice: "Itinerary was successfully created."
@@ -65,7 +58,7 @@ class ItinerariesController < ApplicationController
 
   def review
     @itinerary = Itinerary.find(params[:itinerary_id])
-  
+
     # @itinerary_by_day = @itinerary.itinerary_attractions.group_by(&:day)
 
     # @markers = @itinerary.itinerary_attractions.map do |itinerary_attraction|
@@ -99,9 +92,9 @@ class ItinerariesController < ApplicationController
   def update_with_ai
     user_prompt = params[:ai_prompt]
     locked_attractions_ids = params[:locked_attractions].to_s.split(',').map(&:to_i)
-  
+
     locked_attractions = Attraction.where(id: locked_attractions_ids)
-    
+
     TweakItineraryService.(
       user_prompt:,
       locked_attractions:,
@@ -114,10 +107,10 @@ class ItinerariesController < ApplicationController
   # This is the AJAX request to fetch the route and duration
   def fetch_route
     @travel = Travel.new(travel_params)
-    
+
     # @travel.itinerary_attraction_from = ItineraryAttraction.find(travel_params[:itinerary_attraction_from_id])
     # @travel.itinerary_attraction_to = ItineraryAttraction.find(travel_params[:itinerary_attraction_to_id])
-  
+
     respond_to do |format|
       if @travel.save
         travel_data = GoogleMapsService.create_travel(
@@ -135,7 +128,7 @@ class ItinerariesController < ApplicationController
           end_travel_time = @travel.itinerary_attraction_to.starting_time
           start_travel_time = end_travel_time - duration.minutes
 
-          format.json { render json: { 
+          format.json { render json: {
             travel_id: @travel.id,
             itinerary_attraction_from: @travel.itinerary_attraction_from.attraction.name,
             itinerary_attraction_to: @travel.itinerary_attraction_to.attraction.name,
@@ -176,7 +169,7 @@ class ItinerariesController < ApplicationController
 
   def itinerary_params
     params.require(:itinerary).permit(:start_date, :end_date, :interest, :number_of_pax, dietary_preferences: [])
-  end  
+  end
 
   def set_itinerary
     @itinerary = Itinerary.find(params[:id])
