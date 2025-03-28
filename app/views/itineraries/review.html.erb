@@ -168,9 +168,19 @@
         <% end %>
 
         <p class="mt-3"><strong>Total:</strong> $<span id="cart-total"> <%= total_price %> </span></p>
-        <button class="btn btn-success w-100" id="checkout-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+        <%= form_with model: @itinerary, url: itinerary_update_ticket_booking_status_path(@itinerary), method: :post, 
+            data: { controller: "update-booking-status",
+                    action: "submit->update-booking-status#fire",
+                    update_booking_status_target: "form",
+                    success_url: itineraries_path } do |f| %>
+            <%= f.hidden_field :ticket_booking_status, value: "Confirmed" %>
+            <%= f.submit "Confirm Itinerary Now", class: "btn btn-success w-100" %>
+        <% end %>
+
+        <%# <button class="btn btn-success w-100" id="checkout-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fas fa-check-circle me-2"></i>Confirm Itinerary Now
-        </button>
+        </button> %>
     </div>
 </div>
  
