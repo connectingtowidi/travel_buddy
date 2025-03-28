@@ -15,7 +15,7 @@ class ItinerariesController < ApplicationController
     @itineraries = @itineraries.order(start_date: :desc)
 
      # Handle turbo_frame requests
-    respond_to do |format|
+     respond_to do |format|
       format.html
       format.turbo_stream { render turbo_stream: turbo_stream.replace("itineraries_results", partial: "itineraries/itinerary_list") }
     end
@@ -147,25 +147,8 @@ class ItinerariesController < ApplicationController
     end
   end
 
-  def update_ticket_booking_status
-    @itinerary = Itinerary.find(params[:itinerary_id])
-    
-    respond_to do |format|
-      if @itinerary.update(update_ticket_booking_status_params)
-        format.html { redirect_to itineraries_path, notice: "Itinerary was successfully updated." }
-        flash[:success] = "Your tickets have been successfully confirmed!"
-        format.json { render json: { success: true } }
-      else
-        format.json { render json: { success: false } }
-      end
-    end
-  end
-
   private
 
-  def update_ticket_booking_status_params
-    params.require(:itinerary).permit(:ticket_booking_status)
-  end
 
   def itinerary_params
     params.require(:itinerary).permit(:start_date, :end_date, :interest, :number_of_pax, dietary_preferences: [])
